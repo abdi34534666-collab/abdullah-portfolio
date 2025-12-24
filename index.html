@@ -46,7 +46,6 @@ body{
     overflow:hidden;
 }
 
-/* video smaller & centered */
 .hero video{
     position:absolute;
     width:70%;
@@ -63,7 +62,7 @@ body{
     z-index:1;
 }
 
-/* 🔥 EXTRA DEEP BLACK DOWN BLEND */
+/* 🔥 DEEP DOWN BLEND */
 .hero::after{
     content:'';
     position:absolute;
@@ -93,7 +92,7 @@ body{
     transform:translateY(0);
 }
 
-/* 🔥 RGB LOOP NAME */
+/* RGB LOOP NAME */
 .hero h1{
     font-size:56px;
     font-weight:700;
@@ -156,7 +155,6 @@ section{
     transition:0.4s ease;
 }
 
-/* WHITE glow only */
 .card:hover{
     box-shadow:0 0 40px rgba(255,255,255,0.55);
 }
@@ -230,7 +228,14 @@ footer{
 
 <!-- HERO -->
 <div class="hero">
-    <video id="heroVideo" autoplay muted playsinline>
+    <video
+        id="heroVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="portfolio_images/hero_poster.jpg">
         <source src="portfolio_videos/hero.mp4" type="video/mp4">
     </video>
 
@@ -299,12 +304,23 @@ footer{
 const video = document.getElementById('heroVideo');
 const content = document.getElementById('heroContent');
 
-/* hero video first → 5s → text */
-setTimeout(() => {
-    video.style.opacity = '0';
-    video.style.transform = 'translate(-50%,-50%) scale(0.95)';
-    content.classList.add('show');
-}, 5000);
+function playHeroVideo(){
+    video.play().catch(() => {
+        document.body.addEventListener('touchstart', () => {
+            video.play();
+        }, { once:true });
+    });
+}
+
+window.addEventListener('load', () => {
+    playHeroVideo();
+
+    setTimeout(() => {
+        video.style.opacity = '0';
+        video.style.transform = 'translate(-50%,-50%) scale(0.95)';
+        content.classList.add('show');
+    }, 5000);
+});
 
 function openImg(card){
     document.getElementById('lightboxImg').src =
