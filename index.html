@@ -29,13 +29,13 @@ body{
 
 /* ================= HERO ================= */
 .hero{
-  min-height:100vh;
+  min-height:100svh;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:40px;
-  padding:30px;
+  gap:34px;
+  padding:28px 18px;
   text-align:center;
 }
 
@@ -50,9 +50,9 @@ body{
 
 .video-wrap video{
   width:100%;
-  border-radius:20px;
+  border-radius:18px;
   display:block;
-  box-shadow:0 0 40px rgba(0,0,0,0.6);
+  box-shadow:0 0 36px rgba(0,0,0,0.6);
 }
 
 .video-fade{
@@ -60,10 +60,10 @@ body{
   left:0;
   bottom:0;
   width:100%;
-  height:40%;
+  height:45%;
   background:linear-gradient(to bottom, rgba(5,5,5,0), #050505);
   pointer-events:none;
-  border-radius:0 0 20px 20px;
+  border-radius:0 0 18px 18px;
 }
 
 @keyframes videoIntro{
@@ -84,7 +84,7 @@ body{
   max-width:640px;
   color:#bdbdbd;
   font-size:18px;
-  margin-top:16px;
+  line-height:1.6;
 }
 
 @keyframes rgbText{
@@ -94,35 +94,35 @@ body{
 
 /* ================= SECTIONS ================= */
 section{
-  padding:90px 7%;
+  padding:80px 7%;
 }
 
 .title{
   font-size:32px;
-  margin-bottom:40px;
+  margin-bottom:36px;
   position:relative;
 }
 
 .title::after{
   content:'';
-  width:70px;
+  width:60px;
   height:3px;
   background:var(--rgb);
   position:absolute;
   left:0;
-  bottom:-12px;
+  bottom:-10px;
 }
 
-/* GRID */
+/* ================= GRID ================= */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:34px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:28px;
 }
 
-/* CARD */
+/* ================= CARD ================= */
 .card{
-  border-radius:18px;
+  border-radius:16px;
   overflow:hidden;
   background:var(--glass);
   backdrop-filter:blur(14px);
@@ -133,29 +133,29 @@ section{
   width:100%;
   height:100%;
   object-fit:cover;
-  transition:0.6s;
+  transition:0.5s;
 }
 
 .card:hover img{
-  transform:scale(1.12);
+  transform:scale(1.1);
 }
 
-/* BANNERS */
+/* ================= BANNERS ================= */
 .banners-grid{
-  grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
 }
 
 /* ================= LIGHTBOX ================= */
 .lightbox{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.95);
+  background:rgba(0,0,0,0.96);
   display:flex;
   align-items:center;
   justify-content:center;
   opacity:0;
   pointer-events:none;
-  transition:0.3s;
+  transition:0.25s;
   z-index:999;
 }
 
@@ -165,26 +165,33 @@ section{
 }
 
 .lightbox img{
-  max-width:92%;
-  max-height:92%;
-  border-radius:18px;
+  max-width:94%;
+  max-height:94%;
+  border-radius:16px;
   box-shadow:0 0 60px rgba(255,255,255,0.4);
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 footer{
-  padding:40px;
+  padding:32px 20px;
   text-align:center;
   color:#777;
   background:#020202;
+  font-size:14px;
 }
 
-/* MOBILE */
-@media(max-width:768px){
-  .hero h1{font-size:38px;}
-  .hero p{font-size:16px;}
+/* ================= MOBILE FIX ================= */
+@media(max-width:900px){
   .video-wrap{width:100%;}
   section{padding:70px 6%;}
+}
+
+@media(max-width:600px){
+  .hero h1{font-size:34px;}
+  .hero p{font-size:15px;}
+  .title{font-size:26px;}
+  .grid{grid-template-columns:repeat(2,1fr);}
+  .banners-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -194,7 +201,7 @@ footer{
 <!-- HERO -->
 <div class="hero">
   <div class="video-wrap">
-    <video id="heroVideo" muted playsinline>
+    <video id="heroVideo" muted playsinline preload="auto">
       <source src="portfolio_videos/Animation.mp4" type="video/mp4">
     </video>
     <div class="video-fade"></div>
@@ -216,7 +223,7 @@ footer{
 </div>
 </section>
 
-<!-- ✅ THUMBNAILS (ADDED & FIXED) -->
+<!-- THUMBNAILS -->
 <section>
 <h2 class="title">YouTube Thumbnails</h2>
 <div class="grid">
@@ -226,9 +233,6 @@ footer{
   <div class="card" onclick="openImg(this)"><img src="portfolio_images/BD4.jpg"></div>
   <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA.png"></div>
   <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA2.png"></div>
-  <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA3.png"></div>
-  <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA4.png"></div>
-  <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA5.png"></div>
 </div>
 </section>
 
@@ -247,7 +251,6 @@ footer{
 <div class="grid">
   <div class="card" onclick="openImg(this)"><img src="portfolio_images/Mockup.jpg"></div>
   <div class="card" onclick="openImg(this)"><img src="portfolio_images/Mockup.png"></div>
-  <div class="card" onclick="openImg(this)"><img src="portfolio_images/All T-Shirt Design.png"></div>
 </div>
 </section>
 
@@ -262,15 +265,18 @@ footer{
 
 <script>
 const video = document.getElementById('heroVideo');
-video.addEventListener('canplay', () => video.play());
+video.addEventListener('canplay',()=>video.play());
 
 function openImg(card){
-  document.getElementById('lightboxImg').src = card.querySelector('img').src;
-  document.getElementById('lightbox').classList.add('active');
+  document.getElementById('lightboxImg').src =
+    card.querySelector('img').src;
+  document.getElementById('lightbox')
+    .classList.add('active');
 }
 
 function closeImg(){
-  document.getElementById('lightbox').classList.remove('active');
+  document.getElementById('lightbox')
+    .classList.remove('active');
 }
 </script>
 
