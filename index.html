@@ -11,7 +11,15 @@
 :root{
     --bg:#050505;
     --glass:rgba(255,255,255,0.06);
-    --rgb:linear-gradient(120deg,#00f0ff,#ff00ea,#00ff85,#ffd000);
+    --rgb:linear-gradient(
+        120deg,
+        #00f0ff,
+        #ff00ea,
+        #00ff85,
+        #ffd000,
+        #ff006a,
+        #00f0ff
+    );
 }
 
 *{
@@ -27,39 +35,89 @@ body{
     overflow-x:hidden;
 }
 
-/* ===== HERO ===== */
+/* ================= HERO ================= */
 .hero{
+    position:relative;
     min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
+    overflow:hidden;
+}
+
+/* video smaller & centered */
+.hero video{
+    position:absolute;
+    width:70%;
+    max-width:1080px;
+    aspect-ratio:16/9;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    object-fit:cover;
+    border-radius:24px;
+    filter:brightness(0.82);
+    box-shadow:0 50px 140px rgba(0,0,0,0.95);
+    transition:opacity 1.3s ease, transform 1.3s ease;
+    z-index:1;
+}
+
+/* 🔥 EXTRA DEEP BLACK DOWN BLEND */
+.hero::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 35%,
+        rgba(0,0,0,0.6) 55%,
+        rgba(0,0,0,0.9) 75%,
+        rgba(0,0,0,1) 100%
+    );
+    z-index:2;
+}
+
+/* ================= HERO TEXT ================= */
+.hero-content{
+    position:relative;
+    z-index:3;
+    opacity:0;
+    transform:translateY(80px);
+    transition:1.2s cubic-bezier(.22,.61,.36,1);
     padding:30px;
 }
 
+.hero-content.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* 🔥 RGB LOOP NAME */
 .hero h1{
     font-size:56px;
     font-weight:700;
     background:var(--rgb);
-    background-size:300%;
+    background-size:500%;
     -webkit-background-clip:text;
+    background-clip:text;
     color:transparent;
-    animation:rgbText 6s linear infinite;
+    animation:rgbLoop 8s linear infinite;
+}
+
+@keyframes rgbLoop{
+    0%{background-position:0%}
+    100%{background-position:500%}
 }
 
 .hero p{
     margin-top:18px;
-    color:#bdbdbd;
+    color:#cfcfcf;
     font-size:18px;
     max-width:640px;
 }
 
-@keyframes rgbText{
-    0%{background-position:0%}
-    100%{background-position:300%}
-}
-
-/* ===== SECTION ===== */
+/* ================= SECTIONS ================= */
 section{
     padding:90px 7%;
 }
@@ -74,20 +132,20 @@ section{
     content:'';
     width:70px;
     height:3px;
-    background:var(--rgb);
+    background:#fff;
     position:absolute;
     left:0;
     bottom:-12px;
 }
 
-/* ===== GRID ===== */
+/* ================= GRID ================= */
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:34px;
 }
 
-/* ===== CARD ===== */
+/* ================= CARD ================= */
 .card{
     position:relative;
     border-radius:18px;
@@ -95,41 +153,26 @@ section{
     background:var(--glass);
     backdrop-filter:blur(14px);
     cursor:pointer;
-    transition:0.5s;
+    transition:0.4s ease;
 }
 
-.card::before{
-    content:'';
-    position:absolute;
-    inset:-2px;
-    background:var(--rgb);
-    opacity:0;
-    z-index:-1;
-    transition:0.5s;
-    animation:rgbGlow 8s linear infinite;
-}
-
-.card:hover::before{
-    opacity:1;
-}
-
-@keyframes rgbGlow{
-    0%{filter:hue-rotate(0deg)}
-    100%{filter:hue-rotate(360deg)}
+/* WHITE glow only */
+.card:hover{
+    box-shadow:0 0 40px rgba(255,255,255,0.55);
 }
 
 .card img{
     width:100%;
     height:100%;
     object-fit:cover;
-    transition:0.6s;
+    transition:0.6s ease;
 }
 
 .card:hover img{
     transform:scale(1.12);
 }
 
-/* ===== BANNERS ===== */
+/* ================= BANNERS ================= */
 .banners-grid{
     grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
 }
@@ -138,11 +181,11 @@ section{
     aspect-ratio:16/9;
 }
 
-/* ===== LIGHTBOX ===== */
+/* ================= LIGHTBOX ================= */
 .lightbox{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,0.92);
+    background:rgba(0,0,0,0.94);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -161,16 +204,10 @@ section{
     max-width:92%;
     max-height:92%;
     border-radius:18px;
-    box-shadow:0 0 50px rgba(0,255,255,0.45);
-    animation:zoomIn 0.4s ease;
+    box-shadow:0 0 45px rgba(255,255,255,0.6);
 }
 
-@keyframes zoomIn{
-    from{transform:scale(0.85);opacity:0;}
-    to{transform:scale(1);opacity:1;}
-}
-
-/* ===== FOOTER ===== */
+/* ================= FOOTER ================= */
 footer{
     padding:40px;
     text-align:center;
@@ -178,12 +215,13 @@ footer{
     background:#020202;
 }
 
-/* ===== MOBILE ===== */
+/* ================= MOBILE ================= */
 @media(max-width:768px){
-    .hero h1{font-size:38px;}
-    .hero p{font-size:16px;}
+    .hero h1{font-size:36px;}
+    .hero p{font-size:15px;}
     section{padding:70px 6%;}
     .banners-grid{grid-template-columns:1fr;}
+    .hero video{width:92%;}
 }
 </style>
 </head>
@@ -192,7 +230,11 @@ footer{
 
 <!-- HERO -->
 <div class="hero">
-    <div>
+    <video id="heroVideo" autoplay muted playsinline>
+        <source src="portfolio_videos/hero.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-content" id="heroContent">
         <h1>Abdullah Al Mamun</h1>
         <p>Premium thumbnails, branding & visuals designed to convert viewers into a targeted audience.</p>
     </div>
@@ -225,21 +267,14 @@ footer{
     </div>
 </section>
 
+<!-- BANNERS -->
 <section>
     <h2 class="title">Banners</h2>
     <div class="grid banners-grid">
-
-        <div class="card banner" onclick="openImg(this)">
-            <img src="portfolio_images/Banner.png" alt="Wide Banner Design">
-        </div>
-
-        <div class="card banner" onclick="openImg(this)">
-            <img src="portfolio_images/Banner2.png" alt="Wide Banner Design">
-        </div>
-
+        <div class="card banner" onclick="openImg(this)"><img src="portfolio_images/Banner.png"></div>
+        <div class="card banner" onclick="openImg(this)"><img src="portfolio_images/Banner2.png"></div>
     </div>
 </section>
-
 
 <!-- MOCKUPS -->
 <section>
@@ -261,8 +296,19 @@ footer{
 </div>
 
 <script>
+const video = document.getElementById('heroVideo');
+const content = document.getElementById('heroContent');
+
+/* hero video first → 5s → text */
+setTimeout(() => {
+    video.style.opacity = '0';
+    video.style.transform = 'translate(-50%,-50%) scale(0.95)';
+    content.classList.add('show');
+}, 5000);
+
 function openImg(card){
-    document.getElementById('lightboxImg').src = card.querySelector('img').src;
+    document.getElementById('lightboxImg').src =
+        card.querySelector('img').src;
     document.getElementById('lightbox').classList.add('active');
 }
 function closeImg(){
