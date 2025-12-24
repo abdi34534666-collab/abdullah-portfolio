@@ -9,200 +9,181 @@
 
 <style>
 :root{
-    --bg:#050505;
-    --glass:rgba(255,255,255,0.06);
-    --rgb:linear-gradient(120deg,#00f0ff,#ff00ea,#00ff85,#ffd000);
+  --bg:#050505;
+  --glass:rgba(255,255,255,0.06);
+  --rgb:linear-gradient(120deg,#00f0ff,#ff00ea,#00ff85,#ffd000);
 }
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
 }
 
 body{
-    background:var(--bg);
-    color:#fff;
-    overflow-x:hidden;
+  background:var(--bg);
+  color:#fff;
+  overflow-x:hidden;
 }
 
-/* ===== HERO ===== */
+/* ================= HERO ================= */
 .hero{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:30px;
-    gap:36px;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:36px;
+  padding:28px;
+  text-align:center;
 }
 
-/* VIDEO */
-.hero-video{
-    position:relative;
-    width:100%;
-    max-width:900px;
-    opacity:0;
-    transform:translateY(30px) scale(.96);
-    animation:heroVideoIn 1.2s ease forwards;
+/* VIDEO SAFE FOR MOBILE */
+.video-wrap{
+  position:relative;
+  width:100%;
+  max-width:900px;
 }
 
-.hero-video video{
-    width:100%;
-    border-radius:20px;
-    display:block;
-    box-shadow:0 0 50px rgba(0,0,0,.7);
+.video-wrap video{
+  width:100%;
+  display:block;
+  border-radius:20px;
+  box-shadow:0 0 40px rgba(0,0,0,0.7);
 }
 
-.hero-video::after{
-    content:"";
-    position:absolute;
-    inset:auto 0 0 0;
-    height:40%;
-    background:linear-gradient(to bottom,transparent,#050505);
+/* BLACK BLEND (SAFE METHOD) */
+.video-fade{
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:40%;
+  background:linear-gradient(to bottom, rgba(5,5,5,0), #050505);
+  pointer-events:none;
+  border-radius:0 0 20px 20px;
 }
 
-@keyframes heroVideoIn{
-    to{opacity:1;transform:none;}
-}
-
-/* TEXT */
+/* HERO TEXT */
 .hero h1{
-    font-size:56px;
-    font-weight:700;
-    background:var(--rgb);
-    background-size:300%;
-    -webkit-background-clip:text;
-    color:transparent;
-    animation:rgbText 6s linear infinite, fadeUp .9s ease forwards;
-    opacity:0;
+  font-size:56px;
+  font-weight:700;
+  background:var(--rgb);
+  background-size:300%;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:rgbText 6s linear infinite;
 }
 
 .hero p{
-    margin-top:18px;
-    color:#bdbdbd;
-    font-size:18px;
-    max-width:640px;
-    opacity:0;
-    animation:fadeUp .9s ease forwards;
-    animation-delay:.15s;
+  max-width:640px;
+  font-size:18px;
+  color:#bdbdbd;
+  margin-top:14px;
 }
 
 @keyframes rgbText{
-    0%{background-position:0%}
-    100%{background-position:300%}
+  0%{background-position:0%}
+  100%{background-position:300%}
 }
 
-@keyframes fadeUp{
-    to{opacity:1;transform:none;}
-}
-
-/* ===== SECTION ===== */
+/* ================= SECTIONS ================= */
 section{
-    padding:90px 7%;
+  padding:90px 7%;
 }
 
 .title{
-    font-size:32px;
-    margin-bottom:40px;
-    position:relative;
+  font-size:32px;
+  margin-bottom:40px;
+  position:relative;
 }
 
 .title::after{
-    content:'';
-    width:70px;
-    height:3px;
-    background:var(--rgb);
-    position:absolute;
-    left:0;
-    bottom:-12px;
+  content:'';
+  width:70px;
+  height:3px;
+  background:var(--rgb);
+  position:absolute;
+  left:0;
+  bottom:-12px;
 }
 
-/* ===== GRID ===== */
+/* GRID */
 .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:34px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:30px;
 }
 
-/* ===== CARD ===== */
+/* CARD */
 .card{
-    position:relative;
-    border-radius:18px;
-    overflow:hidden;
-    background:var(--glass);
-    backdrop-filter:blur(14px);
-    cursor:pointer;
+  position:relative;
+  border-radius:18px;
+  overflow:hidden;
+  background:var(--glass);
+  backdrop-filter:blur(14px);
+  cursor:pointer;
 }
 
 .card img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:.6s;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:0.6s;
 }
 
 .card:hover img{
-    transform:scale(1.12);
+  transform:scale(1.1);
 }
 
-/* ===== BANNERS ===== */
+/* BANNERS */
 .banners-grid{
-    grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
 }
 
-.banner img{
-    aspect-ratio:16/9;
-}
-
-/* ===== LIGHTBOX ===== */
+/* ================= LIGHTBOX ================= */
 .lightbox{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.95);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    opacity:0;
-    pointer-events:none;
-    transition:.3s;
-    z-index:999;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.95);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+  z-index:999;
 }
 
 .lightbox.active{
-    opacity:1;
-    pointer-events:auto;
+  opacity:1;
+  pointer-events:auto;
 }
 
 .lightbox img{
-    max-width:92%;
-    max-height:92%;
-    border-radius:18px;
-    box-shadow:0 0 60px rgba(255,255,255,.55);
-    animation:zoomIn .4s ease;
+  max-width:92%;
+  max-height:92%;
+  border-radius:18px;
+  box-shadow:
+    0 0 30px rgba(255,255,255,0.4),
+    0 0 90px rgba(255,255,255,0.15);
 }
 
-@keyframes zoomIn{
-    from{transform:scale(.85);opacity:0;}
-    to{transform:scale(1);opacity:1;}
-}
-
-/* ===== FOOTER ===== */
+/* FOOTER */
 footer{
-    padding:40px;
-    text-align:center;
-    color:#777;
-    background:#020202;
+  padding:40px;
+  text-align:center;
+  color:#777;
+  background:#020202;
 }
 
-/* ===== MOBILE ===== */
+/* ================= MOBILE ================= */
 @media(max-width:768px){
-    .hero h1{font-size:38px;}
-    .hero p{font-size:16px;}
-    section{padding:70px 6%;}
-    .banners-grid{grid-template-columns:1fr;}
+  .hero h1{font-size:38px;}
+  .hero p{font-size:16px;}
+  section{padding:70px 6%;}
+  .banners-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -211,28 +192,27 @@ footer{
 
 <!-- HERO -->
 <div class="hero">
+  <div class="video-wrap">
+    <video autoplay muted loop playsinline preload="metadata"
+      poster="portfolio_images/hero-poster.jpg">
+      <source src="portfolio_videos/hero.mp4" type="video/mp4">
+    </video>
+    <div class="video-fade"></div>
+  </div>
 
-    <!-- VIDEO ADDED -->
-    <div class="hero-video">
-        <video id="heroVideo" muted playsinline preload="metadata">
-            <source src="portfolio_videos/Animation.mp4" type="video/mp4">
-        </video>
-    </div>
-
-    <div>
-        <h1>Abdullah Al Mamun</h1>
-        <p>Premium thumbnails, branding & visuals designed to convert viewers into a targeted audience.</p>
-    </div>
-
+  <div>
+    <h1>Abdullah Al Mamun</h1>
+    <p>Premium thumbnails, branding & visuals designed to convert viewers into a targeted audience.</p>
+  </div>
 </div>
 
 <!-- LOGOS -->
 <section>
 <h2 class="title">Logos & Branding</h2>
 <div class="grid">
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/Logo.jpg"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/Logo.png"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/Logo3.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/Logo.jpg"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/Logo.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/Logo3.png"></div>
 </div>
 </section>
 
@@ -240,16 +220,15 @@ footer{
 <section>
 <h2 class="title">YouTube Thumbnails</h2>
 <div class="grid">
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/BD.jpg"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/BD2.jpg"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/BD3.jpg"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/BD4.jpg"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA.png"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA2.png"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA3.png"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA4.png"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA5.png"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/USA7.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/BD.jpg"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/BD2.jpg"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/BD3.jpg"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/BD4.jpg"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/USA.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/USA2.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/USA3.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/USA4.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/USA5.png"></div>
 </div>
 </section>
 
@@ -257,8 +236,8 @@ footer{
 <section>
 <h2 class="title">Banners</h2>
 <div class="grid banners-grid">
-    <div class="card banner" onclick="openImg(this)"><img src="portfolio_images/Banner.png"></div>
-    <div class="card banner" onclick="openImg(this)"><img src="portfolio_images/Banner2.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/Banner.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/Banner2.png"></div>
 </div>
 </section>
 
@@ -266,33 +245,27 @@ footer{
 <section>
 <h2 class="title">Mockups & Merch</h2>
 <div class="grid">
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/Mockup.jpg"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/Mockup.png"></div>
-    <div class="card" onclick="openImg(this)"><img src="portfolio_images/All T-Shirt Design.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/Mockup.jpg"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/Mockup.png"></div>
+  <div class="card" onclick="openImg(this)"><img loading="lazy" src="portfolio_images/All T-Shirt Design.png"></div>
 </div>
 </section>
 
-<footer>
-© 2025 Abdullah Al Mamun • Premium Creative Portfolio
-</footer>
+<footer>© 2025 Abdullah Al Mamun • Premium Creative Portfolio</footer>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeImg()">
-    <img id="lightboxImg">
+  <img id="lightboxImg">
 </div>
 
 <script>
-/* MOBILE SAFE VIDEO PLAY */
-const video = document.getElementById("heroVideo");
-video.play().catch(()=>{});
-document.addEventListener("touchstart",()=>video.play(),{once:true});
-
 function openImg(card){
-    lightboxImg.src = card.querySelector("img").src;
-    lightbox.classList.add("active");
+  document.getElementById('lightboxImg').src =
+    card.querySelector('img').src;
+  document.getElementById('lightbox').classList.add('active');
 }
 function closeImg(){
-    lightbox.classList.remove("active");
+  document.getElementById('lightbox').classList.remove('active');
 }
 </script>
 
