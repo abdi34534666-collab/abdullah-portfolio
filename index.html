@@ -4,106 +4,113 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abdullah Al Mamun | Portfolio</title>
+
 <style>
-* {margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif;}
-body {background:#000; color:#fff; overflow-x:hidden;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#000;color:#fff;overflow-x:hidden}
 
 /* NAVBAR */
-nav {
-  position:fixed; top:0; width:100%; padding:18px 8%;
-  display:flex; justify-content:flex-end;
-  background: rgba(0,0,0,0.45); backdrop-filter: blur(12px);
-  z-index:100; border-bottom:1px solid rgba(255,255,255,0.08);
+nav{
+  position:fixed;top:0;width:100%;padding:18px 8%;
+  display:flex;justify-content:flex-end;gap:24px;
+  background:rgba(0,0,0,.45);backdrop-filter:blur(12px);
+  z-index:1000
 }
-nav a {
-  margin-left:28px; text-decoration:none; font-weight:bold;
-  color:#fff; transition:.3s; font-size:15px;
-}
-nav a:hover {color:#00ffea; text-shadow:0 0 10px #00ffe0;}
+nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:14px}
+nav a:hover{color:#00ffea;text-shadow:0 0 10px #00ffe0}
 
-/* HERO SECTION */
-#home {
-  height:100vh; display:flex; flex-direction:column;
-  justify-content:flex-end; text-align:center; overflow:hidden;
+/* HERO */
+#home{
+  height:100vh;display:flex;flex-direction:column;
+  justify-content:flex-end;align-items:center;text-align:center;
+  overflow:hidden
 }
-.hero-wrapper {
-  position: relative; width:100%; height:100%;
-  display:flex; justify-content:center; align-items:flex-end;
-}
-.hero-container {
-  position: relative; width:580px; height:400px;
-}
+.hero-wrapper{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:flex-end}
+.hero-container{position:relative;width:600px;height:420px}
 
-/* Hero Image Wrapper with bottom blending */
-.hero-box {
-  position:absolute; bottom:-400px; left:50%; transform:translateX(-50%);
-  width:100%; max-width:580px; z-index:2;
-  transition:bottom 1.5s cubic-bezier(0.25,1,0.5,1);
+.hero-box{
+  position:absolute;bottom:-450px;left:50%;
+  transform:translateX(-50%);
+  transition:bottom 1.6s cubic-bezier(.25,1,.4,1)
 }
-.hero-box::after {
-  content:"";
-  position:absolute; bottom:0; left:0; width:100%; height:50%;
-  background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
-  pointer-events:none;
+.hero-box::after{
+  content:"";position:absolute;bottom:0;left:0;
+  width:100%;height:45%;
+  background:linear-gradient(to top,#000,transparent)
 }
+.hero-box img{width:100%;display:block}
 
-/* Hero images inside wrapper */
-.hero-box img {
-  width:100%; display:block;
-}
+.hero-box.green{width:520px;z-index:1}
+.hero-box.men{width:380px;z-index:2}
 
-/* Men image z-index higher */
-.hero-box.men {z-index:3; width:450px;}
-
-/* NAME & TAGLINE */
-h1 {
-  margin-top:20px; font-size:54px;
-  background: linear-gradient(90deg,#00fff3,#00ffa0,#4d7cff,#c34bff);
-  background-size:400% 400%; color:transparent;
-  -webkit-background-clip:text; animation:rgbFlow 8s infinite ease;
-  opacity:0; transform:translateY(20px);
-  transition:opacity 1s ease, transform 1s ease;
+/* RGB NAME */
+h1{
+  margin-top:22px;font-size:52px;
+  background:linear-gradient(90deg,#00fff3,#00ffa0,#4d7cff,#c34bff);
+  background-size:400% 400%;
+  color:transparent;-webkit-background-clip:text;
+  animation:rgb 8s infinite ease;
+  opacity:0;transform:translateY(20px);transition:1s
 }
-@keyframes rgbFlow {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.subtitle {
-  font-size:20px; margin-bottom:75px; color:#d1d1d1;
-  opacity:0; transform:translateY(20px);
-  transition:opacity 1s ease, transform 1s ease;
+@keyframes rgb{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.subtitle{
+  font-size:18px;margin-bottom:70px;color:#ccc;
+  opacity:0;transform:translateY(20px);transition:1s
 }
 
 /* SECTIONS */
-section {padding:80px 6% 40px;text-align:center;}
-section h2 {font-size:36px;margin-bottom:35px;text-transform:uppercase;font-weight:900;color:#fff;}
+section{padding:90px 6% 40px;text-align:center}
+section h2{font-size:36px;margin-bottom:35px}
 
-/* GRID IMAGES */
-.grid, .banner-grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:25px;}
-.grid img, .banner-grid img {width:100%; border-radius:12px; cursor:pointer; transition:.3s;}
-.grid img:hover, .banner-grid img:hover {transform:scale(1.05); filter:brightness(1.1) drop-shadow(0 0 10px #fff);}
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:25px
+}
+.grid img{
+  width:100%;border-radius:14px;
+  cursor:pointer;transition:.3s
+}
+.grid img:hover{transform:scale(1.05);filter:brightness(1.1)}
 
-/* CLICK TO ENLARGE */
-img.active {
-  position:fixed !important; top:50% !important; left:50% !important;
-  max-width:90%; max-height:90%;
-  transform:translate(-50%, -50%) scale(1) !important;
-  z-index:999 !important; box-shadow:0 0 25px 5px #fff !important;
-  border-radius:12px !important; transition: all 0.3s ease;
+/* LIGHTBOX */
+#lightbox{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.95);
+  display:flex;align-items:center;justify-content:center;
+  z-index:99999;opacity:0;visibility:hidden;transition:.3s
+}
+#lightbox.show{opacity:1;visibility:visible}
+#lightbox img{
+  max-width:90vw;max-height:90vh;
+  object-fit:contain;border-radius:16px;
+  box-shadow:0 0 40px rgba(255,255,255,.4)
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){h1{font-size:36px;} .subtitle{font-size:16px;margin-bottom:50px;} nav a{font-size:13px;margin-left:16px;}}
-@media(max-width:480px){h1{font-size:28px;} .subtitle{font-size:14px;margin-bottom:40px;} nav a{font-size:12px;margin-left:12px;} .grid, .banner-grid{gap:15px;} .hero-box.men{width:280px;} .hero-box.green{width:360px;}}
+/* MOBILE */
+@media(max-width:768px){
+  h1{font-size:34px}
+  .subtitle{font-size:15px}
+  .hero-container{width:100%;height:380px}
+  .hero-box.green{width:360px}
+  .hero-box.men{width:260px}
+}
 </style>
 </head>
+
 <body>
 
-<!-- NAVBAR -->
 <nav>
-<a href="#home">Home</a>
-<a href="#banners">Banners</a>
-<a href="#logos">Logos</a>
-<a href="#thumbs">Thumbnails</a>
-<a href="#mockups">Mockups</a>
-<a href="#tshirts">T-Shirts</a>
+  <a href="#home">Home</a>
+  <a href="#logos">Logos</a>
+  <a href="#thumbnails">Thumbnails</a>
+  <a href="#mockups">Mockups</a>
+  <a href="#tshirts">T-Shirts</a>
 </nav>
 
 <!-- HERO -->
@@ -111,103 +118,107 @@ img.active {
   <div class="hero-wrapper">
     <div class="hero-container">
       <div class="hero-box green">
-        <img src="intro_images/Green Cycle.png" alt="Green Cycle">
+        <img src="intro_images/Green Cycle.png">
       </div>
       <div class="hero-box men">
-        <img src="intro_images/Men1.png" alt="Men">
+        <img src="intro_images/Men1.png">
       </div>
     </div>
   </div>
   <h1>Abdullah Al Mamun</h1>
-  <p class="subtitle">Creative Designer • Thumbnails & Branding</p>
-</section>
-
-<!-- BANNERS -->
-<section id="banners">
-<h2>Banners</h2>
-<div class="banner-grid">
-  <img src="portfolio_images/Banner.png">
-  <img src="portfolio_images/Banner2.png">
-</div>
+  <p class="subtitle">Creative Designer • Branding & Thumbnails</p>
 </section>
 
 <!-- LOGOS -->
 <section id="logos">
 <h2>Logo Designs</h2>
 <div class="grid">
-  <img src="portfolio_images/Logo.jpg">
-  <img src="portfolio_images/Logo.png">
-  <img src="portfolio_images/Logo3.png">
+<img src="portfolio_images/Logo.jpg">
+<img src="portfolio_images/Logo.png">
+<img src="portfolio_images/Logo3.png">
+<img src="portfolio_images/logo4.jpg">
+<img src="portfolio_images/logo5.png">
 </div>
 </section>
 
 <!-- THUMBNAILS -->
-<section id="thumbs">
-<h2>YouTube Thumbnails</h2>
+<section id="thumbnails">
+<h2>BD Thumbnails</h2>
 <div class="grid">
-  <img src="portfolio_images/BD.jpg">
-  <img src="portfolio_images/BD2.jpg">
-  <img src="portfolio_images/BD3.jpg">
-  <img src="portfolio_images/BD4.jpg">
-  <img src="portfolio_images/BD5.png">
-  <img src="portfolio_images/BD6.png">
-  <img src="portfolio_images/USA1.png">
-  <img src="portfolio_images/USA2.png">
-  <img src="portfolio_images/USA3.png">
-  <img src="portfolio_images/USA4.png">
+<img src="portfolio_images/BD.jpg">
+<img src="portfolio_images/BD2.jpg">
+<img src="portfolio_images/BD3.jpg">
+<img src="portfolio_images/BD4.jpg">
+<img src="portfolio_images/BD5.png">
+<img src="portfolio_images/BD6.png">
+</div>
+
+<h2 style="margin-top:80px">USA Thumbnails</h2>
+<div class="grid">
+<img src="portfolio_images/USA1.png">
+<img src="portfolio_images/USA2.png">
+<img src="portfolio_images/USA3.png">
+<img src="portfolio_images/USA4.png">
 </div>
 </section>
 
 <!-- MOCKUPS -->
 <section id="mockups">
-<h2>Mockups</h2>
+<h2>Mockups & Branding</h2>
 <div class="grid">
-  <img src="portfolio_images/Mockup.jpg">
-  <img src="portfolio_images/Mockup.png">
-  <img src="portfolio_images/Mockup1.jpg">
+<img src="portfolio_images/Mockup.jpg">
+<img src="portfolio_images/Mockup.png">
+<img src="portfolio_images/Mockup1.jpg">
+<img src="portfolio_images/Mockup2.jpg">
 </div>
 </section>
 
-<!-- T-SHIRTS -->
+<!-- TSHIRTS -->
 <section id="tshirts">
 <h2>T-Shirt Designs</h2>
 <div class="grid">
-  <img src="portfolio_images/All T-Shirt Design.png">
+<img src="portfolio_images/T-Shirt (1).png">
+<img src="portfolio_images/T-Shirt (2).png">
+<img src="portfolio_images/T-Shirt (3).png">
+<img src="portfolio_images/T-Shirt (4).png">
+<img src="portfolio_images/T-Shirt (5).png">
+<img src="portfolio_images/T-Shirt (6).png">
+<img src="portfolio_images/T-Shirt (7).png">
+<img src="portfolio_images/T-Shirt (8).png">
 </div>
 </section>
 
+<!-- LIGHTBOX -->
+<div id="lightbox"><img></div>
+
 <script>
-// HERO ANIMATION
-window.addEventListener('load', () => {
-  const greenBox = document.querySelector('.hero-box.green');
-  const menBox = document.querySelector('.hero-box.men');
-  const name = document.querySelector('h1');
-  const subtitle = document.querySelector('.subtitle');
-
-  // Animate both boxes from below
-  setTimeout(()=>{ greenBox.style.bottom = '0'; },100);
-  setTimeout(()=>{ menBox.style.bottom = '0'; },1600);
-
-  // Fade in name + tagline after images
+window.onload=()=>{
+  document.querySelector(".hero-box.green").style.bottom="0";
+  setTimeout(()=>document.querySelector(".hero-box.men").style.bottom="0",1200);
   setTimeout(()=>{
-    name.style.opacity='1';
-    name.style.transform='translateY(0)';
-    subtitle.style.opacity='1';
-    subtitle.style.transform='translateY(0)';
-  },3200);
+    document.querySelector("h1").style.opacity="1";
+    document.querySelector("h1").style.transform="translateY(0)";
+    document.querySelector(".subtitle").style.opacity="1";
+    document.querySelector(".subtitle").style.transform="translateY(0)";
+  },2600);
+};
+
+const lb=document.getElementById("lightbox");
+const lbImg=lb.querySelector("img");
+
+document.querySelectorAll(".grid img").forEach(img=>{
+  img.onclick=()=>{
+    lbImg.src=img.src;
+    lb.classList.add("show");
+    document.body.style.overflow="hidden";
+  }
 });
 
-// CLICK TO ENLARGE
-document.querySelectorAll('img').forEach(img=>{
-  img.addEventListener('click',()=>{
-    if(img.classList.contains('active')){
-      img.classList.remove('active');
-    }else{
-      document.querySelectorAll('img').forEach(i=>i.classList.remove('active'));
-      img.classList.add('active');
-    }
-  });
-});
+lb.onclick=()=>{
+  lb.classList.remove("show");
+  lbImg.src="";
+  document.body.style.overflow="";
+};
 </script>
 
 </body>
