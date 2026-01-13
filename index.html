@@ -23,11 +23,10 @@ nav a:hover{color:#00ffea;text-shadow:0 0 10px #00ffe0}
 #home{
   height:100vh;display:flex;flex-direction:column;
   justify-content:flex-end;align-items:center;text-align:center;
-  overflow:hidden
+  overflow:hidden;position:relative;
 }
 .hero-wrapper{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:flex-end}
 .hero-container{position:relative;width:600px;height:420px}
-
 .hero-box{
   position:absolute;bottom:-450px;left:50%;
   transform:translateX(-50%);
@@ -39,7 +38,6 @@ nav a:hover{color:#00ffea;text-shadow:0 0 10px #00ffe0}
   background:linear-gradient(to top,#000,transparent)
 }
 .hero-box img{width:100%;display:block}
-
 .hero-box.green{width:520px;z-index:1}
 .hero-box.men{width:380px;z-index:2}
 
@@ -60,6 +58,34 @@ h1{
 .subtitle{
   font-size:18px;margin-bottom:70px;color:#ccc;
   opacity:0;transform:translateY(20px);transition:1s
+}
+
+/* CUSTOMER REVIEWS ON HERO BACKGROUND */
+.hero-reviews{
+  position:absolute;
+  top:10%;left:0;width:100%;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:18px;
+  pointer-events:none;
+}
+.review-bubble{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(6px);
+  color:#fff;
+  padding:12px 16px;
+  border-radius:12px;
+  font-size:12px;
+  max-width:200px;
+  opacity:0.7;
+  animation:float 6s ease-in-out infinite;
+}
+.review-bubble:nth-child(1){animation-delay:0s;}
+.review-bubble:nth-child(2){animation-delay:1.5s;}
+.review-bubble:nth-child(3){animation-delay:3s;}
+.review-bubble:nth-child(4){animation-delay:4.5s;}
+.review-bubble:nth-child(5){animation-delay:6s;}
+@keyframes float{
+  0%,100%{transform:translateY(0) translateX(0);}
+  50%{transform:translateY(-15px) translateX(5px);}
 }
 
 /* SECTIONS */
@@ -93,6 +119,28 @@ section h2{font-size:36px;margin-bottom:35px}
   box-shadow:0 0 40px rgba(255,255,255,.4)
 }
 
+/* CONTACT SECTION */
+#contact{
+  padding:90px 6% 60px;
+  background:#0a0a0a;
+}
+#contact h2{margin-bottom:30px;}
+.contact-links a{
+  display:inline-block;
+  margin:0 12px;
+  padding:12px 20px;
+  border-radius:8px;
+  background:#111;
+  color:#fff;
+  font-weight:bold;
+  text-decoration:none;
+  transition:.3s;
+}
+.contact-links a:hover{
+  background:#00fff3;
+  color:#000;
+}
+
 /* MOBILE */
 @media(max-width:768px){
   h1{font-size:34px}
@@ -100,10 +148,10 @@ section h2{font-size:36px;margin-bottom:35px}
   .hero-container{width:100%;height:380px}
   .hero-box.green{width:360px}
   .hero-box.men{width:260px}
+  .review-bubble{font-size:11px;max-width:150px}
 }
 </style>
 </head>
-
 <body>
 
 <nav>
@@ -112,6 +160,7 @@ section h2{font-size:36px;margin-bottom:35px}
   <a href="#thumbnails">Thumbnails</a>
   <a href="#mockups">Mockups</a>
   <a href="#tshirts">T-Shirts</a>
+  <a href="#contact">Contact</a>
 </nav>
 
 <!-- HERO -->
@@ -128,6 +177,16 @@ section h2{font-size:36px;margin-bottom:35px}
   </div>
   <h1>Abdullah Al Mamun</h1>
   <p class="subtitle">Creative Designer • Branding & Thumbnails</p>
+
+  <!-- Floating customer reviews in hero background -->
+  <div class="hero-reviews">
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Rahim Hasan.<br>"Excellent Work Abdullah!"</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Sadia Akter.<br>"Super creative & professional."</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Omar Rabbi.<br>"Branding looks amazing!"</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Emma Jell.<br>"Great Thumbnail designs!"</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Alex.<br>"Mockups Are Insane."</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Jack.<br>"Your Best Logo @ Branding Designer, Thank You."</div>
+  </div>
 </section>
 
 <!-- LOGOS -->
@@ -190,11 +249,21 @@ section h2{font-size:36px;margin-bottom:35px}
 </div>
 </section>
 
+<!-- CONTACT -->
+<section id="contact">
+<h2>Contact Me</h2>
+<div class="contact-links">
+  <a href="https://t.me/abdullah_graphicxpart" target="_blank">Telegram</a>
+  <a href="https://Wa.me/+8801600106114" target="_blank">WhatsApp</a>
+</div>
+</section>
+
 <!-- LIGHTBOX -->
 <div id="lightbox"><img></div>
 
 <script>
 window.onload=()=>{
+
   // Hero Animation
   document.querySelector(".hero-box.green").style.bottom="0";
   setTimeout(()=>document.querySelector(".hero-box.men").style.bottom="0",1200);
@@ -257,8 +326,7 @@ function smoothScrollTo(target, duration) {
   function animation(currentTime) {
     if (!startTime) startTime = currentTime;
     const timeElapsed = currentTime - startTime;
-    const progress = Math.min(timeElapsed / duration, 1);
-    const ease = easeInOutQuad(progress);
+    const ease = easeInOutQuad(Math.min(timeElapsed/duration,1));
     window.scrollTo(0, start + distance * ease);
     if (timeElapsed < duration) requestAnimationFrame(animation);
   }
