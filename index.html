@@ -110,7 +110,8 @@ h1{
   font-size:12px;
   max-width:200px;
   opacity:.75;
-  animation:float 6s ease-in-out infinite
+  animation:float 6s ease-in-out infinite;
+  will-change:transform
 }
 @keyframes float{
   0%,100%{transform:translateY(0)}
@@ -190,10 +191,13 @@ section h2{font-size:36px;margin-bottom:35px}
   transition:.3s
 }
 #lightbox.show{opacity:1;visibility:visible}
-#lightbox img{
-  max-width:92vw;
-  max-height:92vh;
-  border-radius:16px
+#lightbox img {
+  max-width: 92vw;
+  max-height: 92vh;
+  width: auto;      /* Let width scale automatically */
+  height: auto;     /* Let height scale automatically */
+  object-fit: contain; /* Preserve proportions */
+  border-radius: 16px;
 }
 
 /* CONTACT */
@@ -214,15 +218,21 @@ section h2{font-size:36px;margin-bottom:35px}
   color:#000
 }
 
-/* MOBILE */
+/* MOBILE PERFORMANCE OPTIMIZATION */
 @media(max-width:768px){
   h1{font-size:34px}
   .subtitle{font-size:15px}
   .hero-container{height:360px}
   .hero-box.green{width:360px}
   .hero-box.men{width:260px}
-  .review-bubble{font-size:11px;max-width:150px}
+  .review-bubble{
+    font-size:11px;
+    max-width:150px;
+    animation-duration:18s;
+  }
+  nav{backdrop-filter:none;background:rgba(0,0,0,0.85)}
 }
+img{width:100%;height:auto;display:block}
 </style>
 </head>
 
@@ -242,10 +252,10 @@ section h2{font-size:36px;margin-bottom:35px}
   <div class="hero-wrapper">
     <div class="hero-container">
       <div class="hero-box green">
-        <img src="intro_images/Green Cycle.png">
+        <img src="intro_images/Green Cycle.png" loading="lazy">
       </div>
       <div class="hero-box men">
-        <img src="intro_images/Men1.png">
+        <img src="intro_images/Men1.png" loading="lazy">
       </div>
     </div>
   </div>
@@ -279,11 +289,11 @@ section h2{font-size:36px;margin-bottom:35px}
 <section id="logos">
 <h2>Logo Designs</h2>
 <div class="grid">
-<img src="portfolio_images/Logo.jpg">
-<img src="portfolio_images/Logo.png">
-<img src="portfolio_images/Logo3.png">
-<img src="portfolio_images/logo4.jpg">
-<img src="portfolio_images/logo5.png">
+<img src="portfolio_images/Logo.jpg" loading="lazy">
+<img src="portfolio_images/Logo.png" loading="lazy">
+<img src="portfolio_images/Logo3.png" loading="lazy">
+<img src="portfolio_images/logo4.jpg" loading="lazy">
+<img src="portfolio_images/logo5.png" loading="lazy">
 </div>
 </section>
 
@@ -291,23 +301,23 @@ section h2{font-size:36px;margin-bottom:35px}
 <section id="thumbnails">
 <h2>BD Thumbnails</h2>
 <div class="grid">
-<img src="portfolio_images/BD.jpg">
-<img src="portfolio_images/BD2.jpg">
-<img src="portfolio_images/BD3.jpg">
-<img src="portfolio_images/BD4.jpg">
-<img src="portfolio_images/BD5.png">
-<img src="portfolio_images/BD6.png">
-<img src="portfolio_images/BD7.jpg">
-<img src="portfolio_images/BD8.jpg">
-<img src="portfolio_images/BD9.jpg">
+<img src="portfolio_images/BD.jpg" loading="lazy">
+<img src="portfolio_images/BD2.jpg" loading="lazy">
+<img src="portfolio_images/BD3.jpg" loading="lazy">
+<img src="portfolio_images/BD4.jpg" loading="lazy">
+<img src="portfolio_images/BD5.png" loading="lazy">
+<img src="portfolio_images/BD6.png" loading="lazy">
+<img src="portfolio_images/BD7.jpg" loading="lazy">
+<img src="portfolio_images/BD8.jpg" loading="lazy">
+<img src="portfolio_images/BD9.jpg" loading="lazy">
 </div>
 
 <h2 style="margin-top:80px">USA Thumbnails</h2>
 <div class="grid">
-<img src="portfolio_images/USA1.png">
-<img src="portfolio_images/USA2.png">
-<img src="portfolio_images/USA3.png">
-<img src="portfolio_images/USA4.png">
+<img src="portfolio_images/USA1.png" loading="lazy">
+<img src="portfolio_images/USA2.png" loading="lazy">
+<img src="portfolio_images/USA3.png" loading="lazy">
+<img src="portfolio_images/USA4.png" loading="lazy">
 </div>
 </section>
 
@@ -315,13 +325,13 @@ section h2{font-size:36px;margin-bottom:35px}
 <section id="mockups">
 <h2>Mockups & Branding</h2>
 <div class="grid">
-<img src="portfolio_images/Mockup.jpg">
-<img src="portfolio_images/Mockup.png">
-<img src="portfolio_images/Mockup1.jpg">
-<img src="portfolio_images/Mockup2.jpg">
-<img src="portfolio_images/Mockup3.png">
-<img src="portfolio_images/Mockup4.png">
-<img src="portfolio_images/Mockup5.png">
+<img src="portfolio_images/Mockup.jpg" loading="lazy">
+<img src="portfolio_images/Mockup.png" loading="lazy">
+<img src="portfolio_images/Mockup1.jpg" loading="lazy">
+<img src="portfolio_images/Mockup2.jpg" loading="lazy">
+<img src="portfolio_images/Mockup3.png" loading="lazy">
+<img src="portfolio_images/Mockup4.png" loading="lazy">
+<img src="portfolio_images/Mockup5.png" loading="lazy">
 </div>
 </section>
 
@@ -329,14 +339,14 @@ section h2{font-size:36px;margin-bottom:35px}
 <section id="tshirts">
 <h2>T-Shirt Designs</h2>
 <div class="grid">
-<img src="portfolio_images/T-Shirt (1).png">
-<img src="portfolio_images/T-Shirt (2).png">
-<img src="portfolio_images/T-Shirt (3).png">
-<img src="portfolio_images/T-Shirt (4).png">
-<img src="portfolio_images/T-Shirt (5).png">
-<img src="portfolio_images/T-Shirt (6).png">
-<img src="portfolio_images/T-Shirt (7).png">
-<img src="portfolio_images/T-Shirt (8).png">
+<img src="portfolio_images/T-Shirt (1).png" loading="lazy">
+<img src="portfolio_images/T-Shirt (2).png" loading="lazy">
+<img src="portfolio_images/T-Shirt (3).png" loading="lazy">
+<img src="portfolio_images/T-Shirt (4).png" loading="lazy">
+<img src="portfolio_images/T-Shirt (5).png" loading="lazy">
+<img src="portfolio_images/T-Shirt (6).png" loading="lazy">
+<img src="portfolio_images/T-Shirt (7).png" loading="lazy">
+<img src="portfolio_images/T-Shirt (8).png" loading="lazy">
 </div>
 </section>
 
