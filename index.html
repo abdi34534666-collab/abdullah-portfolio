@@ -255,7 +255,13 @@ img{width:100%;height:auto;display:block}
         <img src="intro_images/Green Cycle.png" loading="lazy">
       </div>
       <div class="hero-box men">
-        <img src="intro_images/Men1.png" loading="lazy">
+        <img src="intro_images/Men1.png"
+     srcset="intro_images/Men1-480.png 480w,
+             intro_images/Men1-768.png 768w,
+             intro_images/Men1.png 1200w"
+     sizes="(max-width: 768px) 90vw, 600px"
+     alt="Hero Men"
+     loading="lazy">
       </div>
     </div>
   </div>
@@ -408,3 +414,4 @@ document.querySelectorAll("nav a").forEach(a=>{
 
 </body>
 </html>
+
