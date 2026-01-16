@@ -16,59 +16,46 @@ nav{
   background:rgba(0,0,0,.45);backdrop-filter:blur(12px);
   z-index:1000
 }
-nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:14px;cursor:pointer}
+nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:14px}
 nav a:hover{color:#00ffea;text-shadow:0 0 10px #00ffe0}
-
-/* WHY CLIENTS CHOOSE ME */
-#why-choose{
-  padding:100px 6% 60px;
-  text-align:center;
-}
-
-#why-choose h2{
-  font-size:36px;
-  margin-bottom:40px;
-}
-
-.why-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:26px;
-  max-width:1100px;
-  margin:0 auto;
-}
-
-.why-box{
-  padding:18px 22px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-  font-size:15px;
-  font-weight:600;
-  transition:.3s;
-}
-
-.why-box:hover{
-  transform:translateY(-6px);
-  border-color:#00fff3;
-  box-shadow:0 0 18px rgba(0,255,243,.25);
-}
 
 /* HERO */
 #home{
-  height:100vh;display:flex;flex-direction:column;
-  justify-content:flex-end;align-items:center;text-align:center;
-  overflow:hidden;position:relative;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  text-align:center;
+  overflow:hidden;
+  position:relative;
+  padding-top:120px
 }
-.hero-wrapper{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:flex-end}
-.hero-container{position:relative;width:600px;height:420px}
+.hero-wrapper{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end
+}
+.hero-container{
+  position:relative;
+  width:600px;
+  height:420px;
+  max-width:100%
+}
 .hero-box{
-  position:absolute;bottom:-450px;left:50%;
+  position:absolute;
+  bottom:-500px;
+  left:50%;
   transform:translateX(-50%);
   transition:bottom 1.6s cubic-bezier(.25,1,.4,1)
 }
 .hero-box::after{
-  content:"";position:absolute;bottom:0;left:0;
+  content:"";
+  position:absolute;
+  bottom:0;left:0;
   width:100%;height:45%;
   background:linear-gradient(to top,#000,transparent)
 }
@@ -76,14 +63,18 @@ nav a:hover{color:#00ffea;text-shadow:0 0 10px #00ffe0}
 .hero-box.green{width:520px;z-index:1}
 .hero-box.men{width:380px;z-index:2}
 
-/* RGB NAME */
+/* NAME */
 h1{
-  margin-top:22px;font-size:52px;
+  margin-top:22px;
+  font-size:52px;
   background:linear-gradient(90deg,#00fff3,#00ffa0,#4d7cff,#c34bff);
   background-size:400% 400%;
-  color:transparent;-webkit-background-clip:text;
+  color:transparent;
+  -webkit-background-clip:text;
   animation:rgb 8s infinite ease;
-  opacity:0;transform:translateY(20px);transition:1s
+  opacity:0;
+  transform:translateY(20px);
+  transition:1s
 }
 @keyframes rgb{
   0%{background-position:0% 50%}
@@ -91,41 +82,81 @@ h1{
   100%{background-position:0% 50%}
 }
 .subtitle{
-  font-size:18px;margin-bottom:70px;color:#ccc;
-  opacity:0;transform:translateY(20px);transition:1s
+  font-size:18px;
+  margin-bottom:70px;
+  color:#ccc;
+  opacity:0;
+  transform:translateY(20px);
+  transition:1s
 }
 
-/* CUSTOMER REVIEWS ON HERO BACKGROUND */
+/* REVIEWS */
 .hero-reviews{
   position:absolute;
-  top:10%;left:0;width:100%;
-  display:flex;flex-wrap:wrap;justify-content:center;gap:18px;
-  pointer-events:none;
+  top:10%;
+  left:0;
+  width:100%;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+  pointer-events:none
 }
 .review-bubble{
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(6px);
-  color:#fff;
   padding:12px 16px;
   border-radius:12px;
   font-size:12px;
   max-width:200px;
-  opacity:0.7;
-  animation:float 6s ease-in-out infinite;
+  opacity:.75;
+  animation:float 6s ease-in-out infinite
 }
-.review-bubble:nth-child(1){animation-delay:0s;}
-.review-bubble:nth-child(2){animation-delay:1.5s;}
-.review-bubble:nth-child(3){animation-delay:3s;}
-.review-bubble:nth-child(4){animation-delay:4.5s;}
-.review-bubble:nth-child(5){animation-delay:6s;}
 @keyframes float{
-  0%,100%{transform:translateY(0) translateX(0);}
-  50%{transform:translateY(-15px) translateX(5px);}
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-14px)}
+}
+
+/* WHY */
+#why-choose{
+  padding:100px 6% 60px;
+  text-align:center
+}
+#why-choose h2{font-size:36px;margin-bottom:40px}
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:26px;
+  max-width:1100px;
+  margin:auto
+}
+.why-box{
+  padding:18px 22px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  font-size:15px;
+  font-weight:600;
+  transition:.3s
+}
+.why-box:hover{
+  transform:translateY(-6px);
+  border-color:#00fff3;
+  box-shadow:0 0 18px rgba(0,255,243,.25)
 }
 
 /* SECTIONS */
-section{padding:90px 6% 40px;text-align:center;opacity:0;transform:translateY(40px);transition:1s}
-section.visible{opacity:1;transform:translateY(0);}
+section{
+  padding:90px 6% 40px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s
+}
+section.visible{
+  opacity:1;
+  transform:translateY(0)
+}
 section h2{font-size:36px;margin-bottom:35px}
 
 /* GRID */
@@ -135,58 +166,66 @@ section h2{font-size:36px;margin-bottom:35px}
   gap:25px
 }
 .grid img{
-  width:100%;border-radius:14px;
-  cursor:pointer;transition:.3s
+  width:100%;
+  border-radius:14px;
+  cursor:pointer;
+  transition:.3s
 }
-.grid img:hover{transform:scale(1.05);filter:brightness(1.1)}
+.grid img:hover{
+  transform:scale(1.05);
+  filter:brightness(1.1)
+}
 
 /* LIGHTBOX */
 #lightbox{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:rgba(0,0,0,.95);
-  display:flex;align-items:center;justify-content:center;
-  z-index:99999;opacity:0;visibility:hidden;transition:.3s
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  opacity:0;
+  visibility:hidden;
+  transition:.3s
 }
 #lightbox.show{opacity:1;visibility:visible}
 #lightbox img{
-  max-width:90vw;max-height:90vh;
-  object-fit:contain;border-radius:16px;
-  box-shadow:0 0 40px rgba(255,255,255,.4)
+  max-width:92vw;
+  max-height:92vh;
+  border-radius:16px
 }
 
-/* CONTACT SECTION */
-#contact{
-  padding:90px 6% 60px;
-  background:#0a0a0a;
-}
-#contact h2{margin-bottom:30px;}
+/* CONTACT */
+#contact{background:#0a0a0a}
 .contact-links a{
   display:inline-block;
-  margin:0 12px;
+  margin:10px;
   padding:12px 20px;
   border-radius:8px;
   background:#111;
   color:#fff;
   font-weight:bold;
   text-decoration:none;
-  transition:.3s;
+  transition:.3s
 }
 .contact-links a:hover{
   background:#00fff3;
-  color:#000;
+  color:#000
 }
 
 /* MOBILE */
 @media(max-width:768px){
   h1{font-size:34px}
   .subtitle{font-size:15px}
-  .hero-container{width:100%;height:380px}
+  .hero-container{height:360px}
   .hero-box.green{width:360px}
   .hero-box.men{width:260px}
   .review-bubble{font-size:11px;max-width:150px}
 }
 </style>
 </head>
+
 <body>
 
 <nav>
@@ -210,10 +249,11 @@ section h2{font-size:36px;margin-bottom:35px}
       </div>
     </div>
   </div>
+
   <h1>Abdullah Al Mamun</h1>
   <p class="subtitle">Creative Designer • Branding & Thumbnails</p>
 
-  <!-- Floating customer reviews in hero background -->
+  <!-- Floating customer reviews -->
   <div class="hero-reviews">
     <div class="review-bubble">⭐⭐⭐⭐⭐<br>Rahim Hasan.<br>"Excellent Work Abdullah!"</div>
     <div class="review-bubble">⭐⭐⭐⭐⭐<br>Sadia Akter.<br>"Super creative & professional."</div>
@@ -224,15 +264,14 @@ section h2{font-size:36px;margin-bottom:35px}
   </div>
 </section>
 
-<!-- WHY CLIENTS CHOOSE ME -->
+<!-- WHY -->
 <section id="why-choose">
   <h2>Why Clients Choose Me</h2>
-
   <div class="why-grid">
-    <div class="why-box">✔  50+ Custom Designs</div>
-    <div class="why-box">✔  Branding</div>
-    <div class="why-box">✔  Clean & Modern Design</div>
-    <div class="why-box">✔  Fast Delivered</div>
+    <div class="why-box">✔ 50+ Custom Designs</div>
+    <div class="why-box">✔ Branding</div>
+    <div class="why-box">✔ Clean & Modern Design</div>
+    <div class="why-box">✔ Fast Delivered</div>
   </div>
 </section>
 
@@ -310,28 +349,30 @@ section h2{font-size:36px;margin-bottom:35px}
 </div>
 </section>
 
-<!-- LIGHTBOX -->
 <div id="lightbox"><img></div>
 
 <script>
-window.onload=()=>{
-
-  // Hero Animation
+window.addEventListener("load",()=>{
   document.querySelector(".hero-box.green").style.bottom="0";
-  setTimeout(()=>document.querySelector(".hero-box.men").style.bottom="0",1200);
+  setTimeout(()=>document.querySelector(".hero-box.men").style.bottom="0",900);
   setTimeout(()=>{
     document.querySelector("h1").style.opacity="1";
-    document.querySelector("h1").style.transform="translateY(0)";
     document.querySelector(".subtitle").style.opacity="1";
+    document.querySelector("h1").style.transform="translateY(0)";
     document.querySelector(".subtitle").style.transform="translateY(0)";
-  },2600);
+  },2000);
+  reveal();
+  window.addEventListener("scroll",reveal);
+});
 
-  // Show sections on scroll
-  revealSections();
-  window.addEventListener('scroll', revealSections);
-};
+function reveal(){
+  document.querySelectorAll("section").forEach(s=>{
+    if(s.getBoundingClientRect().top < window.innerHeight*0.85){
+      s.classList.add("visible");
+    }
+  });
+}
 
-// LIGHTBOX
 const lb=document.getElementById("lightbox");
 const lbImg=lb.querySelector("img");
 document.querySelectorAll(".grid img").forEach(img=>{
@@ -343,54 +384,17 @@ document.querySelectorAll(".grid img").forEach(img=>{
 });
 lb.onclick=()=>{
   lb.classList.remove("show");
-  lbImg.src="";
   document.body.style.overflow="";
 };
 
-// REVEAL SECTIONS ON SCROLL
-function revealSections(){
-  const sections = document.querySelectorAll("section");
-  const triggerBottom = window.innerHeight * 0.85;
-  sections.forEach(section => {
-    const sectionTop = section.getBoundingClientRect().top;
-    if(sectionTop < triggerBottom){
-      section.classList.add("visible");
-    }
-  });
-}
-
-// PROFESSIONAL SMOOTH SCROLL
-document.querySelectorAll("nav a").forEach(link => {
-  link.addEventListener("click", e => {
+document.querySelectorAll("nav a").forEach(a=>{
+  a.onclick=e=>{
     e.preventDefault();
-    const target = document.querySelector(link.getAttribute("href"));
-    const navbarHeight = 60;
-    const targetPosition = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
-    smoothScrollTo(targetPosition, 800);
-  });
-});
-
-function smoothScrollTo(target, duration) {
-  const start = window.scrollY;
-  const distance = target - start;
-  let startTime = null;
-
-  function animation(currentTime) {
-    if (!startTime) startTime = currentTime;
-    const timeElapsed = currentTime - startTime;
-    const ease = easeInOutQuad(Math.min(timeElapsed/duration,1));
-    window.scrollTo(0, start + distance * ease);
-    if (timeElapsed < duration) requestAnimationFrame(animation);
+    const t=document.querySelector(a.getAttribute("href"));
+    window.scrollTo({top:t.offsetTop-80,behavior:"smooth"});
   }
-  requestAnimationFrame(animation);
-}
-
-function easeInOutQuad(t) {
-  return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t;
-}
+});
 </script>
 
 </body>
 </html>
-
-
