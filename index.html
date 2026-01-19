@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Abdullah Al Mamun | Portfolio</title>
 
+<!-- ✅ Speed hints -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+<!-- ✅ Preload hero images (fastest visible content) -->
+<link rel="preload" as="image" href="intro_images/Green Cycle.webp" fetchpriority="high">
+<link rel="preload" as="image" href="intro_images/men1.webp" fetchpriority="high">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 body{background:#000;color:#fff;overflow-x:hidden}
@@ -18,12 +26,9 @@ nav{
   will-change:transform;
   transform:translateZ(0);
 }
-
-/* blur only desktop, and lower blur to reduce GPU cost */
 @media(min-width:769px){
   nav{backdrop-filter:blur(8px)}
 }
-
 nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:14px}
 nav a:hover{color:#00ffea;text-shadow:0 0 10px #00ffe0}
 
@@ -162,8 +167,6 @@ h1{
   transition:.25s;
   transform:translateZ(0);
 }
-
-/* hover effects only on devices that actually have hover (desktop) */
 @media (hover:hover){
   .why-box:hover{
     transform:translateY(-6px) translateZ(0);
@@ -206,8 +209,6 @@ section h2{font-size:36px;margin-bottom:35px}
   transform:translateZ(0);
   contain:paint;
 }
-
-/* hover only desktop */
 @media (hover:hover){
   .grid img:hover{
     transform:scale(1.04) translateZ(0);
@@ -266,13 +267,11 @@ section h2{font-size:36px;margin-bottom:35px}
   .hero-container{height:360px}
   .hero-box.green{width:360px}
   .hero-box.men{width:260px}
-
   .review-bubble{
     font-size:11px;
     max-width:150px;
     animation-duration:16s;
   }
-
   nav{background:rgba(0,0,0,0.9)}
   .nav-right{gap:14px}
   .nav-left .brand span{display:none}
@@ -284,19 +283,10 @@ section h2{font-size:36px;margin-bottom:35px}
 }
 
 /* 🔥 while scrolling: disable heavy paint effects */
-body.scrolling nav{
-  backdrop-filter:none !important;
-}
-body.scrolling .review-bubble{
-  animation:none !important;
-}
-body.scrolling h1{
-  animation:none !important;
-}
-body.scrolling .grid img{
-  filter:none !important;
-  transition:none !important;
-}
+body.scrolling nav{backdrop-filter:none !important;}
+body.scrolling .review-bubble{animation:none !important;}
+body.scrolling h1{animation:none !important;}
+body.scrolling .grid img{filter:none !important; transition:none !important;}
 </style>
 </head>
 
@@ -325,10 +315,14 @@ body.scrolling .grid img{
   <div class="hero-wrapper">
     <div class="hero-container">
       <div class="hero-box green">
-        <img src="intro_images/Green Cycle.webp" loading="eager" fetchpriority="high" decoding="async" alt="Green Cycle">
+        <img src="intro_images/Green Cycle.webp"
+             loading="eager" fetchpriority="high" decoding="async"
+             alt="Green Cycle">
       </div>
       <div class="hero-box men">
-        <img src="intro_images/men1.webp" loading="eager" fetchpriority="high" decoding="async" alt="Men Image">
+        <img src="intro_images/men1.webp"
+             loading="eager" fetchpriority="high" decoding="async"
+             alt="Men Image">
       </div>
     </div>
   </div>
@@ -438,24 +432,28 @@ body.scrolling .grid img{
 <div id="lightbox"><img alt=""></div>
 
 <script defer>
-  // HERO animation
+(() => {
+  // HERO animation (smooth + safe on mobile)
   window.addEventListener("load", () => {
     const green = document.querySelector(".hero-box.green");
     const men = document.querySelector(".hero-box.men");
     const title = document.querySelector("h1");
     const sub = document.querySelector(".subtitle");
 
+    if (!green || !men || !title || !sub) return;
+
     green.style.bottom = "0";
-    setTimeout(() => (men.style.bottom = "0"), 500);
+    setTimeout(() => (men.style.bottom = "0"), 450);
+
     setTimeout(() => {
       title.style.opacity = "1";
       sub.style.opacity = "1";
       title.style.transform = "translateY(0)";
       sub.style.transform = "translateY(0)";
-    }, 1200);
+    }, 1050);
   }, { passive: true });
 
-  // Reveal sections (FAST)
+  // Reveal sections (IntersectionObserver)
   const sections = document.querySelectorAll("section");
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
@@ -467,45 +465,55 @@ body.scrolling .grid img{
   }, { threshold: 0.12 });
   sections.forEach(s => io.observe(s));
 
-  // Lightbox
+  // ✅ Lightbox (event delegation = faster)
   const lb = document.getElementById("lightbox");
-  const lbImg = lb.querySelector("img");
+  const lbImg = lb?.querySelector("img");
 
-  document.querySelectorAll(".grid img").forEach(img => {
-    img.addEventListener("click", async () => {
-      lbImg.src = img.currentSrc || img.src;
-      try { await lbImg.decode(); } catch(e) {}
-      lb.classList.add("show");
-      document.body.style.overflow = "hidden";
-    }, { passive: true });
+  document.addEventListener("click", async (e) => {
+    const img = e.target.closest(".grid img");
+    if (!img || !lb || !lbImg) return;
+
+    lbImg.src = img.currentSrc || img.src;
+    try { await lbImg.decode(); } catch(_) {}
+    lb.classList.add("show");
+    document.body.style.overflow = "hidden";
   });
 
-  lb.addEventListener("click", () => {
+  lb?.addEventListener("click", () => {
     lb.classList.remove("show");
     document.body.style.overflow = "";
   });
 
-  // Smooth scroll
-  document.querySelectorAll("nav a").forEach(a => {
+  // ✅ Smooth scroll only for internal anchors
+  document.querySelectorAll('nav a[href^="#"]').forEach(a => {
     a.addEventListener("click", (e) => {
       e.preventDefault();
-      const t = document.querySelector(a.getAttribute("href"));
-      const y = t.getBoundingClientRect().top + window.pageYOffset - 80;
+      const target = document.querySelector(a.getAttribute("href"));
+      if (!target) return;
+      const y = target.getBoundingClientRect().top + window.pageYOffset - 80;
       window.scrollTo({ top: y, behavior: "smooth" });
-    });
+    }, { passive: false });
   });
 
-  // ✅ BIG FIX: while scrolling, disable heavy animations/filters (super smooth)
+  // ✅ Super smooth scroll handling (RAF throttle)
+  let ticking = false;
   let scrollTimer;
+
   window.addEventListener("scroll", () => {
-    document.body.classList.add("scrolling");
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      document.body.classList.remove("scrolling");
-    }, 160);
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        document.body.classList.add("scrolling");
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          document.body.classList.remove("scrolling");
+        }, 160);
+        ticking = false;
+      });
+    }
   }, { passive: true });
+})();
 </script>
 
 </body>
 </html>
-
