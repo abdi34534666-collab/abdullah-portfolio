@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Abdullah Al Mamun | Portfolio</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#000;color:#fff;overflow-x:hidden}
+
+/* -------- NAVBAR -------- */
+nav{
+  position:fixed;top:0;width:100%;padding:18px 8%;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(0,0,0,.55);
+  z-index:1000;
+  will-change:transform;
+  transform:translateZ(0);
+}
+
+/* blur only desktop, and lower blur to reduce GPU cost */
+@media(min-width:769px){
+  nav{backdrop-filter:blur(8px)}
+}
+
+nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:14px}
+nav a:hover{color:#00ffea;text-shadow:0 0 10px #00ffe0}
+
+.nav-left .brand{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;color:#fff;font-weight:800;
+}
+.nav-left .brand img{
+  width:38px;height:38px;border-radius:10px;object-fit:cover;
+  transform:translateZ(0);
+}
+.nav-right{display:flex;gap:24px;align-items:center}
+
+/* -------- HERO -------- */
+#home{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  text-align:center;
+  overflow:hidden;
+  position:relative;
+  padding-top:120px
+}
+.hero-wrapper{
+  position:relative;width:100%;height:100%;
+  display:flex;justify-content:center;align-items:flex-end
+}
+.hero-container{
+  position:relative;width:600px;height:420px;max-width:100%;
+  contain:layout paint;
+}
+.hero-box{
+  position:absolute;
+  bottom:-500px;
+  left:50%;
+  transform:translateX(-50%) translateZ(0);
+  transition:bottom 1.2s cubic-bezier(.25,1,.4,1);
+  will-change:bottom;
+}
+.hero-box::after{
+  content:"";
+  position:absolute;
+  bottom:0;left:0;
+  width:100%;height:45%;
+  background:linear-gradient(to top,#000,transparent)
+}
+.hero-box img{
+  width:100%;
+  display:block;
+  transform:translateZ(0);
+}
+.hero-box.green{width:520px;z-index:1}
+.hero-box.men{width:380px;z-index:2}
+
+/* -------- NAME -------- */
+h1{
+  margin-top:22px;
+  font-size:52px;
+  background:linear-gradient(90deg,#00fff3,#00ffa0,#4d7cff,#c34bff);
+  background-size:400% 400%;
+  color:transparent;
+  -webkit-background-clip:text;
+  animation:rgb 8s infinite ease;
+  opacity:0;
+  transform:translateY(20px);
+  transition:1s
+}
+@keyframes rgb{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.subtitle{
+  font-size:18px;
+  margin-bottom:70px;
+  color:#ccc;
+  opacity:0;
+  transform:translateY(20px);
+  transition:1s
+}
+
+/* -------- REVIEWS -------- */
+.hero-reviews{
+  position:absolute;
+  top:10%;
+  left:0;
+  width:100%;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+  pointer-events:none;
+  contain:layout paint;
+}
+.review-bubble{
+  background:rgba(255,255,255,0.05);
+  padding:12px 16px;
+  border-radius:12px;
+  font-size:12px;
+  max-width:200px;
+  opacity:.75;
+  animation:float 10s ease-in-out infinite;
+  will-change:transform;
+  transform:translateZ(0);
+}
+@media(min-width:769px){
+  .review-bubble{backdrop-filter:blur(4px)}
+}
+@keyframes float{
+  0%,100%{transform:translateY(0) translateZ(0)}
+  50%{transform:translateY(-12px) translateZ(0)}
+}
+
+/* -------- WHY -------- */
+#why-choose{
+  padding:100px 6% 60px;
+  text-align:center
+}
+#why-choose h2{font-size:36px;margin-bottom:40px}
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:26px;
+  max-width:1100px;
+  margin:auto
+}
+.why-box{
+  padding:18px 22px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  font-size:15px;
+  font-weight:600;
+  transition:.25s;
+  transform:translateZ(0);
+}
+
+/* hover effects only on devices that actually have hover (desktop) */
+@media (hover:hover){
+  .why-box:hover{
+    transform:translateY(-6px) translateZ(0);
+    border-color:#00fff3;
+    box-shadow:0 0 18px rgba(0,255,243,.25)
+  }
+}
+
+/* -------- SECTIONS -------- */
+section{
+  padding:90px 6% 40px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+  content-visibility:auto;
+  contain-intrinsic-size: 1px 800px;
+  contain:layout paint;
+}
+section.visible{
+  opacity:1;
+  transform:translateY(0)
+}
+section h2{font-size:36px;margin-bottom:35px}
+
+/* -------- GRID -------- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:25px
+}
+.grid img{
+  width:100%;
+  height:auto;
+  border-radius:14px;
+  cursor:pointer;
+  transition:.25s;
+  display:block;
+  background:#0b0b0b;
+  transform:translateZ(0);
+  contain:paint;
+}
+
+/* hover only desktop */
+@media (hover:hover){
+  .grid img:hover{
+    transform:scale(1.04) translateZ(0);
+    filter:brightness(1.08)
+  }
+}
+
+/* -------- LIGHTBOX -------- */
+#lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  opacity:0;
+  visibility:hidden;
+  transition:.2s
+}
+#lightbox.show{opacity:1;visibility:visible}
+#lightbox img{
+  max-width:92vw;
+  max-height:92vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:16px;
+  transform:translateZ(0);
+}
+
+/* -------- CONTACT -------- */
+#contact{background:#0a0a0a}
+.contact-links a{
+  display:inline-block;
+  margin:10px;
+  padding:12px 20px;
+  border-radius:8px;
+  background:#111;
+  color:#fff;
+  font-weight:bold;
+  text-decoration:none;
+  transition:.25s
+}
+@media (hover:hover){
+  .contact-links a:hover{
+    background:#00fff3;
+    color:#000
+  }
+}
+
+/* -------- MOBILE -------- */
+@media(max-width:768px){
+  h1{font-size:34px}
+  .subtitle{font-size:15px}
+  .hero-container{height:360px}
+  .hero-box.green{width:360px}
+  .hero-box.men{width:260px}
+
+  .review-bubble{
+    font-size:11px;
+    max-width:150px;
+    animation-duration:16s;
+  }
+
+  nav{background:rgba(0,0,0,0.9)}
+  .nav-right{gap:14px}
+  .nav-left .brand span{display:none}
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important;}
+}
+
+/* 🔥 while scrolling: disable heavy paint effects */
+body.scrolling nav{
+  backdrop-filter:none !important;
+}
+body.scrolling .review-bubble{
+  animation:none !important;
+}
+body.scrolling h1{
+  animation:none !important;
+}
+body.scrolling .grid img{
+  filter:none !important;
+  transition:none !important;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="#home" class="brand">
+      <img src="logo.webp" alt="Abdullah Logo" loading="eager" decoding="async"/>
+      <span></span>
+    </a>
+  </div>
+
+  <div class="nav-right">
+    <a href="#home">Home</a>
+    <a href="#logos">Logos</a>
+    <a href="#thumbnails">Thumbnails</a>
+    <a href="#mockups">Mockups</a>
+    <a href="#tshirts">T-Shirts</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="visible">
+  <div class="hero-wrapper">
+    <div class="hero-container">
+      <div class="hero-box green">
+        <img src="intro_images/Green Cycle.webp" loading="eager" fetchpriority="high" decoding="async" alt="Green Cycle">
+      </div>
+      <div class="hero-box men">
+        <img src="intro_images/men1.webp" loading="eager" fetchpriority="high" decoding="async" alt="Men Image">
+      </div>
+    </div>
+  </div>
+
+  <h1>Abdullah Al Mamun</h1>
+  <p class="subtitle">Creative Designer • Branding & Thumbnails</p>
+
+  <div class="hero-reviews">
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Rahim Hasan.<br>"Excellent Work Abdullah!"</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Sadia Akter.<br>"Super creative & professional."</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Omar Rabbi.<br>"Branding looks amazing!"</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Emma Jell.<br>"Great Thumbnail designs!"</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Alex.<br>"Mockups Are Insane."</div>
+    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Jack.<br>"Your Best Logo @ Branding Designer, Thank You."</div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why-choose">
+  <h2>Why Clients Choose Me</h2>
+  <div class="why-grid">
+    <div class="why-box">✔ 50+ Custom Designs</div>
+    <div class="why-box">✔ Branding</div>
+    <div class="why-box">✔ Clean & Modern Design</div>
+    <div class="why-box">✔ Fast Delivered</div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<section id="logos">
+  <h2>Logo Designs</h2>
+  <div class="grid">
+    <img src="portfolio_images/Logo1.webp" loading="lazy" decoding="async" alt="Logo 1">
+    <img src="portfolio_images/Logo2.webp" loading="lazy" decoding="async" alt="Logo 2">
+    <img src="portfolio_images/Logo3.webp" loading="lazy" decoding="async" alt="Logo 3">
+    <img src="portfolio_images/logo4.webp" loading="lazy" decoding="async" alt="Logo 4">
+    <img src="portfolio_images/logo5.webp" loading="lazy" decoding="async" alt="Logo 5">
+    <img src="portfolio_images/logo6.webp" loading="lazy" decoding="async" alt="Logo 6">
+  </div>
+</section>
+
+<!-- THUMBNAILS -->
+<section id="thumbnails">
+  <h2>BD Thumbnails</h2>
+  <div class="grid">
+    <img src="portfolio_images/BD1.webp" loading="lazy" decoding="async" alt="BD 1">
+    <img src="portfolio_images/BD2.webp" loading="lazy" decoding="async" alt="BD 2">
+    <img src="portfolio_images/BD3.webp" loading="lazy" decoding="async" alt="BD 3">
+    <img src="portfolio_images/BD4.webp" loading="lazy" decoding="async" alt="BD 4">
+    <img src="portfolio_images/BD5.webp" loading="lazy" decoding="async" alt="BD 5">
+    <img src="portfolio_images/BD6.webp" loading="lazy" decoding="async" alt="BD 6">
+    <img src="portfolio_images/BD7.webp" loading="lazy" decoding="async" alt="BD 7">
+    <img src="portfolio_images/BD8.webp" loading="lazy" decoding="async" alt="BD 8">
+  </div>
+
+  <h2 style="margin-top:80px">USA Thumbnails</h2>
+  <div class="grid">
+    <img src="portfolio_images/USA1.webp" loading="lazy" decoding="async" alt="USA 1">
+    <img src="portfolio_images/USA2.webp" loading="lazy" decoding="async" alt="USA 2">
+    <img src="portfolio_images/USA3.webp" loading="lazy" decoding="async" alt="USA 3">
+    <img src="portfolio_images/USA4.webp" loading="lazy" decoding="async" alt="USA 4">
+    <img src="portfolio_images/USA5.webp" loading="lazy" decoding="async" alt="USA 5">
+    <img src="portfolio_images/USA6.webp" loading="lazy" decoding="async" alt="USA 6">
+  </div>
+</section>
+
+<!-- MOCKUPS -->
+<section id="mockups">
+  <h2>Mockups & Branding</h2>
+  <div class="grid">
+    <img src="portfolio_images/Mockup1.webp" loading="lazy" decoding="async" alt="Mockup 1">
+    <img src="portfolio_images/Mockup2.webp" loading="lazy" decoding="async" alt="Mockup 2">
+    <img src="portfolio_images/Mockup3.webp" loading="lazy" decoding="async" alt="Mockup 3">
+    <img src="portfolio_images/Mockup4.webp" loading="lazy" decoding="async" alt="Mockup 4">
+    <img src="portfolio_images/Mockup5.webp" loading="lazy" decoding="async" alt="Mockup 5">
+    <img src="portfolio_images/Mockup6.webp" loading="lazy" decoding="async" alt="Mockup 6">
+    <img src="portfolio_images/Mockup7.webp" loading="lazy" decoding="async" alt="Mockup 7">
+    <img src="portfolio_images/Mockup8.webp" loading="lazy" decoding="async" alt="Mockup 8">
+    <img src="portfolio_images/Mockup9.webp" loading="lazy" decoding="async" alt="Mockup 9">
+  </div>
+</section>
+
+<!-- TSHIRTS -->
+<section id="tshirts">
+  <h2>T-Shirt Designs</h2>
+  <div class="grid">
+    <img src="portfolio_images/T-Shirt (1).webp" loading="lazy" decoding="async" alt="T-Shirt 1">
+    <img src="portfolio_images/T-Shirt (2).webp" loading="lazy" decoding="async" alt="T-Shirt 2">
+    <img src="portfolio_images/T-Shirt (3).webp" loading="lazy" decoding="async" alt="T-Shirt 3">
+    <img src="portfolio_images/T-Shirt (4).webp" loading="lazy" decoding="async" alt="T-Shirt 4">
+    <img src="portfolio_images/T-Shirt (5).webp" loading="lazy" decoding="async" alt="T-Shirt 5">
+    <img src="portfolio_images/T-Shirt (6).webp" loading="lazy" decoding="async" alt="T-Shirt 6">
+    <img src="portfolio_images/T-Shirt (7).webp" loading="lazy" decoding="async" alt="T-Shirt 7">
+    <img src="portfolio_images/T-Shirt (8).webp" loading="lazy" decoding="async" alt="T-Shirt 8">
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2>Contact Me</h2>
+  <div class="contact-links">
+    <a href="https://t.me/abdullah_graphicxpart" target="_blank" rel="noopener">Telegram</a>
+    <a href="https://wa.me/8801600106114" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</section>
+
+<div id="lightbox"><img alt=""></div>
+
+<script defer>
+  // HERO animation
+  window.addEventListener("load", () => {
+    const green = document.querySelector(".hero-box.green");
+    const men = document.querySelector(".hero-box.men");
+    const title = document.querySelector("h1");
+    const sub = document.querySelector(".subtitle");
+
+    green.style.bottom = "0";
+    setTimeout(() => (men.style.bottom = "0"), 500);
+    setTimeout(() => {
+      title.style.opacity = "1";
+      sub.style.opacity = "1";
+      title.style.transform = "translateY(0)";
+      sub.style.transform = "translateY(0)";
+    }, 1200);
+  }, { passive: true });
+
+  // Reveal sections (FAST)
+  const sections = document.querySelectorAll("section");
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add("visible");
+        io.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.12 });
+  sections.forEach(s => io.observe(s));
+
+  // Lightbox
+  const lb = document.getElementById("lightbox");
+  const lbImg = lb.querySelector("img");
+
+  document.querySelectorAll(".grid img").forEach(img => {
+    img.addEventListener("click", async () => {
+      lbImg.src = img.currentSrc || img.src;
+      try { await lbImg.decode(); } catch(e) {}
+      lb.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }, { passive: true });
+  });
+
+  lb.addEventListener("click", () => {
+    lb.classList.remove("show");
+    document.body.style.overflow = "";
+  });
+
+  // Smooth scroll
+  document.querySelectorAll("nav a").forEach(a => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute("href"));
+      const y = t.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    });
+  });
+
+  // ✅ BIG FIX: while scrolling, disable heavy animations/filters (super smooth)
+  let scrollTimer;
+  window.addEventListener("scroll", () => {
+    document.body.classList.add("scrolling");
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      document.body.classList.remove("scrolling");
+    }, 160);
+  }, { passive: true });
+</script>
+
+</body>
+</html>
