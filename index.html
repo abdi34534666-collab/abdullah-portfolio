@@ -1,519 +1,814 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Abdullah Al Mamun | Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abdullah Al Mamun | Portfolio</title>
+  <meta name="color-scheme" content="dark" />
 
-<meta name="color-scheme" content="dark">
+  <!-- ✅ Preload hero (YOUR SAME NAMES) -->
+  <link rel="preload" as="image" href="intro_images/green-cycle.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="intro_images/men1.webp" fetchpriority="high" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <style>
+    :root{
+      --bg:#050607;
+      --panel:rgba(255,255,255,.04);
+      --stroke:rgba(255,255,255,.10);
+      --stroke2:rgba(255,255,255,.18);
+      --text:#eef2f7;
+      --muted:#a8b0c0;
+      --shadow: 0 22px 70px rgba(0,0,0,.55);
+      --radius:22px;
+    }
 
-<!-- ✅ Preload ONLY low hero images for fastest first paint -->
-<link rel="preload" as="image" href="intro_images/men1-low.webp" fetchpriority="high">
-<link rel="preload" as="image" href="intro_images/green-cycle-low.webp" fetchpriority="high">
+    *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    html{scroll-behavior:smooth}
+    body{
+      background:
+        radial-gradient(900px 520px at 20% 0%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(800px 520px at 85% 10%, rgba(255,255,255,.05), transparent 62%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      -webkit-text-size-adjust:100%;
+      touch-action:pan-y;
+    }
+    section{scroll-margin-top:110px}
+    .wrap{width:min(1120px, calc(100% - 28px));margin:0 auto}
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-html{scroll-behavior:smooth}
-body{background:#000;color:#fff;overflow-x:hidden;-webkit-text-size-adjust:100%;touch-action:pan-y}
+    /* ---------- NAV (Desktop) ---------- */
+    .nav{
+      position:fixed;top:16px;left:50%;
+      transform:translateX(-50%);
+      width:min(1120px, calc(100% - 28px));
+      z-index:999;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(10,10,10,.55);
+      backdrop-filter: blur(10px);
+      box-shadow:0 14px 45px rgba(0,0,0,.45);
+      transition:transform .22s ease, opacity .22s ease;
+      gap:12px;
+    }
+    .nav.hide{transform:translateX(-50%) translateY(-120%);opacity:0}
 
-/* Offset without JS */
-section{scroll-margin-top:90px}
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      text-decoration:none;color:var(--text);
+      font-weight:950;letter-spacing:.2px;
+      min-width:220px;
+    }
+    .brand img{
+      width:38px;height:38px;border-radius:14px;
+      border:1px solid var(--stroke);
+      object-fit:cover;
+      box-shadow:0 0 22px rgba(255,255,255,.10);
+      flex:0 0 auto;
+    }
+    .brand .t{display:flex;flex-direction:column;line-height:1.1}
+    .brand small{color:var(--muted);font-weight:800;font-size:11px;margin-top:2px}
 
-/* -------- NAV -------- */
-nav{
-  position:fixed;top:0;width:100%;padding:16px 8%;
-  display:flex;justify-content:space-between;align-items:center;
-  background:rgba(0,0,0,.65);
-  z-index:1000;
-}
-@media(min-width:769px){ nav{backdrop-filter:blur(8px)} }
-nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:14px}
-nav a:hover{color:#00ffea;text-shadow:0 0 10px #00ffe0}
-.nav-left .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:800}
-.nav-left .brand img{width:38px;height:38px;border-radius:10px;object-fit:cover}
-.nav-right{display:flex;gap:22px;align-items:center}
+    .links{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .links a{
+      text-decoration:none;color:var(--muted);
+      font-weight:900;font-size:13px;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid transparent;
+      transition:.18s ease;white-space:nowrap;
+    }
+    .links a:hover{color:var(--text);border-color:var(--stroke);background:rgba(255,255,255,.03)}
+    .btnHire{
+      color:#0a0a0a !important;
+      background:#fff !important;
+      border-color:transparent !important;
+      box-shadow:0 0 20px rgba(255,255,255,.12);
+    }
 
-/* -------- HERO -------- */
-#home{
-  min-height:100vh;
-  display:flex;flex-direction:column;
-  justify-content:flex-end;align-items:center;
-  text-align:center;overflow:hidden;
-  position:relative;padding-top:110px
-}
-.hero-wrapper{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:flex-end}
-.hero-container{position:relative;width:600px;height:420px;max-width:100%}
+    /* ---------- MOBILE NAV (Fix your issue) ---------- */
+    .mnav{
+      position:fixed;
+      left:12px; right:12px;
+      bottom:12px;
+      z-index:1000;
+      display:none;
+      padding:10px;
+      border-radius:18px;
+      border:1px solid var(--stroke);
+      background:rgba(10,10,10,.62);
+      backdrop-filter: blur(12px);
+      box-shadow:0 18px 60px rgba(0,0,0,.55);
+      gap:8px;
+      align-items:center;
+    }
+    .mnav a{
+      flex:1;
+      text-decoration:none;
+      color:var(--muted);
+      font-weight:950;
+      font-size:12px;
+      padding:10px 8px;
+      border-radius:14px;
+      text-align:center;
+      border:1px solid transparent;
+      background:transparent;
+      white-space:nowrap;
+    }
+    .mnav a:active{transform:scale(.98)}
+    .mnav a.active{
+      color:var(--text);
+      background:rgba(255,255,255,.06);
+      border-color:var(--stroke);
+    }
+    .mnav a.hire{
+      flex:1.2;
+      color:#0a0a0a;
+      background:#fff;
+      border-color:transparent;
+    }
 
-/* ✅ Professional simple intro (desktop + mobile safe) */
-.hero-box{
-  position:absolute;left:50%;bottom:0;
-  transform:translate3d(-50%,60px,0);
-  opacity:0;
-  will-change:transform,opacity;
-  backface-visibility:hidden;
-}
-.hero-box::after{
-  content:"";position:absolute;bottom:0;left:0;
-  width:100%;height:45%;
-  background:linear-gradient(to top,#000,transparent)
-}
-.hero-box img{width:100%;height:auto;display:block;transform:translateZ(0)}
-.hero-box.green{width:520px;z-index:1}
-.hero-box.men{width:380px;z-index:2}
+    /* ---------- HERO ---------- */
+    header.hero{
+      min-height:100vh;
+      padding-top:120px;
+      display:grid;align-items:center;
+      position:relative;overflow:hidden;
+      padding-bottom:28px;
+    }
 
-body.loaded .hero-box{
-  transform:translate3d(-50%,0,0);
-  opacity:1;
-  transition:transform 900ms cubic-bezier(.22,.61,.36,1), opacity 600ms ease;
-}
-body.loaded .hero-box.men{transition-delay:180ms}
+    .heroGrid{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:26px;align-items:center;
+    }
 
-/* Hero low->high */
-.hero-img{transition:filter .35s ease, opacity .35s ease}
-.hero-img.is-low{filter:blur(10px);opacity:.92}
-.hero-img.is-hi{filter:blur(0);opacity:1}
+    .tag{
+      display:inline-flex;gap:10px;align-items:center;
+      padding:10px 14px;border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-weight:900;font-size:13px;
+      width:fit-content;
+    }
+    .tag i{
+      width:10px;height:10px;border-radius:99px;
+      background:rgba(255,255,255,.80);
+      box-shadow:0 0 18px rgba(255,255,255,.25);
+      display:inline-block;
+    }
 
-/* -------- NAME (RGB + smooth intro) -------- */
-h1{
-  margin-top:22px;font-size:52px;
-  background:linear-gradient(90deg,#00fff3,#00ffa0,#4d7cff,#c34bff);
-  background-size:400% 400%;
-  color:transparent;-webkit-background-clip:text;background-clip:text;
-  animation:rgb 8s infinite ease;
-  filter:drop-shadow(0 0 10px rgba(0,255,243,.18));
-}
-@keyframes rgb{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-.subtitle{font-size:18px;margin-bottom:70px;color:#ccc}
+    .h1{
+      margin-top:14px;
+      font-size:clamp(38px,4.4vw,64px);
+      line-height:1.05;
+      letter-spacing:-.8px;
+      font-weight:980;
+    }
+    .h1 span{
+      color:#fff;
+      text-shadow:0 0 30px rgba(255,255,255,.18);
+    }
 
-/* ✅ One-time intro only (never re-triggers) */
-.nameWrap{
-  opacity:0;
-  transform:translateY(12px);
-  will-change:transform,opacity;
-}
-.nameWrap.show{
-  opacity:1;
-  transform:translateY(0);
-  transition:opacity 600ms ease, transform 600ms ease;
-}
+    .lead{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.7;
+      max-width:60ch;
+    }
 
-/* -------- REVIEWS -------- */
-.hero-reviews{
-  position:absolute;top:10%;left:0;width:100%;
-  display:flex;flex-wrap:wrap;justify-content:center;gap:16px;
-  pointer-events:none;
-}
-.review-bubble{
-  background:rgba(255,255,255,0.05);
-  padding:12px 16px;border-radius:12px;
-  font-size:12px;max-width:200px;opacity:.75;
-  animation:float 10s ease-in-out infinite;
-  box-shadow:0 0 16px rgba(0,255,243,.10);
-  border:1px solid rgba(0,255,243,.08);
-}
-@media(min-width:769px){ .review-bubble{backdrop-filter:blur(4px)} }
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-}
+    .heroBtns{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 16px;border-radius:14px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      text-decoration:none;color:var(--text);
+      font-weight:950;
+      transition:.18s ease;
+      box-shadow:0 14px 50px rgba(0,0,0,.35);
+    }
+    .btn:hover{transform:translateY(-2px);border-color:var(--stroke2)}
+    .btn.primary{
+      background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+    }
+    .btn svg{width:18px;height:18px}
 
-/* -------- WHY -------- */
-#why-choose{padding:100px 6% 60px;text-align:center}
-#why-choose h2{font-size:36px;margin-bottom:40px}
-.why-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:24px;max-width:1100px;margin:auto
-}
-.why-box{
-  padding:18px 22px;border-radius:14px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-  font-size:15px;font-weight:600;
-  transition:.2s;
-  box-shadow:0 0 18px rgba(77,124,255,.06);
-}
-@media (hover:hover){
-  .why-box:hover{
-    transform:translateY(-5px);
-    border-color:#00fff3;
-    box-shadow:0 0 18px rgba(0,255,243,.22)
-  }
-}
+    .miniStats{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:12px;
+      max-width:520px;
+    }
+    .miniStats .s{
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      padding:12px 14px;
+    }
+    .miniStats strong{display:block;font-size:18px}
+    .miniStats span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 
-/* -------- SECTIONS -------- */
-section{
-  padding:90px 6% 40px;
-  text-align:center;
-  opacity:0;
-  transition:opacity .35s ease;
-  content-visibility:auto;
-  contain-intrinsic-size: 1px 900px;
-}
-section.visible{opacity:1}
-section h2{font-size:36px;margin-bottom:35px}
+    /* ---------- RIGHT BOX ---------- */
+    .art{
+      position:relative;
+      height:540px;
+      border-radius:var(--radius);
+      border:1px solid var(--stroke);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      transform:translateZ(0);
+    }
+    .art::before{
+      content:"";
+      position:absolute;inset:-40px;
+      background:
+        radial-gradient(520px 360px at 40% 25%, rgba(255,255,255,.12), transparent 60%),
+        radial-gradient(520px 400px at 60% 80%, rgba(255,255,255,.08), transparent 65%);
+      filter:blur(18px);
+      opacity:.85;
+      pointer-events:none;
+    }
 
-/* -------- GRID -------- */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:24px
-}
-.grid img{
-  width:100%;height:auto;border-radius:14px;
-  cursor:pointer;transition:.18s;
-  display:block;background:#0b0b0b;
-  box-shadow:0 0 22px rgba(0,255,243,.08);
-  transform:translateZ(0);
-}
-.grid img.lazy{filter:blur(6px);opacity:.9}
-@media (hover:hover){
-  .grid img:hover{
-    transform:scale(1.03) translateZ(0);
-    box-shadow:0 0 26px rgba(0,255,243,.16);
-  }
-}
+    .heroStage{
+      position:absolute;
+      left:16px; right:16px;
+      top:16px;
+      height:calc(100% - 16px - 130px);
+      border-radius:20px;
+      overflow:hidden;
+      z-index:2;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .heroStage::after{
+      content:"";
+      position:absolute;left:0;right:0;bottom:0;
+      height:44%;
+      background:linear-gradient(to top, rgba(0,0,0,.62), transparent);
+      pointer-events:none;
+    }
 
-/* -------- LIGHTBOX -------- */
-#lightbox{
-  position:fixed;inset:0;background:rgba(0,0,0,.95);
-  display:flex;align-items:center;justify-content:center;
-  z-index:99999;opacity:0;visibility:hidden;
-  transition:.15s
-}
-#lightbox.show{opacity:1;visibility:visible}
-#lightbox img{
-  max-width:92vw;max-height:92vh;width:auto;height:auto;
-  object-fit:contain;border-radius:16px;
-  box-shadow:0 0 34px rgba(0,255,243,.12);
-}
+    .glowFloor{
+      position:absolute;left:50%;bottom:58px;
+      width:520px;height:320px;
+      transform:translateX(-50%);
+      background:radial-gradient(circle at 50% 65%,
+        rgba(255,255,255,.20) 0%,
+        rgba(255,255,255,.10) 35%,
+        rgba(255,255,255,0) 70%);
+      filter:blur(12px);
+      pointer-events:none;
+      z-index:1;
+    }
 
-/* -------- CONTACT -------- */
-#contact{background:#0a0a0a}
-.contact-links a{
-  display:inline-block;margin:10px;padding:12px 20px;
-  border-radius:8px;background:#111;color:#fff;
-  font-weight:bold;text-decoration:none;
-  transition:.18s;
-  box-shadow:0 0 20px rgba(195,75,255,.06);
-}
-@media (hover:hover){
-  .contact-links a:hover{
-    background:#00fff3;color:#000;
-    box-shadow:0 0 24px rgba(0,255,243,.28);
-  }
-}
+    /* ✅ intro_images animation (down -> up), green first, then men */
+    .ring, .man{
+      position:absolute;
+      left:50%;
+      bottom:0;
+      opacity:0;
+      transform:translate3d(-50%, 120px, 0) scale(.98);
+      filter:blur(14px) drop-shadow(0 0 18px rgba(255,255,255,.14));
+      will-change:transform,opacity,filter;
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
+    }
+    .ring{width:520px;max-width:92%;bottom:20px;z-index:2}
+    .man {width:390px;max-width:80%;bottom:-6px;z-index:3}
 
-/* -------- MOBILE -------- */
-@media(max-width:768px){
-  h1{font-size:34px}
-  .subtitle{font-size:15px}
-  .hero-container{height:360px}
-  .hero-box.green{width:360px}
-  .hero-box.men{width:260px}
-  .review-bubble{font-size:11px;max-width:150px;animation-duration:16s}
-  nav{background:rgba(0,0,0,0.92)}
-  .nav-right{gap:14px}
-  .nav-left .brand span{display:none}
-}
+    body.loaded .ring{animation: riseIn 900ms cubic-bezier(.18,1,.28,1) forwards;}
+    body.loaded .man {animation: riseIn 880ms cubic-bezier(.18,1,.28,1) forwards; animation-delay:1400ms;}
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce){
-  *{animation:none !important;transition:none !important;}
-  section{opacity:1 !important;}
-  .nameWrap{opacity:1 !important;transform:none !important;}
-}
+    @keyframes riseIn{
+      0%   {opacity:0;transform:translate3d(-50%, 140px, 0) scale(.98);filter:blur(16px) drop-shadow(0 0 18px rgba(255,255,255,.10))}
+      60%  {opacity:1;transform:translate3d(-50%, -10px, 0) scale(1);filter:blur(0) drop-shadow(0 0 22px rgba(255,255,255,.18))}
+      100% {opacity:1;transform:translate3d(-50%, 0px, 0) scale(1);filter:blur(0) drop-shadow(0 0 22px rgba(255,255,255,.18))}
+    }
 
-/* While scrolling: reduce heavy effects (KEEP RGB ON) */
-body.scrolling nav{backdrop-filter:none !important;}
-body.scrolling .review-bubble{animation:none !important;}
-body.scrolling h1{filter:drop-shadow(0 0 6px rgba(255,255,255,.06)) !important;}
-body.scrolling .grid img{box-shadow:none !important;transition:none !important;}
-body.scrolling .why-box{box-shadow:none !important;}
-body.scrolling .contact-links a{box-shadow:none !important;}
-</style>
+    /* gentle float after show */
+    body.loaded .ring.floatAfter{animation: floatIdle 7.2s ease-in-out infinite}
+    body.loaded .man.floatAfter {animation: floatIdle 7.9s ease-in-out infinite}
+    @keyframes floatIdle{
+      0%,100%{transform:translate3d(-50%, 0px, 0)}
+      50%{transform:translate3d(-50%, -10px, 0)}
+    }
+
+    /* ---------- REVIEW BOX ---------- */
+    .reviewBox{
+      position:absolute;
+      left:16px; right:16px;
+      bottom:16px;
+      height:96px;
+      border-radius:18px;
+      border:1px solid var(--stroke);
+      background:rgba(0,0,0,.24);
+      backdrop-filter: blur(10px);
+      box-shadow:0 0 40px rgba(255,255,255,.08);
+      overflow:hidden;
+      z-index:4;
+      pointer-events:none;
+      padding:14px 14px;
+      display:flex;
+      align-items:center;
+    }
+
+    .reviewCard{
+      position:absolute;
+      left:14px; right:14px;
+      bottom:-140px;
+      opacity:0;
+      transform:translate3d(0, 0, 0);
+      filter:blur(12px);
+      will-change:transform,opacity,filter;
+      color:var(--text);
+    }
+    .reviewCard.play{
+      animation: reviewFly 2.0s cubic-bezier(.18,1,.22,1) forwards;
+    }
+    @keyframes reviewFly{
+      0%   {opacity:0; transform:translate3d(0, 70px, 0); filter:blur(14px)}
+      22%  {opacity:1; transform:translate3d(0, 0px, 0); filter:blur(0px)}
+      65%  {opacity:1; transform:translate3d(0, -10px, 0); filter:blur(0px)}
+      100% {opacity:0; transform:translate3d(0, -70px, 0); filter:blur(10px)}
+    }
+    .stars{font-weight:900;letter-spacing:1px;font-size:12px;color:#fff;opacity:.92}
+    .revText{margin-top:6px;font-weight:900;font-size:14px;line-height:1.25}
+    .revName{margin-top:6px;color:var(--muted);font-size:12px;font-weight:800}
+
+    /* ---------- SECTIONS ---------- */
+    .sp{height:34px}
+    .secHead{display:grid;gap:10px;margin-top:38px}
+    .secHead h2{font-size:30px;letter-spacing:-.3px;font-weight:980}
+    .secHead p{color:var(--muted);line-height:1.7;max-width:72ch}
+
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+    }
+    .grid img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:18px;
+      border:1px solid var(--stroke);
+      background:#0b0b0b;
+      box-shadow:0 18px 70px rgba(0,0,0,.35);
+      transform:translateZ(0);
+      transition:transform .22s ease, border-color .22s ease;
+      cursor:pointer;
+    }
+    .grid img.lazy{filter:blur(8px);opacity:.92}
+    @media(hover:hover){
+      .grid img:hover{transform:scale(1.03);border-color:var(--stroke2)}
+    }
+
+    /* reveal */
+    .reveal{opacity:0;transform:translate3d(0,14px,0);will-change:transform,opacity}
+    .reveal.in{opacity:1;transform:translate3d(0,0,0);transition:opacity .6s ease, transform .6s ease}
+
+    /* contact */
+    #contactBox{
+      margin-top:16px;
+      border-radius:var(--radius);
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      padding:18px;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      box-shadow:var(--shadow);
+      flex-wrap:wrap;
+    }
+    #contactBox p{color:var(--muted);line-height:1.7}
+    .contactBtns{display:flex;gap:10px;flex-wrap:wrap}
+
+    /* lightbox */
+    #lightbox{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,.92);
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;visibility:hidden;
+      transition:.16s ease;
+      z-index:99999;
+    }
+    #lightbox.show{opacity:1;visibility:visible}
+    #lightbox img{
+      max-width:92vw;max-height:92vh;
+      border-radius:18px;
+      box-shadow:0 0 70px rgba(255,255,255,.12);
+    }
+
+    /* ---------- MOBILE LAYOUT FIX ---------- */
+    @media(max-width:980px){
+      header.hero{padding-top:84px; padding-bottom:110px;} /* space for bottom nav */
+      .nav{display:none;} /* hide desktop nav */
+      .mnav{display:flex;} /* show mobile nav */
+
+      .heroGrid{grid-template-columns:1fr;gap:16px}
+      .art{height:520px}
+      .grid{grid-template-columns:1fr}
+
+      .miniStats{grid-template-columns:repeat(3, minmax(0,1fr))}
+    }
+
+    @media(max-width:520px){
+      .wrap{width:calc(100% - 22px)}
+      .tag{font-size:12px}
+      .lead{font-size:14.5px}
+      .heroBtns .btn{width:100%;justify-content:center}
+      .miniStats{grid-template-columns:1fr;max-width:none}
+      .art{height:520px}
+      .reviewBox{height:108px}
+      .ring{width:460px}
+      .man{width:330px}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important;transition:none !important}
+      .reveal{opacity:1 !important;transform:none !important}
+      .ring,.man{opacity:1 !important;transform:translate3d(-50%,0,0) !important;filter:none !important}
+      .reviewCard{opacity:1 !important;transform:none !important;filter:none !important;position:static}
+    }
+
+    body.scrolling .grid img{transition:none}
+  </style>
 </head>
 
 <body>
-
-<nav>
-  <div class="nav-left">
-    <a href="#home" class="brand">
-      <img src="logo.webp" alt="Abdullah Logo" decoding="async" fetchpriority="high" width="38" height="38"/>
-      <span></span>
+  <!-- DESKTOP NAV -->
+  <nav class="nav" id="nav">
+    <a class="brand" href="#home">
+      <img src="logo.webp" alt="Logo" decoding="async" fetchpriority="high" />
+      <span class="t">
+        Abdullah
+        <small>Graphic Designer</small>
+      </span>
     </a>
-  </div>
-
-  <div class="nav-right">
-    <a href="#home">Home</a>
-    <a href="#logos">Logos</a>
-    <a href="#thumbnails">Thumbnails</a>
-    <a href="#mockups">Mockups</a>
-    <a href="#tshirts">T-Shirts</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section id="home" class="visible">
-  <div class="hero-wrapper">
-    <div class="hero-container">
-
-      <div class="hero-box green">
-        <img class="hero-img progressive"
-             src="intro_images/green-cycle-low.webp"
-             data-hi="intro_images/green-cycle.webp"
-             decoding="async"
-             fetchpriority="high"
-             alt="Green Cycle" width="520" height="420">
-      </div>
-
-      <div class="hero-box men">
-        <img class="hero-img progressive"
-             src="intro_images/men1-low.webp"
-             data-hi="intro_images/men1.webp"
-             decoding="async"
-             fetchpriority="high"
-             alt="Men Image" width="380" height="420">
-      </div>
-
+    <div class="links">
+      <a href="#home">Home</a>
+      <a href="#logos">Logos</a>
+      <a href="#thumbnails">Thumbnails</a>
+      <a href="#mockups">Mockups</a>
+      <a href="#tshirts">T-Shirts</a>
+      <a href="#contact" class="btnHire">Hire Me</a>
     </div>
+  </nav>
+
+  <!-- ✅ MOBILE NAV (clean, not overlapping) -->
+  <div class="mnav" id="mnav" aria-label="Mobile navigation">
+    <a href="#home" class="active" data-sec="home">Home</a>
+    <a href="#logos" data-sec="logos">Logos</a>
+    <a href="#thumbnails" data-sec="thumbnails">Thumbs</a>
+    <a href="#mockups" data-sec="mockups">Mockups</a>
+    <a href="#contact" class="hire" data-sec="contact">Hire</a>
   </div>
 
-  <div class="nameWrap" id="nameWrap">
-    <h1>Abdullah Al Mamun</h1>
-    <p class="subtitle">Creative Designer • Branding & Thumbnails</p>
-  </div>
+  <!-- HERO -->
+  <header class="hero" id="home">
+    <div class="wrap heroGrid">
+      <div>
+        <div class="tag reveal"><i></i> Branding • Logos • Thumbnails • Mockups</div>
 
-  <div class="hero-reviews">
-    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Rahim Hasan.<br>"Excellent Work Abdullah!"</div>
-    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Sadia Akter.<br>"Super creative & professional."</div>
-    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Omar Rabbi.<br>"Branding looks amazing!"</div>
-    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Emma Jell.<br>"Great Thumbnail designs!"</div>
-    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Alex.<br>"Mockups Are Insane."</div>
-    <div class="review-bubble">⭐⭐⭐⭐⭐<br>Jack.<br>"Your Best Logo @ Branding Designer, Thank You."</div>
-  </div>
-</section>
+        <h1 class="h1 reveal">
+          Simple. <span>Premium</span>.<br/>Modern Designer.
+        </h1>
 
-<!-- WHY -->
-<section id="why-choose">
-  <h2>Why Clients Choose Me</h2>
-  <div class="why-grid">
-    <div class="why-box">✔ 50+ Custom Designs</div>
-    <div class="why-box">✔ Branding</div>
-    <div class="why-box">✔ Clean & Modern Design</div>
-    <div class="why-box">✔ Fast Delivered</div>
-  </div>
-</section>
+        <p class="lead reveal">
+          Hi, I’m <b>Abdullah Al Mamun</b> — I create clean branding, logo design, high click thumbnails,
+          and professional mockups. Premium look, fast delivery, and client satisfaction.
+        </p>
 
-<!-- LOGOS -->
-<section id="logos">
-  <h2>Logo Designs</h2>
-  <div class="grid">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo1.webp" decoding="async" alt="Logo 1" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo2.webp" decoding="async" alt="Logo 2" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo3.webp" decoding="async" alt="Logo 3" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo4.webp" decoding="async" alt="Logo 4" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo5.webp" decoding="async" alt="Logo 5" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo6.webp" decoding="async" alt="Logo 6" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo7.webp" decoding="async" alt="Logo 7" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo8.webp" decoding="async" alt="Logo 8" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo9.webp" decoding="async" alt="Logo 9" width="800" height="600">
-  </div>
-</section>
+        <div class="heroBtns reveal">
+          <a class="btn primary" href="#logos">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 7h10v10H7z" stroke="currentColor" stroke-width="2"/>
+              <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            View Work
+          </a>
+          <a class="btn" href="#contact">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M21 8V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v1" stroke="currentColor" stroke-width="2"/>
+              <path d="m3 8 9 6 9-6" stroke="currentColor" stroke-width="2"/>
+              <path d="M3 8v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            Contact
+          </a>
+        </div>
 
-<!-- THUMBNAILS -->
-<section id="thumbnails">
-  <h2>BD Thumbnails</h2>
-  <div class="grid">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD1.webp" decoding="async" alt="BD 1" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD2.webp" decoding="async" alt="BD 2" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD3.webp" decoding="async" alt="BD 3" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD4.webp" decoding="async" alt="BD 4" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD5.webp" decoding="async" alt="BD 5" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD6.webp" decoding="async" alt="BD 6" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD7.webp" decoding="async" alt="BD 7" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD8.webp" decoding="async" alt="BD 8" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD9.webp" decoding="async" alt="BD 9" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD10.webp" decoding="async" alt="BD 10" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD11.webp" decoding="async" alt="BD 11" width="800" height="600">
-  </div>
+        <div class="miniStats reveal">
+          <div class="s"><strong>50+</strong><span>Custom Designs</span></div>
+          <div class="s"><strong>Fast</strong><span>Delivery & Revisions</span></div>
+          <div class="s"><strong>Clean</strong><span>Premium Style</span></div>
+        </div>
+      </div>
 
-  <h2 style="margin-top:80px">USA Thumbnails</h2>
-  <div class="grid">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA1.webp" decoding="async" alt="USA 1" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA2.webp" decoding="async" alt="USA 2" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA3.webp" decoding="async" alt="USA 3" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA4.webp" decoding="async" alt="USA 4" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA5.webp" decoding="async" alt="USA 5" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA6.webp" decoding="async" alt="USA 6" width="800" height="600">
-  </div>
-</section>
+      <!-- RIGHT BOX -->
+      <div class="art" id="art">
+        <div class="glowFloor"></div>
 
-<!-- MOCKUPS -->
-<section id="mockups">
-  <h2>Mockups & Branding</h2>
-  <div class="grid">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup1.webp" decoding="async" alt="Mockup 1" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup2.webp" decoding="async" alt="Mockup 2" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup3.webp" decoding="async" alt="Mockup 3" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup4.webp" decoding="async" alt="Mockup 4" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup5.webp" decoding="async" alt="Mockup 5" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup6.webp" decoding="async" alt="Mockup 6" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup7.webp" decoding="async" alt="Mockup 7" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup8.webp" decoding="async" alt="Mockup 8" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup9.webp" decoding="async" alt="Mockup 9" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup10.webp" decoding="async" alt="Mockup 10" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup11.webp" decoding="async" alt="Mockup 11" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup12.webp" decoding="async" alt="Mockup 12" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup13.webp" decoding="async" alt="Mockup 13" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup14.webp" decoding="async" alt="Mockup 14" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup15.webp" decoding="async" alt="Mockup 15" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup16.webp" decoding="async" alt="Mockup 16" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup17.webp" decoding="async" alt="Mockup 17" width="800" height="600">
-  </div>
-</section>
+        <div class="heroStage">
+          <img class="ring" src="intro_images/green-cycle.webp" alt="Green Cycle" decoding="async" fetchpriority="high">
+          <img class="man"  src="intro_images/men1.webp"       alt="Men Image"   decoding="async" fetchpriority="high">
+        </div>
 
-<!-- TSHIRTS -->
-<section id="tshirts">
-  <h2>T-Shirt Designs</h2>
-  <div class="grid">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (1).webp" decoding="async" alt="T-Shirt 1" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (2).webp" decoding="async" alt="T-Shirt 2" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (3).webp" decoding="async" alt="T-Shirt 3" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (4).webp" decoding="async" alt="T-Shirt 4" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (5).webp" decoding="async" alt="T-Shirt 5" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (6).webp" decoding="async" alt="T-Shirt 6" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (7).webp" decoding="async" alt="T-Shirt 7" width="800" height="600">
-    <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (8).webp" decoding="async" alt="T-Shirt 8" width="800" height="600">
-  </div>
-</section>
+        <div class="reviewBox" aria-hidden="true">
+          <div class="reviewCard" id="reviewCard">
+            <div class="stars" id="revStars">★★★★★</div>
+            <div class="revText" id="revText">Super creative & premium look. Fast delivery!</div>
+            <div class="revName" id="revName">— Sadia Akter</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<!-- CONTACT -->
-<section id="contact">
-  <h2>Contact Me</h2>
-  <div class="contact-links">
-    <a href="https://t.me/abdullah_graphicxpart" target="_blank" rel="noopener">Telegram</a>
-    <a href="https://wa.me/8801600106114" target="_blank" rel="noopener">WhatsApp</a>
-  </div>
-</section>
+  <div class="sp"></div>
 
-<div id="lightbox" aria-hidden="true"><img alt=""></div>
+  <!-- LOGOS -->
+  <section id="logos" class="wrap">
+    <div class="secHead">
+      <h2 class="reveal">Logo Designs</h2>
+      <p class="reveal">Clean logo showcase. Click any image to open full view.</p>
+    </div>
+    <div class="grid">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo1.webp" decoding="async" alt="Logo 1" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo2.webp" decoding="async" alt="Logo 2" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo3.webp" decoding="async" alt="Logo 3" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo4.webp" decoding="async" alt="Logo 4" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo5.webp" decoding="async" alt="Logo 5" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo6.webp" decoding="async" alt="Logo 6" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo7.webp" decoding="async" alt="Logo 7" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo8.webp" decoding="async" alt="Logo 8" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Logo9.webp" decoding="async" alt="Logo 9" width="800" height="600">
+    </div>
+  </section>
 
-<script>
-(() => {
-  const d = document;
+  <div class="sp"></div>
 
-  // ✅ HERO + NAME intro (professional + consistent)
-  d.body.classList.remove("loaded");
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      d.body.classList.add("loaded");
-      const nw = d.getElementById("nameWrap");
-      if (nw) setTimeout(() => nw.classList.add("show"), 520);
-    });
-  });
+  <!-- THUMBNAILS -->
+  <section id="thumbnails" class="wrap">
+    <div class="secHead">
+      <h2 class="reveal">BD Thumbnails</h2>
+      <p class="reveal">Thumbnail designs (BD + USA). Smooth load + premium spacing.</p>
+    </div>
 
-  // Reveal sections (opacity only)
-  const sections = d.querySelectorAll("section");
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        if (!e.isIntersecting) continue;
-        e.target.classList.add("visible");
-        io.unobserve(e.target);
-      }
-    }, { threshold: 0.01, rootMargin: "220px 0px 220px 0px" });
-    sections.forEach(s => io.observe(s));
-  } else {
-    sections.forEach(s => s.classList.add("visible"));
-  }
+    <div class="grid">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD1.webp" decoding="async" alt="BD 1" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD2.webp" decoding="async" alt="BD 2" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD3.webp" decoding="async" alt="BD 3" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD4.webp" decoding="async" alt="BD 4" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD5.webp" decoding="async" alt="BD 5" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD6.webp" decoding="async" alt="BD 6" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD7.webp" decoding="async" alt="BD 7" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD8.webp" decoding="async" alt="BD 8" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD9.webp" decoding="async" alt="BD 9" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD10.webp" decoding="async" alt="BD 10" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/BD11.webp" decoding="async" alt="BD 11" width="800" height="600">
+    </div>
 
-  // HERO progressive low -> high (idle)
-  function upgradeHero(){
-    const heroImgs = d.querySelectorAll("img.progressive[data-hi]");
-    heroImgs.forEach(img => img.classList.add("is-low"));
+    <h2 class="reveal" style="margin-top:80px;font-size:30px;font-weight:980;letter-spacing:-.3px;">USA Thumbnails</h2>
+    <div class="grid">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA1.webp" decoding="async" alt="USA 1" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA2.webp" decoding="async" alt="USA 2" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA3.webp" decoding="async" alt="USA 3" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA4.webp" decoding="async" alt="USA 4" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA5.webp" decoding="async" alt="USA 5" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/USA6.webp" decoding="async" alt="USA 6" width="800" height="600">
+    </div>
+  </section>
 
-    heroImgs.forEach(img => {
-      const hi = img.getAttribute("data-hi");
-      if (!hi) return;
+  <div class="sp"></div>
 
-      const pre = new Image();
-      pre.decoding = "async";
-      pre.src = hi;
+  <!-- MOCKUPS -->
+  <section id="mockups" class="wrap">
+    <div class="secHead">
+      <h2 class="reveal">Mockups & Branding</h2>
+      <p class="reveal">Professional mockups with clean grid layout.</p>
+    </div>
 
-      pre.onload = () => {
-        img.src = hi;
-        img.classList.remove("is-low");
-        img.classList.add("is-hi");
-      };
-    });
-  }
-  if ("requestIdleCallback" in window) requestIdleCallback(upgradeHero, { timeout: 1500 });
-  else setTimeout(upgradeHero, 900);
+    <div class="grid">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup1.webp" decoding="async" alt="Mockup 1" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup2.webp" decoding="async" alt="Mockup 2" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup3.webp" decoding="async" alt="Mockup 3" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup4.webp" decoding="async" alt="Mockup 4" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup5.webp" decoding="async" alt="Mockup 5" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup6.webp" decoding="async" alt="Mockup 6" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup7.webp" decoding="async" alt="Mockup 7" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup8.webp" decoding="async" alt="Mockup 8" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup9.webp" decoding="async" alt="Mockup 9" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup10.webp" decoding="async" alt="Mockup 10" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup11.webp" decoding="async" alt="Mockup 11" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup12.webp" decoding="async" alt="Mockup 12" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup13.webp" decoding="async" alt="Mockup 13" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup14.webp" decoding="async" alt="Mockup 14" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup15.webp" decoding="async" alt="Mockup 15" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup16.webp" decoding="async" alt="Mockup 16" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Mockup17.webp" decoding="async" alt="Mockup 17" width="800" height="600">
+    </div>
+  </section>
 
-  // Scroll-download images
-  const lazyImgs = d.querySelectorAll("img.lazy[data-src]");
-  const loadImg = (img) => {
-    const src = img.getAttribute("data-src");
-    if (!src) return;
-    img.src = src;
-    img.removeAttribute("data-src");
-    img.classList.remove("lazy");
-  };
+  <div class="sp"></div>
 
-  if ("IntersectionObserver" in window) {
-    const ioImg = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        loadImg(e.target);
-        ioImg.unobserve(e.target);
+  <!-- TSHIRTS -->
+  <section id="tshirts" class="wrap">
+    <div class="secHead">
+      <h2 class="reveal">T-Shirt Designs</h2>
+      <p class="reveal">T-shirt designs in clean premium gallery.</p>
+    </div>
+
+    <div class="grid">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (1).webp" decoding="async" alt="T-Shirt 1" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (2).webp" decoding="async" alt="T-Shirt 2" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (3).webp" decoding="async" alt="T-Shirt 3" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (4).webp" decoding="async" alt="T-Shirt 4" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (5).webp" decoding="async" alt="T-Shirt 5" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (6).webp" decoding="async" alt="T-Shirt 6" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (7).webp" decoding="async" alt="T-Shirt 7" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/T-Shirt (8).webp" decoding="async" alt="T-Shirt 8" width="800" height="600">
+    </div>
+  </section>
+
+  <div class="sp"></div>
+
+  <!-- CONTACT -->
+  <section id="contact" class="wrap">
+    <div class="secHead">
+      <h2 class="reveal">Contact</h2>
+      <p class="reveal">Message me any time. I reply fast.</p>
+    </div>
+
+    <div id="contactBox" class="reveal">
+      <div>
+        <strong style="font-size:18px;font-weight:980">Abdullah Al Mamun</strong>
+        <p>Creative Designer • Branding & Thumbnails</p>
+      </div>
+      <div class="contactBtns">
+        <a class="btn primary" href="https://t.me/abdullah_graphicxpart" target="_blank" rel="noopener">Telegram</a>
+        <a class="btn" href="https://wa.me/8801600106114" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="sp"></div>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" aria-hidden="true"><img alt=""></div>
+
+  <script>
+    (() => {
+      const d = document;
+
+      // ✅ Reviews list (loop)
+      const REVIEWS = [
+        { text: "Excellent work! Clean and premium design.", name: "— Rahim Hasan" },
+        { text: "Super creative & premium look. Fast delivery!", name: "— Sadia Akter" },
+        { text: "Branding looks amazing! Highly recommended.", name: "— Omar Rabbi" },
+        { text: "Great thumbnail designs, very professional.", name: "— Emma Jell" },
+        { text: "Mockups are insane. Perfect details!", name: "— Alex" },
+        { text: "Best logo & branding designer. Thank you!", name: "— Jack" }
+      ];
+
+      // ✅ Start hero animations + after both appear start float
+      requestAnimationFrame(() => {
+        d.body.classList.add("loaded");
+        setTimeout(() => {
+          const ring = d.querySelector(".ring");
+          const man  = d.querySelector(".man");
+          ring && ring.classList.add("floatAfter");
+          man && man.classList.add("floatAfter");
+        }, 2300);
       });
-    }, { rootMargin: "450px 0px 450px 0px", threshold: 0.01 });
 
-    lazyImgs.forEach(img => ioImg.observe(img));
-  } else {
-    lazyImgs.forEach(loadImg);
-  }
+      // ✅ Review loop every 2 sec
+      const card = d.getElementById("reviewCard");
+      const revText = d.getElementById("revText");
+      const revName = d.getElementById("revName");
+      let idx = 0;
+      function playReview(){
+        const r = REVIEWS[idx % REVIEWS.length];
+        idx++;
+        revText.textContent = r.text;
+        revName.textContent = r.name;
+        card.classList.remove("play");
+        void card.offsetWidth;
+        card.classList.add("play");
+      }
+      playReview();
+      setInterval(playReview, 2000);
 
-  // Lightbox
-  const lb = d.getElementById("lightbox");
-  const lbImg = lb ? lb.querySelector("img") : null;
+      // ✅ smooth anchor click (works both navs)
+      d.addEventListener("click", (e) => {
+        const a = e.target.closest('a[href^="#"]');
+        if(!a) return;
+        const id = a.getAttribute("href");
+        const el = id && id.length > 1 ? d.querySelector(id) : null;
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({ behavior:"smooth", block:"start" });
+        history.pushState(null, "", id);
+      }, { passive:false });
 
-  d.addEventListener("click", async (e) => {
-    const img = e.target.closest(".grid img");
-    if (!img || !lb || !lbImg) return;
+      // ✅ reveal on scroll
+      const reveals = d.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        }, { threshold: 0.01, rootMargin: "180px 0px 180px 0px" });
+        reveals.forEach(el => io.observe(el));
+      } else {
+        reveals.forEach(el => el.classList.add("in"));
+      }
 
-    if (img.classList.contains("lazy") && img.dataset.src) loadImg(img);
+      // ✅ lazy load images
+      const lazyImgs = d.querySelectorAll("img.lazy[data-src]");
+      const loadImg = (img) => {
+        const src = img.getAttribute("data-src");
+        if (!src) return;
+        img.src = src;
+        img.removeAttribute("data-src");
+        img.classList.remove("lazy");
+      };
+      if ("IntersectionObserver" in window) {
+        const ioImg = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            loadImg(e.target);
+            ioImg.unobserve(e.target);
+          }
+        }, { rootMargin: "520px 0px 520px 0px", threshold: 0.01 });
+        lazyImgs.forEach(img => ioImg.observe(img));
+      } else {
+        lazyImgs.forEach(loadImg);
+      }
 
-    lbImg.src = img.currentSrc || img.src;
-    try { await lbImg.decode(); } catch(_) {}
-    lb.classList.add("show");
-    lb.setAttribute("aria-hidden","false");
-    d.body.style.overflow = "hidden";
-  }, { passive: true });
+      // ✅ lightbox
+      const lb = d.getElementById("lightbox");
+      const lbImg = lb.querySelector("img");
+      d.addEventListener("click", async (e) => {
+        const img = e.target.closest(".grid img");
+        if (!img) return;
+        if (img.classList.contains("lazy") && img.dataset.src) loadImg(img);
+        lbImg.src = img.currentSrc || img.src;
+        try { await lbImg.decode(); } catch(_) {}
+        lb.classList.add("show");
+        d.body.style.overflow = "hidden";
+      }, { passive:true });
+      lb.addEventListener("click", () => {
+        lb.classList.remove("show");
+        d.body.style.overflow = "";
+      }, { passive:true });
 
-  lb && lb.addEventListener("click", () => {
-    lb.classList.remove("show");
-    lb.setAttribute("aria-hidden","true");
-    d.body.style.overflow = "";
-  }, { passive: true });
+      // ✅ desktop nav hide/show only (mobile nav stays)
+      const nav = d.getElementById("nav");
+      let lastY = window.scrollY || 0;
+      let t;
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY || 0;
+        d.body.classList.add("scrolling");
+        clearTimeout(t);
+        t = setTimeout(() => d.body.classList.remove("scrolling"), 160);
 
-  // ✅ lighter scrolling class (does not break RGB)
-  let t;
-  window.addEventListener("scroll", () => {
-    d.body.classList.add("scrolling");
-    clearTimeout(t);
-    t = setTimeout(() => d.body.classList.remove("scrolling"), 240);
-  }, { passive: true });
-})();
-</script>
+        if (nav && window.innerWidth > 980) {
+          if (y > lastY && y > 140) nav.classList.add("hide");
+          else nav.classList.remove("hide");
+        }
+        lastY = y;
+      }, { passive:true });
 
+      // ✅ mobile nav active highlight
+      const mnav = d.getElementById("mnav");
+      const mlinks = mnav ? Array.from(mnav.querySelectorAll("a[data-sec]")) : [];
+      const sections = ["home","logos","thumbnails","mockups","contact"].map(id => d.getElementById(id)).filter(Boolean);
+
+      function setActive(id){
+        mlinks.forEach(a => a.classList.toggle("active", a.dataset.sec === id));
+      }
+      if (mlinks.length) {
+        if ("IntersectionObserver" in window) {
+          const ioSec = new IntersectionObserver((entries) => {
+            // pick most visible
+            const visible = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+            if (visible) setActive(visible.target.id);
+          }, { threshold:[0.2,0.35,0.5,0.65], rootMargin:"-30% 0px -55% 0px" });
+          sections.forEach(s => ioSec.observe(s));
+        } else {
+          setActive("home");
+        }
+      }
+    })();
+  </script>
 </body>
 </html>
