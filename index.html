@@ -25,7 +25,6 @@
   --blue:#4d7cff;
   --purple:#c34bff;
 
-  /* clean white glow (light) */
   --wglow: rgba(255,255,255,.10);
   --aglow: rgba(0,255,243,.18);
 }
@@ -66,7 +65,6 @@ nav a:hover{color:var(--aqua);text-shadow:0 0 12px var(--aglow)}
   justify-content:flex-end;align-items:center;
   text-align:center;overflow:hidden;
   position:relative;padding-top:110px;
-  /* IMPORTANT: disable content-visibility here so desktop animation always runs */
   content-visibility: visible !important;
   contain: none !important;
 }
@@ -79,11 +77,12 @@ nav a:hover{color:var(--aqua);text-shadow:0 0 12px var(--aglow)}
   isolation:isolate;
 }
 
-/* HERO DEFAULT: visible (prevents blank if animation fails) */
+/* ✅ HERO: start hidden, then animate in when body.loaded is added */
 .hero-box{
   position:absolute;left:50%;bottom:0;
-  transform:translate3d(-50%,0,0);
-  opacity:1;
+  transform:translate3d(-50%,120%,0);
+  opacity:0;
+  will-change:transform,opacity;
   backface-visibility:hidden;
 }
 .hero-box::after{
@@ -100,14 +99,8 @@ nav a:hover{color:var(--aqua);text-shadow:0 0 12px var(--aglow)}
 .hero-box.green{width:520px;z-index:1}
 .hero-box.men{width:380px;z-index:2}
 
-/* Animate ONLY when JS adds .intro then switches to .loaded */
-body.intro .hero-box{
-  transform:translate3d(-50%,120%,0);
-  opacity:0;
-  will-change:transform,opacity;
-}
 body.loaded .hero-box{
-  transform:translate3d(-50%,0%,0);
+  transform:translate3d(-50%,0,0);
   opacity:1;
   transition:transform 1000ms cubic-bezier(.2,1,.25,1), opacity 700ms ease;
 }
@@ -118,12 +111,12 @@ body.loaded .hero-box.men{transition-delay:260ms}
 .hero-img.is-low{filter:blur(10px);opacity:.92}
 .hero-img.is-hi{filter:blur(0);opacity:1}
 
-/* -------- NAME (NO BUG / NO FLICKER) -------- */
+/* -------- NAME (RGB ANIMATION RESTORED) -------- */
 h1{
   margin-top:22px;font-size:52px;
   background:linear-gradient(90deg,var(--aqua),var(--mint),var(--blue),var(--purple));
   background-size:400% 400%;
-  color:transparent;-webkit-background-clip:text;
+  color:transparent;-webkit-background-clip:text;background-clip:text;
   animation:rgb 8s infinite ease;
   filter:drop-shadow(0 0 14px rgba(255,255,255,.08)) drop-shadow(0 0 14px var(--aglow));
 }
@@ -199,7 +192,6 @@ section{
   opacity:0;
   transition:opacity .35s ease;
 
-  /* keep for performance on long pages */
   content-visibility:auto;
   contain-intrinsic-size: 1px 900px;
 }
@@ -284,10 +276,11 @@ section#home{
   .nameWrap{opacity:1 !important;transform:none !important;}
 }
 
-/* While scrolling: reduce heavy effects */
+/* While scrolling: reduce heavy effects (KEEP RGB animation ON) */
 body.scrolling nav{backdrop-filter:none !important;}
 body.scrolling .review-bubble{animation:none !important;}
-body.scrolling h1{animation:none !important;filter:none !important;}
+/* ✅ do NOT disable h1 animation; only reduce glow a bit */
+body.scrolling h1{filter:drop-shadow(0 0 6px rgba(255,255,255,.06)) !important;}
 body.scrolling .grid img{box-shadow:none !important;transition:none !important;}
 body.scrolling .why-box{box-shadow:none !important;}
 body.scrolling .contact-links a{box-shadow:none !important;}
@@ -464,24 +457,15 @@ body.scrolling .contact-links a{box-shadow:none !important;}
 (() => {
   const d = document;
 
-  // BULLETPROOF HERO INTRO:
-  // Start in intro state (hero offscreen + opacity 0),
-  // then after paint switch to loaded (hero animates in).
-  d.body.classList.add("intro");
-
-  const startIntro = () => {
-    // force layout flush for desktop reliability
-    void d.body.offsetHeight;
-
-    d.body.classList.add("loaded");
-    d.body.classList.remove("intro");
-
-    const nw = d.getElementById("nameWrap");
-    if (nw) setTimeout(() => nw.classList.add("show"), 780);
-  };
-
-  // double-raf = safest across browsers
-  requestAnimationFrame(() => requestAnimationFrame(startIntro));
+  // ✅ HERO + NAME intro (works on PC + mobile)
+  d.body.classList.remove("loaded");
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      d.body.classList.add("loaded");
+      const nw = d.getElementById("nameWrap");
+      if (nw) setTimeout(() => nw.classList.add("show"), 700);
+    });
+  });
 
   // Reveal sections (opacity only)
   const sections = d.querySelectorAll("section");
@@ -553,7 +537,6 @@ body.scrolling .contact-links a{box-shadow:none !important;}
     const img = e.target.closest(".grid img");
     if (!img || !lb || !lbImg) return;
 
-    // If still placeholder, load first then open
     if (img.classList.contains("lazy") && img.dataset.src) loadImg(img);
 
     lbImg.src = img.currentSrc || img.src;
@@ -569,12 +552,12 @@ body.scrolling .contact-links a{box-shadow:none !important;}
     d.body.style.overflow = "";
   }, { passive: true });
 
-  // Scrolling class
+  // ✅ Lighter scrolling class (doesn't break RGB)
   let t;
   window.addEventListener("scroll", () => {
     d.body.classList.add("scrolling");
     clearTimeout(t);
-    t = setTimeout(() => d.body.classList.remove("scrolling"), 160);
+    t = setTimeout(() => d.body.classList.remove("scrolling"), 240);
   }, { passive: true });
 })();
 </script>
