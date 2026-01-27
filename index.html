@@ -12,7 +12,7 @@
 
 <!-- Preload ONLY low hero images for fastest first paint -->
 <link rel="preload" as="image" href="intro_images/men1-low.webp" fetchpriority="high">
-<link rel="preload" as="image" href="intro_images/Green Cycle-low.webp" fetchpriority="high">
+<link rel="preload" as="image" href="intro_images/green-cycle-low.webp" fetchpriority="high">
 
 <style>
 :root{
@@ -66,7 +66,7 @@ nav a:hover{color:var(--aqua);text-shadow:0 0 12px var(--aglow)}
   justify-content:flex-end;align-items:center;
   text-align:center;overflow:hidden;
   position:relative;padding-top:110px;
-  /* ✅ IMPORTANT: disable content-visibility here so desktop animation always runs */
+  /* IMPORTANT: disable content-visibility here so desktop animation always runs */
   content-visibility: visible !important;
   contain: none !important;
 }
@@ -79,12 +79,11 @@ nav a:hover{color:var(--aqua);text-shadow:0 0 12px var(--aglow)}
   isolation:isolate;
 }
 
-/* smooth intro with transform */
+/* HERO DEFAULT: visible (prevents blank if animation fails) */
 .hero-box{
   position:absolute;left:50%;bottom:0;
-  transform:translate3d(-50%,120%,0);
-  opacity:0;
-  will-change:transform,opacity;
+  transform:translate3d(-50%,0,0);
+  opacity:1;
   backface-visibility:hidden;
 }
 .hero-box::after{
@@ -101,18 +100,18 @@ nav a:hover{color:var(--aqua);text-shadow:0 0 12px var(--aglow)}
 .hero-box.green{width:520px;z-index:1}
 .hero-box.men{width:380px;z-index:2}
 
-/* ✅ Desktop-safe animation */
-body.loaded .hero-box.green{
-  animation:heroIn 1000ms cubic-bezier(.2,1,.25,1) forwards;
+/* Animate ONLY when JS adds .intro then switches to .loaded */
+body.intro .hero-box{
+  transform:translate3d(-50%,120%,0);
+  opacity:0;
+  will-change:transform,opacity;
 }
-body.loaded .hero-box.men{
-  animation:heroIn 950ms cubic-bezier(.2,1,.25,1) forwards;
-  animation-delay:260ms;
+body.loaded .hero-box{
+  transform:translate3d(-50%,0%,0);
+  opacity:1;
+  transition:transform 1000ms cubic-bezier(.2,1,.25,1), opacity 700ms ease;
 }
-@keyframes heroIn{
-  from{transform:translate3d(-50%,120%,0);opacity:0}
-  to{transform:translate3d(-50%,0%,0);opacity:1}
-}
+body.loaded .hero-box.men{transition-delay:260ms}
 
 /* Hero low->high */
 .hero-img{transition:filter .35s ease, opacity .35s ease}
@@ -200,14 +199,14 @@ section{
   opacity:0;
   transition:opacity .35s ease;
 
-  /* ✅ keep for performance on long pages */
+  /* keep for performance on long pages */
   content-visibility:auto;
   contain-intrinsic-size: 1px 900px;
 }
 section.visible{opacity:1}
 section h2{font-size:36px;margin-bottom:35px}
 
-/* ✅ ensure #home not affected by section rule */
+/* ensure #home not affected by section rule */
 section#home{
   content-visibility: visible !important;
   contain-intrinsic-size: auto !important;
@@ -322,8 +321,8 @@ body.scrolling .contact-links a{box-shadow:none !important;}
 
       <div class="hero-box green">
         <img class="hero-img progressive"
-             src="intro_images/Green Cycle-low.webp"
-             data-hi="intro_images/Green Cycle.webp"
+             src="intro_images/green-cycle-low.webp"
+             data-hi="intro_images/green-cycle.webp"
              decoding="async"
              fetchpriority="high"
              alt="Green Cycle" width="520" height="420">
@@ -465,15 +464,23 @@ body.scrolling .contact-links a{box-shadow:none !important;}
 (() => {
   const d = document;
 
-  // ✅ Start hero animations AFTER layout/paint (more reliable on desktop)
+  // BULLETPROOF HERO INTRO:
+  // Start in intro state (hero offscreen + opacity 0),
+  // then after paint switch to loaded (hero animates in).
+  d.body.classList.add("intro");
+
   const startIntro = () => {
+    // force layout flush for desktop reliability
+    void d.body.offsetHeight;
+
     d.body.classList.add("loaded");
+    d.body.classList.remove("intro");
 
     const nw = d.getElementById("nameWrap");
     if (nw) setTimeout(() => nw.classList.add("show"), 780);
   };
 
-  // double-raf = safest for desktop + content-visibility combos
+  // double-raf = safest across browsers
   requestAnimationFrame(() => requestAnimationFrame(startIntro));
 
   // Reveal sections (opacity only)
@@ -486,7 +493,6 @@ body.scrolling .contact-links a{box-shadow:none !important;}
         io.unobserve(e.target);
       }
     }, { threshold: 0.01, rootMargin: "220px 0px 220px 0px" });
-
     sections.forEach(s => io.observe(s));
   } else {
     sections.forEach(s => s.classList.add("visible"));
@@ -547,6 +553,7 @@ body.scrolling .contact-links a{box-shadow:none !important;}
     const img = e.target.closest(".grid img");
     if (!img || !lb || !lbImg) return;
 
+    // If still placeholder, load first then open
     if (img.classList.contains("lazy") && img.dataset.src) loadImg(img);
 
     lbImg.src = img.currentSrc || img.src;
