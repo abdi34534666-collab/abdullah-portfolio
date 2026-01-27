@@ -10,32 +10,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
 
-<!-- Preload ONLY low hero images for fastest first paint -->
+<!-- ✅ Preload ONLY low hero images for fastest first paint -->
 <link rel="preload" as="image" href="intro_images/men1-low.webp" fetchpriority="high">
 <link rel="preload" as="image" href="intro_images/green-cycle-low.webp" fetchpriority="high">
 
 <style>
-:root{
-  --bg:#000;
-  --card:rgba(255,255,255,0.04);
-  --card-b:rgba(255,255,255,0.09);
-
-  --aqua:#00fff3;
-  --mint:#00ffa0;
-  --blue:#4d7cff;
-  --purple:#c34bff;
-
-  --wglow: rgba(255,255,255,.10);
-  --aglow: rgba(0,255,243,.18);
-}
-
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 html{scroll-behavior:smooth}
-body{
-  background:var(--bg);color:#fff;overflow-x:hidden;
-  -webkit-text-size-adjust:100%;
-  touch-action:pan-y;
-}
+body{background:#000;color:#fff;overflow-x:hidden;-webkit-text-size-adjust:100%;touch-action:pan-y}
 
 /* Offset without JS */
 section{scroll-margin-top:90px}
@@ -46,16 +28,12 @@ nav{
   display:flex;justify-content:space-between;align-items:center;
   background:rgba(0,0,0,.65);
   z-index:1000;
-  border-bottom:1px solid rgba(255,255,255,0.05);
 }
 @media(min-width:769px){ nav{backdrop-filter:blur(8px)} }
 nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:14px}
-nav a:hover{color:var(--aqua);text-shadow:0 0 12px var(--aglow)}
+nav a:hover{color:#00ffea;text-shadow:0 0 10px #00ffe0}
 .nav-left .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:800}
-.nav-left .brand img{
-  width:38px;height:38px;border-radius:10px;object-fit:cover;
-  box-shadow:0 0 18px var(--wglow);
-}
+.nav-left .brand img{width:38px;height:38px;border-radius:10px;object-fit:cover}
 .nav-right{display:flex;gap:22px;align-items:center}
 
 /* -------- HERO -------- */
@@ -64,23 +42,15 @@ nav a:hover{color:var(--aqua);text-shadow:0 0 12px var(--aglow)}
   display:flex;flex-direction:column;
   justify-content:flex-end;align-items:center;
   text-align:center;overflow:hidden;
-  position:relative;padding-top:110px;
-  content-visibility: visible !important;
-  contain: none !important;
+  position:relative;padding-top:110px
 }
-.hero-wrapper{
-  position:relative;width:100%;height:100%;
-  display:flex;justify-content:center;align-items:flex-end;
-}
-.hero-container{
-  position:relative;width:600px;height:420px;max-width:100%;
-  isolation:isolate;
-}
+.hero-wrapper{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:flex-end}
+.hero-container{position:relative;width:600px;height:420px;max-width:100%}
 
-/* ✅ HERO: start hidden, then animate in when body.loaded is added */
+/* ✅ Professional simple intro (desktop + mobile safe) */
 .hero-box{
   position:absolute;left:50%;bottom:0;
-  transform:translate3d(-50%,120%,0);
+  transform:translate3d(-50%,60px,0);
   opacity:0;
   will-change:transform,opacity;
   backface-visibility:hidden;
@@ -88,58 +58,50 @@ nav a:hover{color:var(--aqua);text-shadow:0 0 12px var(--aglow)}
 .hero-box::after{
   content:"";position:absolute;bottom:0;left:0;
   width:100%;height:45%;
-  background:linear-gradient(to top,#000,transparent);
-  pointer-events:none;
+  background:linear-gradient(to top,#000,transparent)
 }
-.hero-box img{
-  width:100%;height:auto;display:block;
-  transform:translateZ(0);
-  filter:drop-shadow(0 0 22px rgba(255,255,255,.06));
-}
+.hero-box img{width:100%;height:auto;display:block;transform:translateZ(0)}
 .hero-box.green{width:520px;z-index:1}
 .hero-box.men{width:380px;z-index:2}
 
 body.loaded .hero-box{
   transform:translate3d(-50%,0,0);
   opacity:1;
-  transition:transform 1000ms cubic-bezier(.2,1,.25,1), opacity 700ms ease;
+  transition:transform 900ms cubic-bezier(.22,.61,.36,1), opacity 600ms ease;
 }
-body.loaded .hero-box.men{transition-delay:260ms}
+body.loaded .hero-box.men{transition-delay:180ms}
 
 /* Hero low->high */
 .hero-img{transition:filter .35s ease, opacity .35s ease}
 .hero-img.is-low{filter:blur(10px);opacity:.92}
 .hero-img.is-hi{filter:blur(0);opacity:1}
 
-/* -------- NAME (RGB ANIMATION RESTORED) -------- */
+/* -------- NAME (RGB + smooth intro) -------- */
 h1{
   margin-top:22px;font-size:52px;
-  background:linear-gradient(90deg,var(--aqua),var(--mint),var(--blue),var(--purple));
+  background:linear-gradient(90deg,#00fff3,#00ffa0,#4d7cff,#c34bff);
   background-size:400% 400%;
   color:transparent;-webkit-background-clip:text;background-clip:text;
   animation:rgb 8s infinite ease;
-  filter:drop-shadow(0 0 14px rgba(255,255,255,.08)) drop-shadow(0 0 14px var(--aglow));
+  filter:drop-shadow(0 0 10px rgba(0,255,243,.18));
 }
 @keyframes rgb{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-.subtitle{
-  font-size:18px;margin-bottom:70px;color:#cfcfcf;
-  text-shadow:0 0 14px rgba(255,255,255,.06);
-}
+.subtitle{font-size:18px;margin-bottom:70px;color:#ccc}
 
-/* One-time intro only (never re-triggers) */
+/* ✅ One-time intro only (never re-triggers) */
 .nameWrap{
   opacity:0;
-  transform:translate3d(0,16px,0);
+  transform:translateY(12px);
   will-change:transform,opacity;
 }
 .nameWrap.show{
   opacity:1;
-  transform:translate3d(0,0,0);
-  transition:opacity .7s ease, transform .7s ease;
+  transform:translateY(0);
+  transition:opacity 600ms ease, transform 600ms ease;
 }
 
 /* -------- REVIEWS -------- */
@@ -151,15 +113,15 @@ h1{
 .review-bubble{
   background:rgba(255,255,255,0.05);
   padding:12px 16px;border-radius:12px;
-  font-size:12px;max-width:200px;opacity:.82;
+  font-size:12px;max-width:200px;opacity:.75;
   animation:float 10s ease-in-out infinite;
-  box-shadow:0 0 18px rgba(255,255,255,.08), 0 0 18px rgba(0,255,243,.10);
-  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 0 16px rgba(0,255,243,.10);
+  border:1px solid rgba(0,255,243,.08);
 }
 @media(min-width:769px){ .review-bubble{backdrop-filter:blur(4px)} }
 @keyframes float{
-  0%,100%{transform:translate3d(0,0,0)}
-  50%{transform:translate3d(0,-10px,0)}
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
 }
 
 /* -------- WHY -------- */
@@ -171,17 +133,17 @@ h1{
 }
 .why-box{
   padding:18px 22px;border-radius:14px;
-  background:var(--card);
-  border:1px solid var(--card-b);
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
   font-size:15px;font-weight:600;
   transition:.2s;
-  box-shadow:0 0 20px rgba(255,255,255,.06);
+  box-shadow:0 0 18px rgba(77,124,255,.06);
 }
 @media (hover:hover){
   .why-box:hover{
     transform:translateY(-5px);
-    border-color:rgba(255,255,255,.16);
-    box-shadow:0 0 22px rgba(255,255,255,.10), 0 0 22px rgba(0,255,243,.16)
+    border-color:#00fff3;
+    box-shadow:0 0 18px rgba(0,255,243,.22)
   }
 }
 
@@ -191,18 +153,11 @@ section{
   text-align:center;
   opacity:0;
   transition:opacity .35s ease;
-
   content-visibility:auto;
   contain-intrinsic-size: 1px 900px;
 }
 section.visible{opacity:1}
 section h2{font-size:36px;margin-bottom:35px}
-
-/* ensure #home not affected by section rule */
-section#home{
-  content-visibility: visible !important;
-  contain-intrinsic-size: auto !important;
-}
 
 /* -------- GRID -------- */
 .grid{
@@ -214,14 +169,14 @@ section#home{
   width:100%;height:auto;border-radius:14px;
   cursor:pointer;transition:.18s;
   display:block;background:#0b0b0b;
-  box-shadow:0 0 22px rgba(255,255,255,.06), 0 0 22px rgba(0,255,243,.08);
+  box-shadow:0 0 22px rgba(0,255,243,.08);
   transform:translateZ(0);
 }
 .grid img.lazy{filter:blur(6px);opacity:.9}
 @media (hover:hover){
   .grid img:hover{
     transform:scale(1.03) translateZ(0);
-    box-shadow:0 0 26px rgba(255,255,255,.10), 0 0 26px rgba(0,255,243,.16);
+    box-shadow:0 0 26px rgba(0,255,243,.16);
   }
 }
 
@@ -236,7 +191,7 @@ section#home{
 #lightbox img{
   max-width:92vw;max-height:92vh;width:auto;height:auto;
   object-fit:contain;border-radius:16px;
-  box-shadow:0 0 34px rgba(255,255,255,.10), 0 0 34px rgba(0,255,243,.12);
+  box-shadow:0 0 34px rgba(0,255,243,.12);
 }
 
 /* -------- CONTACT -------- */
@@ -246,13 +201,12 @@ section#home{
   border-radius:8px;background:#111;color:#fff;
   font-weight:bold;text-decoration:none;
   transition:.18s;
-  box-shadow:0 0 18px rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,0.06);
+  box-shadow:0 0 20px rgba(195,75,255,.06);
 }
 @media (hover:hover){
   .contact-links a:hover{
-    background:var(--aqua);color:#000;
-    box-shadow:0 0 26px rgba(255,255,255,.12), 0 0 26px rgba(0,255,243,.24);
+    background:#00fff3;color:#000;
+    box-shadow:0 0 24px rgba(0,255,243,.28);
   }
 }
 
@@ -276,10 +230,9 @@ section#home{
   .nameWrap{opacity:1 !important;transform:none !important;}
 }
 
-/* While scrolling: reduce heavy effects (KEEP RGB animation ON) */
+/* While scrolling: reduce heavy effects (KEEP RGB ON) */
 body.scrolling nav{backdrop-filter:none !important;}
 body.scrolling .review-bubble{animation:none !important;}
-/* ✅ do NOT disable h1 animation; only reduce glow a bit */
 body.scrolling h1{filter:drop-shadow(0 0 6px rgba(255,255,255,.06)) !important;}
 body.scrolling .grid img{box-shadow:none !important;transition:none !important;}
 body.scrolling .why-box{box-shadow:none !important;}
@@ -457,13 +410,13 @@ body.scrolling .contact-links a{box-shadow:none !important;}
 (() => {
   const d = document;
 
-  // ✅ HERO + NAME intro (works on PC + mobile)
+  // ✅ HERO + NAME intro (professional + consistent)
   d.body.classList.remove("loaded");
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       d.body.classList.add("loaded");
       const nw = d.getElementById("nameWrap");
-      if (nw) setTimeout(() => nw.classList.add("show"), 700);
+      if (nw) setTimeout(() => nw.classList.add("show"), 520);
     });
   });
 
@@ -552,7 +505,7 @@ body.scrolling .contact-links a{box-shadow:none !important;}
     d.body.style.overflow = "";
   }, { passive: true });
 
-  // ✅ Lighter scrolling class (doesn't break RGB)
+  // ✅ lighter scrolling class (does not break RGB)
   let t;
   window.addEventListener("scroll", () => {
     d.body.classList.add("scrolling");
