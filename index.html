@@ -34,7 +34,13 @@
       overflow-x:hidden;
       -webkit-text-size-adjust:100%;
       touch-action:pan-y;
+      /* ✅ keep space for mobile bottom nav only */
       padding-bottom: calc(var(--mnav-h) + 16px + var(--safe-b));
+    }
+
+    /* ✅ remove extra bottom gap on desktop */
+    @media(min-width:981px){
+      body{padding-bottom:0}
     }
 
     section{scroll-margin-top:110px}
@@ -283,8 +289,8 @@
       bottom:-8px;
       width:clamp(220px, 24vw, 320px);
       max-width:70%;
-      transform:translate3d(-50%, 170px, 0) scale(.98);
-      opacity:0;
+      transform:translate3d(-50%, 60px, 0) scale(.98);
+      opacity:1; /* mobile fix: prevent blank intro */
       will-change:transform,opacity;
       object-fit:contain;
       z-index:4;
@@ -323,7 +329,7 @@
     }
 
     @keyframes riseWave{
-      0%   {opacity:0; transform:translate3d(-50%, 170px, 0) scale(.98)}
+      0%   {opacity:0; transform:translate3d(-50%, 60px, 0) scale(.98)}
       52%  {opacity:1; transform:translate3d(-50%, -14px, 0) scale(1)}
       70%  {opacity:1; transform:translate3d(-50%, 8px, 0) scale(1)}
       84%  {opacity:1; transform:translate3d(-50%, -5px, 0) scale(1)}
@@ -367,10 +373,10 @@
     }
     .reviewCard.play{ animation: reviewFly 2400ms cubic-bezier(.18,1,.22,1) forwards; }
     @keyframes reviewFly{
-      0%{opacity:0; transform:translate3d(0, 70px, 0); filter:blur(12px)}
-      22%{opacity:1; transform:translate3d(0, 0px, 0); filter:blur(0px)}
-      65%{opacity:1; transform:translate3d(0, -10px, 0); filter:blur(0px)}
-      100%{opacity:0; transform:translate3d(0, -70px, 0); filter:blur(10px)}
+      0%{opacity:0; transform:translate3d(0, 60px, 0); filter:blur(10px)}
+      20%{opacity:1; transform:translate3d(0, 0px, 0); filter:blur(0)}
+      80%{opacity:1; transform:translate3d(0, -6px, 0); filter:blur(0)}
+      100%{opacity:1; transform:translate3d(0, 0px, 0); filter:blur(0)}
     }
     .stars{font-weight:900;letter-spacing:1px;font-size:12px;color:#fff;opacity:.92}
     .revText{margin-top:6px;font-weight:900;font-size:14px;line-height:1.25}
@@ -466,7 +472,11 @@
       .mnav{display:flex;}
       .heroGrid{grid-template-columns:1fr;gap:16px}
       .grid{grid-template-columns:1fr}
-      .art{height:480px}
+
+      /* ✅ mobile performance + better spacing */
+      .art{height:460px}
+      .heroStage{height:calc(100% - 16px - 118px)}
+      .reviewBox{height:92px}
 
       .intro{bottom:-10px}
       .line{height:210px}
@@ -479,11 +489,11 @@
       .heroBtns .btn{width:100%;justify-content:center}
       .miniStats{grid-template-columns:1fr;max-width:none}
 
-      .art{height:460px}
-      .reviewBox{height:108px}
+      .art{height:440px}
+      .art::before{filter:blur(12px);opacity:.75}
+      .glowFloor{display:none}
 
-      .intro{bottom:-12px}
-      .line{height:200px;width:4px}
+      .reviewBox{height:96px}
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -738,9 +748,9 @@
       ];
 
       // ✅ Play hero animations one time
-      requestAnimationFrame(() => {
+      window.addEventListener('DOMContentLoaded', () => {
         d.body.classList.add("loaded");
-      });
+      }, { once:true });
 
       // ✅ Review loop
       const card = d.getElementById("reviewCard");
