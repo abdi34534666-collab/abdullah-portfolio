@@ -290,7 +290,7 @@
       width:clamp(220px, 24vw, 320px);
       max-width:70%;
       transform:translate3d(-50%, 60px, 0) scale(.98);
-      opacity:1; /* mobile fix: prevent blank intro */
+      opacity:0; /* start hidden for smooth animation */
       will-change:transform,opacity;
       object-fit:contain;
       z-index:4;
@@ -298,25 +298,8 @@
       -webkit-backface-visibility:hidden;
     }
 
-    /* ✅ Optional line (bottom -> top) one time */
-    .line{
-      position:absolute;
-      left:50%;
-      bottom:20px;
-      width:4px;
-      height:210px;
-      transform:translateX(-50%) scaleY(0);
-      transform-origin:bottom;
-      border-radius:999px;
-      background:linear-gradient(to top,
-        rgba(255,255,255,0),
-        rgba(255,255,255,.35),
-        rgba(255,255,255,.90));
-      opacity:.95;
-      z-index:3;
-      will-change:transform,opacity;
-      pointer-events:none;
-    }
+    /* ✅ Line removed (clean intro only) */
+    .line{display:none !important}
 
     /* ✅ HERO animations (one time, smooth) */
     body.loaded .intro{
@@ -747,6 +730,9 @@
         { text: "Best logo & branding designer. Thank you!", name: "— Jack" }
       ];
 
+      /* ✅ performance: pause review when tab hidden */
+      let reviewTimer = null;
+
       // ✅ Play hero animations one time
       window.addEventListener('DOMContentLoaded', () => {
         d.body.classList.add("loaded");
@@ -768,7 +754,13 @@
         card.classList.add("play");
       }
       playReview();
-      setInterval(playReview, 2400);
+      function startReviews(){ if(!reviewTimer) reviewTimer = setInterval(playReview, 2400); }
+      function stopReviews(){ clearInterval(reviewTimer); reviewTimer = null; }
+      startReviews();
+
+      document.addEventListener('visibilitychange', ()=>{
+        if(document.hidden) stopReviews(); else startReviews();
+      });
 
       // ✅ smooth anchor click
       d.addEventListener("click", (e) => {
@@ -844,7 +836,13 @@
       const nav = d.getElementById("nav");
       let lastY = window.scrollY || 0;
       let t;
+      /* ✅ smoother scroll (throttled for performance) */
+      let ticking=false;
       window.addEventListener("scroll", () => {
+        if(ticking) return;
+        ticking=true;
+        requestAnimationFrame(()=>{
+
         const y = window.scrollY || 0;
         d.body.classList.add("scrolling");
         clearTimeout(t);
@@ -855,6 +853,8 @@
           else nav.classList.remove("hide");
         }
         lastY = y;
+          ticking=false;
+        });
       }, { passive:true });
 
       // ✅ mobile nav active
