@@ -6,9 +6,9 @@
   <title>Abdullah Al Mamun | Portfolio</title>
   <meta name="color-scheme" content="dark" />
 
-  <!-- ✅ Preload hero (YOUR SAME NAMES) -->
-  <link rel="preload" as="image" href="intro_images/green-cycle.webp" fetchpriority="high" />
-  <link rel="preload" as="image" href="intro_images/men1.webp" fetchpriority="high" />
+  <!-- ✅ Preload NEW intro image (put your file here) -->
+  <!-- Recommended rename: intro_images/intro.webp  (or intro.png) -->
+  <link rel="preload" as="image" href="intro_images/intro.webp" fetchpriority="high" />
 
   <style>
     :root{
@@ -141,7 +141,6 @@
 
     /* ---------- HERO ---------- */
     header.hero{
-      /* ✅ mobile vh fix (address bar) */
       min-height: 100vh;
       min-height: 100svh;
       min-height: 100dvh;
@@ -283,33 +282,35 @@
       z-index:1;
     }
 
-    /* ✅ intro_images animation (down -> up), green first, then men */
-    .ring, .man{
+    /* ✅ NEW: Single intro image (NO red/white glow) */
+    .intro{
       position:absolute;
       left:50%;
-      bottom:0;
+      bottom:-6px;
+      width:420px;
+      max-width:82%;
       opacity:0;
       transform:translate3d(-50%, 120px, 0) scale(.98);
-      filter:blur(14px) drop-shadow(0 0 18px rgba(255,255,255,.14));
-      will-change:transform,opacity,filter;
+      will-change:transform,opacity;
       backface-visibility:hidden;
       -webkit-backface-visibility:hidden;
+      filter:none;
+      object-fit:contain;
+      z-index:3;
     }
-    .ring{width:520px;max-width:92%;bottom:20px;z-index:2}
-    .man {width:390px;max-width:80%;bottom:-6px;z-index:3}
 
-    body.loaded .ring{animation: riseIn 900ms cubic-bezier(.18,1,.28,1) forwards;}
-    body.loaded .man {animation: riseIn 880ms cubic-bezier(.18,1,.28,1) forwards; animation-delay:1400ms;}
+    body.loaded .intro{
+      animation: riseIn 900ms cubic-bezier(.18,1,.28,1) forwards;
+    }
 
     @keyframes riseIn{
-      0%   {opacity:0;transform:translate3d(-50%, 140px, 0) scale(.98);filter:blur(16px) drop-shadow(0 0 18px rgba(255,255,255,.10))}
-      60%  {opacity:1;transform:translate3d(-50%, -10px, 0) scale(1);filter:blur(0) drop-shadow(0 0 22px rgba(255,255,255,.18))}
-      100% {opacity:1;transform:translate3d(-50%, 0px, 0) scale(1);filter:blur(0) drop-shadow(0 0 22px rgba(255,255,255,.18))}
+      0%   {opacity:0;transform:translate3d(-50%, 140px, 0) scale(.98)}
+      60%  {opacity:1;transform:translate3d(-50%, -10px, 0) scale(1)}
+      100% {opacity:1;transform:translate3d(-50%, 0px, 0) scale(1)}
     }
 
     /* gentle float after show */
-    body.loaded .ring.floatAfter{animation: floatIdle 7.2s ease-in-out infinite}
-    body.loaded .man.floatAfter {animation: floatIdle 7.9s ease-in-out infinite}
+    body.loaded .intro.floatAfter{animation: floatIdle 7.6s ease-in-out infinite}
     @keyframes floatIdle{
       0%,100%{transform:translate3d(-50%, 0px, 0)}
       50%{transform:translate3d(-50%, -10px, 0)}
@@ -345,7 +346,6 @@
       color:var(--text);
     }
     .reviewCard.play{
-      /* ✅ match interval for smooth phones */
       animation: reviewFly 2400ms cubic-bezier(.18,1,.22,1) forwards;
     }
     @keyframes reviewFly{
@@ -424,12 +424,11 @@
 
     /* ---------- MOBILE LAYOUT FIX ---------- */
     @media(max-width:980px){
-      /* ✅ scroll offset for mobile (no top nav) */
       section{scroll-margin-top:18px}
 
       header.hero{
         padding-top:26px;
-        padding-bottom: calc(var(--mnav-h) + 26px + var(--safe-b)); /* ✅ space for bottom nav */
+        padding-bottom: calc(var(--mnav-h) + 26px + var(--safe-b));
       }
       .nav{display:none;}
       .mnav{display:flex;}
@@ -437,10 +436,8 @@
       .heroGrid{grid-template-columns:1fr;gap:16px}
       .grid{grid-template-columns:1fr}
 
-      /* ✅ phone looks better */
       .art{height:480px}
-      .ring{width:480px}
-      .man {width:330px}
+      .intro{width:360px;max-width:84%;bottom:-10px}
 
       .miniStats{grid-template-columns:repeat(3, minmax(0,1fr))}
     }
@@ -454,14 +451,13 @@
 
       .art{height:460px}
       .reviewBox{height:108px}
-      .ring{width:460px}
-      .man{width:320px}
+      .intro{width:330px;max-width:86%;bottom:-12px}
     }
 
     @media (prefers-reduced-motion: reduce){
       *{animation:none !important;transition:none !important}
       .reveal{opacity:1 !important;transform:none !important}
-      .ring,.man{opacity:1 !important;transform:translate3d(-50%,0,0) !important;filter:none !important}
+      .intro{opacity:1 !important;transform:translate3d(-50%,0,0) !important}
       .reviewCard{opacity:1 !important;transform:none !important;filter:none !important;position:static}
     }
 
@@ -543,8 +539,11 @@
         <div class="glowFloor"></div>
 
         <div class="heroStage">
-          <img class="ring" src="intro_images/green-cycle.webp" alt="Green Cycle" decoding="async" fetchpriority="high">
-          <img class="man"  src="intro_images/men1.webp"       alt="Men Image"   decoding="async" fetchpriority="high">
+          <!-- ✅ CHANGE ONLY THIS PATH if your file name is different -->
+          <img class="intro" src="intro_images/intro.webp" alt="Intro" decoding="async" fetchpriority="high">
+          <!-- Example if you keep the original name with spaces:
+          <img class="intro" src="intro_images/Graphic Design Abdullah Al Mamun.png" alt="Intro" decoding="async" fetchpriority="high">
+          -->
         </div>
 
         <div class="reviewBox" aria-hidden="true">
@@ -707,18 +706,16 @@
         { text: "Best logo & branding designer. Thank you!", name: "— Jack" }
       ];
 
-      // ✅ Start hero animations + after both appear start float
+      // ✅ Start hero animations + float after show
       requestAnimationFrame(() => {
         d.body.classList.add("loaded");
         setTimeout(() => {
-          const ring = d.querySelector(".ring");
-          const man  = d.querySelector(".man");
-          ring && ring.classList.add("floatAfter");
-          man && man.classList.add("floatAfter");
-        }, 2300);
+          const intro = d.querySelector(".intro");
+          intro && intro.classList.add("floatAfter");
+        }, 1400);
       });
 
-      // ✅ Review loop (2400ms = smoother on phones)
+      // ✅ Review loop
       const card = d.getElementById("reviewCard");
       const revText = d.getElementById("revText");
       const revName = d.getElementById("revName");
@@ -848,5 +845,3 @@
   </script>
 </body>
 </html>
-
-
