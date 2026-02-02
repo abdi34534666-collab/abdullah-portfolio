@@ -6,7 +6,7 @@
   <title>Abdullah Al Mamun | Portfolio</title>
   <meta name="color-scheme" content="dark" />
 
-  <!-- ✅ Preload hero intro image (change filename if needed) -->
+  <!-- ✅ Preload hero intro image -->
   <link rel="preload" as="image" href="intro_images/intro.webp" fetchpriority="high" />
 
   <style>
@@ -34,14 +34,9 @@
       overflow-x:hidden;
       -webkit-text-size-adjust:100%;
       touch-action:pan-y;
-      /* ✅ keep space for mobile bottom nav only */
       padding-bottom: calc(var(--mnav-h) + 16px + var(--safe-b));
     }
-
-    /* ✅ remove extra bottom gap on desktop */
-    @media(min-width:981px){
-      body{padding-bottom:0}
-    }
+    @media(min-width:981px){ body{padding-bottom:0} }
 
     section{scroll-margin-top:110px}
     .wrap{width:min(1120px, calc(100% - 28px));margin:0 auto}
@@ -163,7 +158,6 @@
       color:#ffffff;
       font-weight:900;font-size:13px;
       width:fit-content;
-      /* ✨ NEW glow effect */
       text-shadow:
         0 0 8px rgba(255,255,255,.35),
         0 0 18px rgba(255,255,255,.18);
@@ -279,10 +273,6 @@
       z-index:1;
     }
 
-    /* ❌ Removed green circle (user image already has background) */
-    .circleBG{display:none}
-
-    /* ✅ Intro photo (ONLY intro.webp, no extra circles) */
     .intro{
       position:absolute;
       left:50%;
@@ -290,7 +280,7 @@
       width:clamp(220px, 24vw, 320px);
       max-width:70%;
       transform:translate3d(-50%, 60px, 0) scale(.98);
-      opacity:0; /* start hidden for smooth animation */
+      opacity:0;
       will-change:transform,opacity;
       object-fit:contain;
       z-index:4;
@@ -298,17 +288,11 @@
       -webkit-backface-visibility:hidden;
     }
 
-    /* ✅ Line removed (clean intro only) */
     .line{display:none !important}
 
-    /* ✅ HERO animations (one time, smooth) */
     body.loaded .intro{
       animation: riseWave 1200ms cubic-bezier(.18,1,.22,1) forwards;
       animation-delay:120ms;
-    }
-    body.loaded .line{
-      animation: drawUp 900ms cubic-bezier(.18,1,.22,1) forwards;
-      animation-delay:320ms;
     }
 
     @keyframes riseWave{
@@ -317,12 +301,6 @@
       70%  {opacity:1; transform:translate3d(-50%, 8px, 0) scale(1)}
       84%  {opacity:1; transform:translate3d(-50%, -5px, 0) scale(1)}
       100% {opacity:1; transform:translate3d(-50%, 0px, 0) scale(1)}
-    }
-
-    @keyframes drawUp{
-      0%{transform:translateX(-50%) scaleY(0); opacity:0}
-      20%{opacity:1}
-      100%{transform:translateX(-50%) scaleY(1); opacity:1}
     }
 
     /* ---------- REVIEW BOX ---------- */
@@ -390,9 +368,7 @@
       cursor:pointer;
     }
     .grid img.lazy{filter:blur(8px);opacity:.92}
-    @media(hover:hover){
-      .grid img:hover{transform:scale(1.03);border-color:var(--stroke2)}
-    }
+    @media(hover:hover){ .grid img:hover{transform:scale(1.03);border-color:var(--stroke2)} }
 
     .reveal{opacity:0;transform:translate3d(0,14px,0);will-change:transform,opacity}
     .reveal.in{opacity:1;transform:translate3d(0,0,0);transition:opacity .6s ease, transform .6s ease}
@@ -410,7 +386,6 @@
     #contactBox p{color:var(--muted);line-height:1.7}
     .contactBtns{display:flex;gap:10px;flex-wrap:wrap}
 
-    /* ✅ WhatsApp highlight */
     .btn-whatsapp{
       background:#25D366 !important;
       color:#0a0a0a !important;
@@ -439,30 +414,19 @@
       padding:16px;
     }
     #lightbox.show{opacity:1;visibility:visible}
-    #lightbox img{
-      max-width:92vw;max-height:92vh;
-      border-radius:18px;
-      box-shadow:0 0 70px rgba(255,255,255,.12);
-    }
+    #lightbox img{max-width:92vw;max-height:92vh;border-radius:18px;box-shadow:0 0 70px rgba(255,255,255,.12)}
 
     @media(max-width:980px){
       section{scroll-margin-top:18px}
-      header.hero{
-        padding-top:26px;
-        padding-bottom: calc(var(--mnav-h) + 26px + var(--safe-b));
-      }
+      header.hero{padding-top:26px;padding-bottom: calc(var(--mnav-h) + 26px + var(--safe-b));}
       .nav{display:none;}
       .mnav{display:flex;}
       .heroGrid{grid-template-columns:1fr;gap:16px}
       .grid{grid-template-columns:1fr}
-
-      /* ✅ mobile performance + better spacing */
       .art{height:460px}
       .heroStage{height:calc(100% - 16px - 118px)}
       .reviewBox{height:92px}
-
       .intro{bottom:-10px}
-      .line{height:210px}
     }
 
     @media(max-width:520px){
@@ -471,11 +435,9 @@
       .lead{font-size:14.5px}
       .heroBtns .btn{width:100%;justify-content:center}
       .miniStats{grid-template-columns:1fr;max-width:none}
-
       .art{height:440px}
       .art::before{filter:blur(12px);opacity:.75}
       .glowFloor{display:none}
-
       .reviewBox{height:96px}
     }
 
@@ -483,11 +445,12 @@
       *{animation:none !important;transition:none !important}
       .reveal{opacity:1 !important;transform:none !important}
       .intro{opacity:1 !important;transform:translate3d(-50%,0,0) !important}
-      .line{opacity:0 !important}
       .reviewCard{opacity:1 !important;transform:none !important;filter:none !important;position:static}
     }
 
     body.scrolling .grid img{transition:none}
+
+    
   </style>
 </head>
 
@@ -497,8 +460,8 @@
     <a class="brand" href="#home">
       <img src="logo.webp" alt="Logo" decoding="async" fetchpriority="high" />
       <span class="t">
-        Abdullah Al Mamun
-        <small>Graphic Designer</small>
+        <span id="uiName">Abdullah Al Mamun</span>
+        <small id="uiRole">Graphic Designer</small>
       </span>
     </a>
     <div class="links">
@@ -507,6 +470,7 @@
       <a href="#thumbnails">Thumbnails</a>
       <a href="#mockups">Mockups</a>
       <a href="#tshirts">T-Shirts</a>
+      <a href="#streetwear">Streetwear</a>
       <a href="#contact" class="btnHire">Hire Me</a>
     </div>
   </nav>
@@ -517,9 +481,8 @@
     <a href="#logos" data-sec="logos">Logos</a>
     <a href="#thumbnails" data-sec="thumbnails">Thumbs</a>
     <a href="#mockups" data-sec="mockups">Mockups</a>
-
-    <!-- ✅ Hire now opens WhatsApp directly (fix not showing issue) -->
-    <a href="https://wa.me/8801600106114" target="_blank" rel="noopener" class="hire" style="background:#25D366;color:#0a0a0a;font-weight:1000;box-shadow:0 0 20px rgba(37,211,102,.55)">WhatsApp</a>
+    <a href="#streetwear" data-sec="streetwear">Wear</a>
+    <a id="mnavWa" href="https://wa.me/8801600106114" target="_blank" rel="noopener" class="hire" style="background:#25D366;color:#0a0a0a;font-weight:1000;box-shadow:0 0 20px rgba(37,211,102,.55)">WhatsApp</a>
   </div>
 
   <!-- HERO -->
@@ -533,7 +496,7 @@
         </h1>
 
         <p class="lead reveal">
-          Hi, I’m <b>Abdullah Al Mamun</b> — I create clean branding, logo design, high click thumbnails,
+          Hi, I’m <b id="heroName">Abdullah Al Mamun</b> — I create clean branding, logo design, high click thumbnails,
           and professional mockups. Premium look, fast delivery, and client satisfaction.
         </p>
 
@@ -692,6 +655,22 @@
 
   <div class="sp"></div>
 
+  <!-- STREETWEAR -->
+  <section id="streetwear" class="wrap">
+    <div class="secHead">
+      <h2 class="reveal">Streetwear Concepts</h2>
+      <p class="reveal">Streetwear hoodie + tee concepts. Clean typography, bold graphics, premium street style.</p>
+    </div>
+
+    <!-- ✅ EDIT HERE: add/remove streetwear images -->
+    <div class="grid">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Streetwear1.webp" decoding="async" alt="Streetwear 1" width="800" height="600">
+      <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Streetwear2.webp" decoding="async" alt="Streetwear 2" width="800" height="600">
+    </div>
+  </section>
+
+  <div class="sp"></div>
+
   <!-- CONTACT -->
   <section id="contact" class="wrap">
     <div class="secHead">
@@ -701,12 +680,12 @@
 
     <div id="contactBox" class="reveal">
       <div>
-        <strong style="font-size:18px;font-weight:980">Abdullah Al Mamun</strong>
-        <p>Creative Designer • Branding & Thumbnails</p>
+        <strong id="contactName" style="font-size:18px;font-weight:980">Abdullah Al Mamun</strong>
+        <p id="contactRole">Creative Designer • Branding & Thumbnails</p>
       </div>
       <div class="contactBtns">
-        <a class="btn primary" href="https://t.me/abdullah_graphicxpart" target="_blank" rel="noopener">Telegram</a>
-        <a class="btn btn-whatsapp" href="https://wa.me/8801600106114" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn primary" id="tgBtn" href="https://t.me/abdullah_graphicxpart" target="_blank" rel="noopener">Telegram</a>
+        <a class="btn btn-whatsapp" id="waBtn" href="https://wa.me/8801600106114" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
   </section>
@@ -715,6 +694,8 @@
 
   <!-- LIGHTBOX -->
   <div id="lightbox" aria-hidden="true"><img alt=""></div>
+
+  
 
   <script>
     (() => {
@@ -729,15 +710,13 @@
         { text: "Best logo & branding designer. Thank you!", name: "— Jack" }
       ];
 
-      /* ✅ performance: pause review when tab hidden */
-      let reviewTimer = null;
-
-      // ✅ Play hero animations one time
+      // ---------------- Start animations one time ----------------
       window.addEventListener('DOMContentLoaded', () => {
         d.body.classList.add("loaded");
       }, { once:true });
 
-      // ✅ Review loop
+      // ---------------- Reviews ----------------
+      let reviewTimer = null;
       const card = d.getElementById("reviewCard");
       const revText = d.getElementById("revText");
       const revName = d.getElementById("revName");
@@ -756,7 +735,6 @@
       function startReviews(){ if(!reviewTimer) reviewTimer = setInterval(playReview, 2400); }
       function stopReviews(){ clearInterval(reviewTimer); reviewTimer = null; }
       startReviews();
-
       document.addEventListener('visibilitychange', ()=>{
         if(document.hidden) stopReviews(); else startReviews();
       });
@@ -790,7 +768,7 @@
         reveals.forEach(el => el.classList.add("in"));
       }
 
-      // ✅ lazy load images
+      // ✅ lazy load images (all sections)
       const lazyImgs = d.querySelectorAll("img.lazy[data-src]");
       const loadImg = (img) => {
         const src = img.getAttribute("data-src");
@@ -799,6 +777,7 @@
         img.removeAttribute("data-src");
         img.classList.remove("lazy");
       };
+
       if ("IntersectionObserver" in window) {
         const ioImg = new IntersectionObserver((entries) => {
           for (const e of entries) {
@@ -812,14 +791,60 @@
         lazyImgs.forEach(loadImg);
       }
 
+      // ---------------- Lazy Image Loader ----------------
+      function initLazyImages(){
+        const imgs = d.querySelectorAll('img.lazy[data-src]');
+        const load = (img)=>{
+          const s = img.getAttribute('data-src');
+          if(!s) return;
+          img.src = s;
+          img.removeAttribute('data-src');
+          img.classList.remove('lazy');
+        };
+        if('IntersectionObserver' in window){
+          const io = new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{
+              if(!e.isIntersecting) return;
+              load(e.target);
+              io.unobserve(e.target);
+            });
+          },{rootMargin:'500px 0px'});
+          imgs.forEach(i=>io.observe(i));
+        }else{
+          imgs.forEach(load);
+        }
+      }
+
+      // ---------------- Streetwear Builder (static safe) ----------------
+      function applyUI(){
+        const grid = d.getElementById('swGrid');
+        if(!grid) return;
+        const files = [
+          'portfolio_images/Streetwear1.webp',
+          'portfolio_images/Streetwear2.webp'
+        ];
+        grid.innerHTML = files.map((src,i)=>
+          `<img class=\"lazy\" src=\"placeholder.webp\" data-src=\"${src}\" alt=\"Streetwear ${i+1}\" width=\"800\" height=\"600\">`
+        ).join('');
+        initLazyImages();
+      }
+
       // ✅ lightbox
       const lb = d.getElementById("lightbox");
       const lbImg = lb.querySelector("img");
 
+      const loadImgNow = (img) => {
+        if (img.classList.contains("lazy") && img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute("data-src");
+          img.classList.remove("lazy");
+        }
+      };
+
       d.addEventListener("click", async (e) => {
         const img = e.target.closest(".grid img");
         if (!img) return;
-        if (img.classList.contains("lazy") && img.dataset.src) loadImg(img);
+        loadImgNow(img);
         lbImg.src = img.currentSrc || img.src;
         try { await lbImg.decode(); } catch(_) {}
         lb.classList.add("show");
@@ -835,23 +860,21 @@
       const nav = d.getElementById("nav");
       let lastY = window.scrollY || 0;
       let t;
-      /* ✅ smoother scroll (throttled for performance) */
       let ticking=false;
       window.addEventListener("scroll", () => {
         if(ticking) return;
         ticking=true;
         requestAnimationFrame(()=>{
+          const y = window.scrollY || 0;
+          d.body.classList.add("scrolling");
+          clearTimeout(t);
+          t = setTimeout(() => d.body.classList.remove("scrolling"), 160);
 
-        const y = window.scrollY || 0;
-        d.body.classList.add("scrolling");
-        clearTimeout(t);
-        t = setTimeout(() => d.body.classList.remove("scrolling"), 160);
-
-        if (nav && window.innerWidth > 980) {
-          if (y > lastY && y > 140) nav.classList.add("hide");
-          else nav.classList.remove("hide");
-        }
-        lastY = y;
+          if (nav && window.innerWidth > 980) {
+            if (y > lastY && y > 140) nav.classList.add("hide");
+            else nav.classList.remove("hide");
+          }
+          lastY = y;
           ticking=false;
         });
       }, { passive:true });
@@ -859,11 +882,9 @@
       // ✅ mobile nav active
       const mnav = d.getElementById("mnav");
       const mlinks = mnav ? Array.from(mnav.querySelectorAll("a[data-sec]")) : [];
-      const sections = ["home","logos","thumbnails","mockups","contact"].map(id => d.getElementById(id)).filter(Boolean);
+      const sections = ["home","logos","thumbnails","mockups","tshirts","streetwear","contact"].map(id => d.getElementById(id)).filter(Boolean);
 
-      function setActive(id){
-        mlinks.forEach(a => a.classList.toggle("active", a.dataset.sec === id));
-      }
+      function setActive(id){ mlinks.forEach(a => a.classList.toggle("active", a.dataset.sec === id)); }
       if (mlinks.length) {
         if ("IntersectionObserver" in window) {
           const ioSec = new IntersectionObserver((entries) => {
@@ -877,10 +898,8 @@
           setActive("home");
         }
       }
+
     })();
   </script>
 </body>
 </html>
-
-
-
