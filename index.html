@@ -36,6 +36,8 @@
       touch-action:pan-y;
       padding-bottom: calc(var(--mnav-h) + 16px + var(--safe-b));
     }
+
+    /* ✅ remove extra bottom gap on desktop */
     @media(min-width:981px){ body{padding-bottom:0} }
 
     section{scroll-margin-top:110px}
@@ -65,13 +67,48 @@
       font-weight:950;letter-spacing:.2px;
       min-width:220px;
     }
-    .brand img{
-      width:38px;height:38px;border-radius:14px;
+
+    /* ✅ Sharp vector logo */
+    .brand .logoA{
+      width:38px;height:38px;
+      border-radius:14px;
       border:1px solid var(--stroke);
-      object-fit:cover;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(145deg,#0e0f11,#1b1d21);
       box-shadow:0 0 22px rgba(255,255,255,.10);
+      position:relative;
+      overflow:hidden;
       flex:0 0 auto;
     }
+    .logoA svg{width:26px;height:26px;display:block;position:relative;z-index:2}
+
+    /* single glow layer (fix duplicate ::before bug) */
+    .logoA::before{
+      content:"";
+      position:absolute;inset:-18px;
+      background:
+        radial-gradient(60px 60px at 20% 18%, rgba(37,211,102,.22), transparent 60%),
+        radial-gradient(70px 70px at 82% 78%, rgba(255,255,255,.10), transparent 65%),
+        linear-gradient(45deg, transparent 45%, rgba(37,211,102,.14) 50%, transparent 55%);
+      filter:blur(10px);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .logoA::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:7px;
+      width:62%;
+      height:3px;
+      transform:translateX(-50%);
+      background:#25D366;
+      border-radius:2px;
+      box-shadow:0 0 10px rgba(37,211,102,.9), 0 0 22px rgba(37,211,102,.55);
+      pointer-events:none;
+    }
+
     .brand .t{display:flex;flex-direction:column;line-height:1.1}
     .brand small{color:var(--muted);font-weight:800;font-size:11px;margin-top:2px}
 
@@ -90,6 +127,26 @@
       border-color:transparent !important;
       box-shadow:0 0 20px rgba(255,255,255,.12);
     }
+
+    /* ---------- MOBILE TOP BRAND ---------- */
+    .mTop{
+      position:fixed;
+      left:12px; right:12px;
+      top:12px;
+      z-index:1001;
+      display:none;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:18px;
+      border:1px solid var(--stroke);
+      background:rgba(10,10,10,.62);
+      backdrop-filter: blur(12px);
+      box-shadow:0 18px 60px rgba(0,0,0,.55);
+    }
+    .mTop .t{display:flex;flex-direction:column;line-height:1.1}
+    .mTop strong{font-weight:950;font-size:14px}
+    .mTop small{color:var(--muted);font-weight:800;font-size:11px}
 
     /* ---------- MOBILE NAV ---------- */
     .mnav{
@@ -164,8 +221,8 @@
     }
     .tag i{
       width:10px;height:10px;border-radius:99px;
-      background:rgba(255,255,255,.80);
-      box-shadow:0 0 18px rgba(255,255,255,.25);
+      background:#25D366;
+      box-shadow:0 0 12px #25D366, 0 0 26px rgba(37,211,102,.7);
       display:inline-block;
     }
     .h1{
@@ -226,7 +283,6 @@
       overflow:hidden;
       transform:translateZ(0);
     }
-
     .art::before{
       content:"";
       position:absolute;inset:-40px;
@@ -287,14 +343,12 @@
       backface-visibility:hidden;
       -webkit-backface-visibility:hidden;
     }
-
     .line{display:none !important}
 
     body.loaded .intro{
       animation: riseWave 1200ms cubic-bezier(.18,1,.22,1) forwards;
       animation-delay:120ms;
     }
-
     @keyframes riseWave{
       0%   {opacity:0; transform:translate3d(-50%, 60px, 0) scale(.98)}
       52%  {opacity:1; transform:translate3d(-50%, -14px, 0) scale(1)}
@@ -370,8 +424,18 @@
     .grid img.lazy{filter:blur(8px);opacity:.92}
     @media(hover:hover){ .grid img:hover{transform:scale(1.03);border-color:var(--stroke2)} }
 
-    .reveal{opacity:0;transform:translate3d(0,14px,0);will-change:transform,opacity}
-    .reveal.in{opacity:1;transform:translate3d(0,0,0);transition:opacity .6s ease, transform .6s ease}
+    .reveal{
+      opacity:0;
+      transform:translateY(40px) scale(.98);
+      will-change:transform,opacity;
+    }
+    .reveal.in{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      transition:
+        opacity .9s cubic-bezier(.22,1,.36,1),
+        transform .9s cubic-bezier(.22,1,.36,1);
+    }
 
     #contactBox{
       margin-top:16px;
@@ -418,9 +482,10 @@
 
     @media(max-width:980px){
       section{scroll-margin-top:18px}
-      header.hero{padding-top:26px;padding-bottom: calc(var(--mnav-h) + 26px + var(--safe-b));}
+      header.hero{padding-top:86px;padding-bottom: calc(var(--mnav-h) + 26px + var(--safe-b));}
       .nav{display:none;}
       .mnav{display:flex;}
+      .mTop{display:flex;}
       .heroGrid{grid-template-columns:1fr;gap:16px}
       .grid{grid-template-columns:1fr}
       .art{height:460px}
@@ -449,19 +514,50 @@
     }
 
     body.scrolling .grid img{transition:none}
-
-    
   </style>
 </head>
 
 <body>
+  <!-- MOBILE TOP BRAND (shows logo on smartphone) -->
+  <div class="mTop" id="mTop" aria-label="Mobile brand">
+    <div class="logoA" aria-hidden="true">
+      <svg viewBox="0 0 64 64" focusable="false">
+        <defs>
+          <linearGradient id="gA2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.98"/>
+            <stop offset="1" stop-color="#cfd6e3" stop-opacity="0.92"/>
+          </linearGradient>
+        </defs>
+        <path d="M32 8 L54 56 H45.5 L40.8 44.5 H23.2 L18.5 56 H10 L32 8Z" fill="url(#gA2)"/>
+        <path d="M27.2 37.8 H36.8 L32 26.2Z" fill="#0b0c0e" opacity="0.92"/>
+        <path d="M22 46.5 L44.5 19.5" stroke="#25D366" stroke-width="4.2" stroke-linecap="round" opacity="0.9"/>
+      </svg>
+    </div>
+    <div class="t">
+      <strong>Abdullah Al Mamun</strong>
+      <small>Graphic Designer</small>
+    </div>
+  </div>
+
   <!-- DESKTOP NAV -->
   <nav class="nav" id="nav">
     <a class="brand" href="#home">
-      <img src="logo.webp" alt="Logo" decoding="async" fetchpriority="high" />
+      <div class="logoA" aria-label="Logo">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity="0.98"/>
+              <stop offset="1" stop-color="#cfd6e3" stop-opacity="0.92"/>
+            </linearGradient>
+          </defs>
+          <path d="M32 8 L54 56 H45.5 L40.8 44.5 H23.2 L18.5 56 H10 L32 8Z" fill="url(#gA)"/>
+          <path d="M27.2 37.8 H36.8 L32 26.2Z" fill="#0b0c0e" opacity="0.92"/>
+          <path d="M22 46.5 L44.5 19.5" stroke="#25D366" stroke-width="4.2" stroke-linecap="round" opacity="0.9"/>
+        </svg>
+      </div>
       <span class="t">
-        <span id="uiName">Abdullah Al Mamun</span>
-        <small id="uiRole">Graphic Designer</small>
+        Abdullah Al Mamun
+        <small>Graphic Designer</small>
       </span>
     </a>
     <div class="links">
@@ -496,7 +592,7 @@
         </h1>
 
         <p class="lead reveal">
-          Hi, I’m <b id="heroName">Abdullah Al Mamun</b> — I create clean branding, logo design, high click thumbnails,
+          Hi, I’m <b>Abdullah Al Mamun</b> — I create clean branding, logo design, high click thumbnails,
           and professional mockups. Premium look, fast delivery, and client satisfaction.
         </p>
 
@@ -530,13 +626,12 @@
         <div class="glowFloor"></div>
 
         <div class="heroStage">
-          <div class="line" aria-hidden="true"></div>
           <img class="intro" src="intro_images/intro.webp" alt="Intro" decoding="async" fetchpriority="high">
         </div>
 
         <div class="reviewBox" aria-hidden="true">
           <div class="reviewCard" id="reviewCard">
-            <div class="stars" id="revStars">★★★★★</div>
+            <div class="stars">★★★★★</div>
             <div class="revText" id="revText">Mockups are insane. Perfect details!</div>
             <div class="revName" id="revName">— Alex</div>
           </div>
@@ -662,7 +757,6 @@
       <p class="reveal">Streetwear hoodie + tee concepts. Clean typography, bold graphics, premium street style.</p>
     </div>
 
-    <!-- ✅ EDIT HERE: add/remove streetwear images -->
     <div class="grid">
       <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Streetwear1.webp" decoding="async" alt="Streetwear 1" width="800" height="600">
       <img class="lazy" src="placeholder.webp" data-src="portfolio_images/Streetwear2.webp" decoding="async" alt="Streetwear 2" width="800" height="600">
@@ -680,12 +774,12 @@
 
     <div id="contactBox" class="reveal">
       <div>
-        <strong id="contactName" style="font-size:18px;font-weight:980">Abdullah Al Mamun</strong>
-        <p id="contactRole">Creative Designer • Branding & Thumbnails</p>
+        <strong style="font-size:18px;font-weight:980">Abdullah Al Mamun</strong>
+        <p>Creative Designer • Branding & Thumbnails</p>
       </div>
       <div class="contactBtns">
-        <a class="btn primary" id="tgBtn" href="https://t.me/abdullah_graphicxpart" target="_blank" rel="noopener">Telegram</a>
-        <a class="btn btn-whatsapp" id="waBtn" href="https://wa.me/8801600106114" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn primary" href="https://t.me/abdullah_graphicxpart" target="_blank" rel="noopener">Telegram</a>
+        <a class="btn btn-whatsapp" href="https://wa.me/8801600106114" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
   </section>
@@ -695,13 +789,91 @@
   <!-- LIGHTBOX -->
   <div id="lightbox" aria-hidden="true"><img alt=""></div>
 
-  
-
   <script>
-    (() => {
-      const d = document;
+    (function(){
+      // ---------------- Polyfills (older browsers / webviews) ----------------
+      if(!window.requestAnimationFrame){
+        window.requestAnimationFrame = function(cb){ return setTimeout(function(){ cb(Date.now()); }, 16); };
+      }
+      if(!window.cancelAnimationFrame){
+        window.cancelAnimationFrame = function(id){ clearTimeout(id); };
+      }
+      if(!Element.prototype.matches){
+        Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+      }
+      if(!Element.prototype.closest){
+        Element.prototype.closest = function(s){
+          var el = this;
+          while(el && el.nodeType === 1){
+            if(el.matches(s)) return el;
+            el = el.parentElement || el.parentNode;
+          }
+          return null;
+        };
+      }
 
-      const REVIEWS = [
+      var d = document;
+
+      // ---------------- Smooth Page Scroll (Desktop) ----------------
+      // ES5 safe (no const/let/arrow) + auto-disable on touch devices
+      var reduceMotion = false;
+      try{
+        reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      }catch(e){ reduceMotion = false; }
+
+      var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+      var isDesktop = !isTouch;
+
+      var smoothEnabled = isDesktop && !reduceMotion;
+      var currentY = window.scrollY || 0;
+      var targetY = currentY;
+      var rafId = null;
+
+      function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+      function maxScroll(){
+        var h = (d.documentElement.scrollHeight || d.body.scrollHeight || 0);
+        return Math.max(0, h - window.innerHeight);
+      }
+
+      function startSmoothLoop(){
+        if(rafId) return;
+        function loop(){
+          rafId = requestAnimationFrame(loop);
+          currentY += (targetY - currentY) * 0.12;
+          if(Math.abs(targetY - currentY) < 0.5) currentY = targetY;
+          window.scrollTo(0, currentY);
+          if(currentY === targetY){
+            cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+        }
+        rafId = requestAnimationFrame(loop);
+      }
+
+      function smoothTo(y){
+        if(!smoothEnabled){
+          try{ window.scrollTo({ top:y, behavior:'smooth' }); }
+          catch(e){ window.scrollTo(0, y); }
+          return;
+        }
+        targetY = clamp(y, 0, maxScroll());
+        startSmoothLoop();
+      }
+
+      if(smoothEnabled){
+        window.addEventListener('resize', function(){ targetY = clamp(targetY, 0, maxScroll()); }, { passive:true });
+        window.addEventListener('scroll', function(){ if(!rafId){ currentY = window.scrollY||0; targetY = currentY; } }, { passive:true });
+        window.addEventListener('wheel', function(e){
+          if(e.ctrlKey) return;
+          if(Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+          e.preventDefault();
+          targetY = clamp(targetY + e.deltaY, 0, maxScroll());
+          startSmoothLoop();
+        }, { passive:false });
+      }
+
+      // ---------------- Reviews ----------------
+      var REVIEWS = [
         { text: "Excellent work! Clean and premium design.", name: "— Rahim Hasan" },
         { text: "Super creative & premium look. Fast delivery!", name: "— Sadia Akter" },
         { text: "Branding looks amazing! Highly recommended.", name: "— Omar Rabbi" },
@@ -710,192 +882,186 @@
         { text: "Best logo & branding designer. Thank you!", name: "— Jack" }
       ];
 
-      // ---------------- Start animations one time ----------------
-      window.addEventListener('DOMContentLoaded', () => {
-        d.body.classList.add("loaded");
+      // Start hero animation once
+      d.addEventListener('DOMContentLoaded', function(){
+        d.body.classList.add('loaded');
       }, { once:true });
 
-      // ---------------- Reviews ----------------
-      let reviewTimer = null;
-      const card = d.getElementById("reviewCard");
-      const revText = d.getElementById("revText");
-      const revName = d.getElementById("revName");
-      let idx = 0;
+      var reviewTimer = null;
+      var card = d.getElementById('reviewCard');
+      var revText = d.getElementById('revText');
+      var revName = d.getElementById('revName');
+      var idx = 0;
 
       function playReview(){
-        const r = REVIEWS[idx % REVIEWS.length];
+        if(!card || !revText || !revName) return;
+        var r = REVIEWS[idx % REVIEWS.length];
         idx++;
         revText.textContent = r.text;
         revName.textContent = r.name;
-        card.classList.remove("play");
-        void card.offsetWidth;
-        card.classList.add("play");
+        card.classList.remove('play');
+        card.offsetWidth; // reflow
+        card.classList.add('play');
       }
       playReview();
       function startReviews(){ if(!reviewTimer) reviewTimer = setInterval(playReview, 2400); }
       function stopReviews(){ clearInterval(reviewTimer); reviewTimer = null; }
       startReviews();
-      document.addEventListener('visibilitychange', ()=>{
-        if(document.hidden) stopReviews(); else startReviews();
+
+      d.addEventListener('visibilitychange', function(){
+        if(d.hidden) stopReviews(); else startReviews();
       });
 
-      // ✅ smooth anchor click
-      d.addEventListener("click", (e) => {
-        const a = e.target.closest('a[href^="#"]');
+      // ---------------- Smooth anchor clicks ----------------
+      d.addEventListener('click', function(e){
+        var a = e.target.closest('a[href^="#"]');
         if(!a) return;
 
-        const id = a.getAttribute("href");
-        const el = id && id.length > 1 ? d.querySelector(id) : null;
+        var id = a.getAttribute('href');
+        if(!id || id.length < 2) return;
+
+        var el = d.querySelector(id);
         if(!el) return;
 
         e.preventDefault();
-        el.scrollIntoView({ behavior:"smooth", block:"start" });
-        history.pushState(null, "", id);
-      }, { passive:false });
+        var top = el.getBoundingClientRect().top + (window.scrollY || 0);
+        smoothTo(top - 10);
+        try{ history.pushState(null, "", id); }catch(err){}
+        currentY = window.scrollY || 0;
+        targetY = currentY;
+      }, false);
 
-      // ✅ reveal on scroll
-      const reveals = d.querySelectorAll(".reveal");
-      if ("IntersectionObserver" in window) {
-        const io = new IntersectionObserver((entries) => {
-          for (const e of entries) {
-            if (!e.isIntersecting) continue;
-            e.target.classList.add("in");
-            io.unobserve(e.target);
+      // ---------------- Reveal on scroll ----------------
+      var reveals = d.querySelectorAll('.reveal');
+      function revealNow(el){ el.classList.add('in'); }
+
+      if('IntersectionObserver' in window){
+        var revealIO = new IntersectionObserver(function(entries){
+          for(var i=0;i<entries.length;i++){
+            var entry = entries[i];
+            if(!entry.isIntersecting) continue;
+            revealNow(entry.target);
+            revealIO.unobserve(entry.target);
           }
-        }, { threshold: 0.01, rootMargin: "180px 0px 180px 0px" });
-        reveals.forEach(el => io.observe(el));
+        }, { threshold:0.12, rootMargin:"0px 0px -10% 0px" });
+
+        for(var r=0;r<reveals.length;r++) revealIO.observe(reveals[r]);
       } else {
-        reveals.forEach(el => el.classList.add("in"));
+        for(var r2=0;r2<reveals.length;r2++) revealNow(reveals[r2]);
       }
 
-      // ✅ lazy load images (all sections)
-      const lazyImgs = d.querySelectorAll("img.lazy[data-src]");
-      const loadImg = (img) => {
-        const src = img.getAttribute("data-src");
-        if (!src) return;
+      // ---------------- Lazy load images ----------------
+      var lazyImgs = d.querySelectorAll('img.lazy[data-src]');
+      function loadImg(img){
+        var src = img.getAttribute('data-src');
+        if(!src) return;
         img.src = src;
-        img.removeAttribute("data-src");
-        img.classList.remove("lazy");
-      };
+        img.removeAttribute('data-src');
+        img.classList.remove('lazy');
+      }
 
-      if ("IntersectionObserver" in window) {
-        const ioImg = new IntersectionObserver((entries) => {
-          for (const e of entries) {
-            if (!e.isIntersecting) continue;
-            loadImg(e.target);
-            ioImg.unobserve(e.target);
+      if('IntersectionObserver' in window){
+        var ioImg = new IntersectionObserver(function(entries){
+          for(var i2=0;i2<entries.length;i2++){
+            var entry2 = entries[i2];
+            if(!entry2.isIntersecting) continue;
+            loadImg(entry2.target);
+            ioImg.unobserve(entry2.target);
           }
-        }, { rootMargin: "520px 0px 520px 0px", threshold: 0.01 });
-        lazyImgs.forEach(img => ioImg.observe(img));
+        }, { rootMargin:"520px 0px 520px 0px", threshold:0.01 });
+
+        for(var li=0;li<lazyImgs.length;li++) ioImg.observe(lazyImgs[li]);
       } else {
-        lazyImgs.forEach(loadImg);
+        for(var li2=0;li2<lazyImgs.length;li2++) loadImg(lazyImgs[li2]);
       }
 
-      // ---------------- Lazy Image Loader ----------------
-      function initLazyImages(){
-        const imgs = d.querySelectorAll('img.lazy[data-src]');
-        const load = (img)=>{
-          const s = img.getAttribute('data-src');
-          if(!s) return;
-          img.src = s;
-          img.removeAttribute('data-src');
-          img.classList.remove('lazy');
-        };
-        if('IntersectionObserver' in window){
-          const io = new IntersectionObserver((entries)=>{
-            entries.forEach(e=>{
-              if(!e.isIntersecting) return;
-              load(e.target);
-              io.unobserve(e.target);
-            });
-          },{rootMargin:'500px 0px'});
-          imgs.forEach(i=>io.observe(i));
-        }else{
-          imgs.forEach(load);
+      // ---------------- Lightbox ----------------
+      var lb = d.getElementById('lightbox');
+      var lbImg = lb ? lb.querySelector('img') : null;
+
+      function loadImgNow(img){
+        if(img.classList.contains('lazy') && img.getAttribute('data-src')){
+          loadImg(img);
         }
       }
 
-      // ---------------- Streetwear Builder (static safe) ----------------
-      function applyUI(){
-        const grid = d.getElementById('swGrid');
-        if(!grid) return;
-        const files = [
-          'portfolio_images/Streetwear1.webp',
-          'portfolio_images/Streetwear2.webp'
-        ];
-        grid.innerHTML = files.map((src,i)=>
-          `<img class=\"lazy\" src=\"placeholder.webp\" data-src=\"${src}\" alt=\"Streetwear ${i+1}\" width=\"800\" height=\"600\">`
-        ).join('');
-        initLazyImages();
-      }
-
-      // ✅ lightbox
-      const lb = d.getElementById("lightbox");
-      const lbImg = lb.querySelector("img");
-
-      const loadImgNow = (img) => {
-        if (img.classList.contains("lazy") && img.dataset.src) {
-          img.src = img.dataset.src;
-          img.removeAttribute("data-src");
-          img.classList.remove("lazy");
-        }
-      };
-
-      d.addEventListener("click", async (e) => {
-        const img = e.target.closest(".grid img");
-        if (!img) return;
+      d.addEventListener('click', function(e){
+        var img = e.target.closest('.grid img');
+        if(!img || !lb || !lbImg) return;
         loadImgNow(img);
         lbImg.src = img.currentSrc || img.src;
-        try { await lbImg.decode(); } catch(_) {}
-        lb.classList.add("show");
-        d.body.style.overflow = "hidden";
-      }, { passive:true });
+        lb.classList.add('show');
+        d.body.style.overflow = 'hidden';
+      }, true);
 
-      lb.addEventListener("click", () => {
-        lb.classList.remove("show");
-        d.body.style.overflow = "";
-      }, { passive:true });
+      if(lb){
+        lb.addEventListener('click', function(){
+          lb.classList.remove('show');
+          d.body.style.overflow = '';
+        }, true);
+      }
 
-      // ✅ desktop nav hide/show
-      const nav = d.getElementById("nav");
-      let lastY = window.scrollY || 0;
-      let t;
-      let ticking=false;
-      window.addEventListener("scroll", () => {
+      // ---------------- Desktop nav hide/show ----------------
+      var nav = d.getElementById('nav');
+      var lastY = window.scrollY || 0;
+      var t = null;
+      var ticking = false;
+
+      window.addEventListener('scroll', function(){
         if(ticking) return;
-        ticking=true;
-        requestAnimationFrame(()=>{
-          const y = window.scrollY || 0;
-          d.body.classList.add("scrolling");
+        ticking = true;
+        requestAnimationFrame(function(){
+          var y = window.scrollY || 0;
+          d.body.classList.add('scrolling');
           clearTimeout(t);
-          t = setTimeout(() => d.body.classList.remove("scrolling"), 160);
+          t = setTimeout(function(){ d.body.classList.remove('scrolling'); }, 160);
 
-          if (nav && window.innerWidth > 980) {
-            if (y > lastY && y > 140) nav.classList.add("hide");
-            else nav.classList.remove("hide");
+          if(nav && window.innerWidth > 980){
+            if(y > lastY && y > 140) nav.classList.add('hide');
+            else nav.classList.remove('hide');
           }
           lastY = y;
-          ticking=false;
+          ticking = false;
         });
       }, { passive:true });
 
-      // ✅ mobile nav active
-      const mnav = d.getElementById("mnav");
-      const mlinks = mnav ? Array.from(mnav.querySelectorAll("a[data-sec]")) : [];
-      const sections = ["home","logos","thumbnails","mockups","tshirts","streetwear","contact"].map(id => d.getElementById(id)).filter(Boolean);
+      // ---------------- Mobile nav active ----------------
+      var mnav = d.getElementById('mnav');
+      var mlinks = [];
+      if(mnav){
+        var tmp = mnav.querySelectorAll('a[data-sec]');
+        for(var mi=0;mi<tmp.length;mi++) mlinks.push(tmp[mi]);
+      }
 
-      function setActive(id){ mlinks.forEach(a => a.classList.toggle("active", a.dataset.sec === id)); }
-      if (mlinks.length) {
-        if ("IntersectionObserver" in window) {
-          const ioSec = new IntersectionObserver((entries) => {
-            const visible = entries
-              .filter(e => e.isIntersecting)
-              .sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-            if (visible) setActive(visible.target.id);
+      function setActive(id){
+        for(var i3=0;i3<mlinks.length;i3++){
+          var a = mlinks[i3];
+          a.classList.toggle('active', a.getAttribute('data-sec') === id);
+        }
+      }
+
+      var secIds = ['home','logos','thumbnails','mockups','tshirts','streetwear','contact'];
+      var sections = [];
+      for(var si=0;si<secIds.length;si++){
+        var elS = d.getElementById(secIds[si]);
+        if(elS) sections.push(elS);
+      }
+
+      if(mlinks.length){
+        if('IntersectionObserver' in window){
+          var ioSec = new IntersectionObserver(function(entries){
+            var best = null;
+            for(var ei=0;ei<entries.length;ei++){
+              var en = entries[ei];
+              if(!en.isIntersecting) continue;
+              if(!best || en.intersectionRatio > best.intersectionRatio) best = en;
+            }
+            if(best) setActive(best.target.id);
           }, { threshold:[0.2,0.35,0.5,0.65], rootMargin:"-25% 0px -55% 0px" });
-          sections.forEach(s => ioSec.observe(s));
+
+          for(var ssi=0;ssi<sections.length;ssi++) ioSec.observe(sections[ssi]);
         } else {
-          setActive("home");
+          setActive('home');
         }
       }
 
